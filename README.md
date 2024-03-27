@@ -32,7 +32,7 @@ CREATE TABLE Accompagnateur(
 	idAccompagnateur serial PRIMARY KEY, 
 	nomAccompagnateur varChar(30) not null, 
 	prenomAccompagnateur varChar(30) not null, 
-	loginAccompagnateur varChar(30) not null,  -- psedo
+	loginAccompagnateur varChar(30) not null,  -- pseudo
 	motDePasseAccompagnateur varChar(30) not null, 
 	emailAccompagnateur varChar(50) not null, 
 	dateInscriptionAcommpagnateur date, 
@@ -62,7 +62,7 @@ CREATE TABLE Etablissemnt (
 	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
-	titre text not null, 
+	titre varchar(200) not null, 
 	editionOeuvre varChar(50), 
 	descriptionOeuvre text not null, 
 	publicCible text, -- un enum ou pas ? si oui: publicCible type EnumPublicCible,
