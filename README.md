@@ -249,7 +249,7 @@ CREATE TABLE LanguesInterprete (
 */
 
 /* La table sauvegarde
-	Le taux de participation doit être supérieur à 0 ➜ Statique forte 
+	Le taux de participation doit être supérieur à 0 et inférieur à 1 ➜ Statique forte 
 	l’année d’une édition doit être inférieure ou égale à l’année en cours➜  Statique forte
 	le nombre de participants doit  être positif ➜  Statique forte
 */
