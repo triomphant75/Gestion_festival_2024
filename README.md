@@ -148,7 +148,7 @@ CREATE TABLE Intervention(
 
 CREATE TABLE SAUVEGARDE(
 	idSauvegarde serial PRIMARY KEY, 
-	tauxDeParticipation float not null, 
+	tauxDeParticipation DECIMAL(10,2) not null, 
 	nombreDeParicipantPresentParIntervention int not null, 
 	annee date not null, 
 	idEdition int not null, 
