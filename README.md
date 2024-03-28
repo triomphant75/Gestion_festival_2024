@@ -119,43 +119,59 @@ CREATE TABLE OuvragesSelectionnes (
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
 /*Moustapha*/
 
-CREATE TABLE Inscription(
-	idInscription serial not null, 
-	dateInscription date not null,
-	idInterprete int not null, 
-	idAuteur int not null, 
-	idAccompagnateur int not null, 
-	idEdition int not null,
-	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
-CREATE TABLE Intervention( 
-	idIntervention serial PRIMARY KEY, 
-	dureeIntervention time not null, 
-	dateDebutIntervention date time not null, 
-	dateFinIntervention date time not null, 
-	lieuIntervention varchar(50), 
-	etatIntervention type EnumTypeEtat,
-	idInterprete int not null, 
-	idAuteur int not null, 
-	idAccompagnateur int not null,  
-	idEdition int not null,
-	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+/*SAli*/
+CREATE TABLE OuvragesSelectionnes (
+idOeuvre int not null,
+idEdition int not null,
+dateSelection date check (dateSelection<= current_date),
+description text not null,
+quantitesOuvrageSelectionne int check (quantitesOuvrageSelectionne> 0),
+PRIMARY KEY (idOeuvre, idEdition),
+FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+
+CREATE TABLE Inscription(
+idInscription serial not null,
+dateInscription date not null check(dateInscription = current_date),
+idInterprete int not null,
+idAuteur int not null,
+idAccompagnateur int not null,
+idEdition int not null,
+FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+
+CREATE TABLE Intervention(
+idIntervention serial PRIMARY KEY,
+dureeIntervention time not null check (dureeIntervention>=2 AND dureeIntervention<=4),
+dateDebutIntervention date time not null check(dateDebutIntervention >= current_date),
+dateFinIntervention date time not null check(dateFinIntervention > dateDebutIntervention),
+lieuIntervention not null varchar(50),
+etatIntervention type EnumTypeEtat,
+idInterprete int not null,
+idAuteur int not null,
+idAccompagnateur int not null,
+idEdition int not null,
+FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 CREATE TABLE Sauvegarde(
-	idSauvegarde serial PRIMARY KEY, 
-	tauxDeParticipation DECIMAL(10,2) not null, 
-	nombreDeParicipantPresentParIntervention int not null, 
-	annee date not null, 
-	idEdition int not null, 
-	idIntervation int not null,
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idIntervatio) REFERENCES Intervatio(idIntervatio);
+idSauvegarde serial PRIMARY KEY,
+tauxDeParticipation DECIMAL(10,2) not null,
+nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
+annee int not null,
+idEdition int not null,
+idIntervation int not null,
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idIntervatio) REFERENCES Intervatio(idIntervatio);
+
+
+	
+
 /*Salimata*/
 
 CREATE TABLE LanguesAuteurs (
