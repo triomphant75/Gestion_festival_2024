@@ -49,6 +49,7 @@ CREATE TABLE Interprete(
 	dateNaissanceInterprete date, 
 	telInterprete integer, 
 	adresseInterprete varChar(50)); 
+/*anikati*/
 
 CREATE TABLE Etablissemnt ( 
 	idEtablissement serial PRIMARY KEY, 
@@ -69,7 +70,7 @@ CREATE TABLE Oeuvre(
 	ggenreLitteraire type EnumGenreLitteraire,
 	
 CREATE TABLE Auteur (
-	idAuteur serial constraint pk_Auteur PRIMARY KEY,
+	idAuteur serial PRIMARY KEY,
 	idOeuvre int not null,
 	nomAuteur varChar(30) not null, 
 	prénomAuteur varChar(30) not null, 
@@ -81,6 +82,7 @@ CREATE TABLE Auteur (
 	telAuteur integer, 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
+ /*Warda*/
  
 CREATE TABLE Referent (
 	idReferent serial PRIMARY KEY,
@@ -113,6 +115,7 @@ CREATE TABLE OuvragesSelectionnes (
 	PRIMARY KEY (idOeuvre, idEdition),
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+/*Moustapha*/
 
 CREATE TABLE Inscription(
 	idInscription serial not null, 
@@ -151,6 +154,7 @@ CREATE TABLE Sauvegarde(
 	idIntervation int not null,
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
 	FOREIGN KEY (idIntervatio) REFERENCES Intervatio(idIntervatio);
+/*Salimata*/
 
 CREATE TABLE LanguesAuteurs (
 	idLangue int not null, 
