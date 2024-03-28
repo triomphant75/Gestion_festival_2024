@@ -36,7 +36,7 @@ CREATE TABLE Accompagnateur(
 	dateInscriptionAcommpagnateur date check (dateInscriptionAcommpagnateur=current date), 
 	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current date), 
  	adresseAccompagnateur varChar(50),
-	telAcommpagnateur VARCHAR(15) NOT NULL check (telAcommpagnateur REGEXP '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'));
+	telAcommpagnateur VARCHAR(15) NOT NULL check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
 	
 CREATE TABLE Interprete(
@@ -49,7 +49,7 @@ CREATE TABLE Interprete(
 	dateInscriptionInterprete date check (dateInscriptionInterprete=current date), 
 	dateNaissanceInterprete date check (dateNaissanceInterprete<current date), 
  	adresseInterprete varChar(50),
-	telInterprete VARCHAR(15) NOT NULL check (telInterprete REGEXP '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'));
+	telInterprete VARCHAR(15) NOT NULL check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
 /*anikati*/
 
@@ -125,6 +125,27 @@ CREATE TABLE OuvragesSelectionnes (
 
  
 /*Moustapha*/
+CREATE TABLE Referent ( 
+	idReferent serial PRIMARY KEY, 
+	nomReferent varChar(30) not null, 
+	prénomReferent varChar(30) not null,
+	emailReferent varChar(50) not null,
+	telReferent VARCHAR(15) NOT NULL check (telReferent ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$')); 
+
+CREATE TABLE Voeux ( 
+	idVoeux serial PRIMARY KEY, 
+	idEtablissement int not null, 
+	dateEnvoie date check(dateEnvoie> 
+	prioriteVoeux int not null CHECK (prioriteVoeux between 1 and 3), 
+	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
+	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
+
+CREATE TABLE Edition ( 
+	idEdition serial PRIMARY KEY, 
+	dateDebuteEdition date check (dateDebutEdition=>current_date and dateDebutEdition=<dateFinEdition) not null, 
+	dateFinEdition date not null, 
+	anneeEdition int not null check (anneeEdition>=2024), 
+	descriptionEditon text) ;
 
 
 /*SAli*/
