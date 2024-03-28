@@ -63,10 +63,10 @@ CREATE TABLE Oeuvre(
 	titre varchar(200) not null, 
 	editionOeuvre varChar(50), 
 	descriptionOeuvre text not null, 
-	publicCible text, -- un enum ou pas ? si oui: publicCible type EnumPublicCible,
+	publicCible type EnumPublicCible,
 	prixLitteraire varChar(50) null, 
 	anneePublication date, 
-	genreLitteraire varChar(50)); -- un enum ou pas ? si oui: genreLitteraire type EnumGenreLitteraire,
+	ggenreLitteraire type EnumGenreLitteraire,
 	
 CREATE TABLE Auteur (
 	idAuteur serial constraint pk_Auteur PRIMARY KEY,
