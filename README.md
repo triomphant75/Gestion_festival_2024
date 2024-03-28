@@ -36,7 +36,7 @@ CREATE TABLE Accompagnateur(
 	dateInscriptionAcommpagnateur date check (dateInscriptionAcommpagnateur=current date), 
 	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current date), 
  	adresseAccompagnateur varChar(50),
-	telAcommpagnateur VARCHAR(15) NOT NULL check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telAcommpagnateur VARCHAR(15) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
 	
 CREATE TABLE Interprete(
@@ -49,7 +49,7 @@ CREATE TABLE Interprete(
 	dateInscriptionInterprete date check (dateInscriptionInterprete=current date), 
 	dateNaissanceInterprete date check (dateNaissanceInterprete<current date), 
  	adresseInterprete varChar(50),
-	telInterprete VARCHAR(15) NOT NULL check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telInterprete VARCHAR(15) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
 /*anikati*/
 
