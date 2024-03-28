@@ -11,16 +11,14 @@ CREATE TYPE EnumNiveauLangue AS ENUM (
 
 CREATE TYPE EnumTypeEtat AS ENUM (
 	'Programmée','En attente','Annulée','Remplacée');
-/*
+
 CREATE TYPE EnumPublicCible AS ENUM (
 	'jeune', 'jeune adulte','adulte','enfant','tout public');
-*/
 
-/*
+
 CREATE TYPE EnumGenreLitteraire AS ENUM (
 	'roman', 'thriller','science-fiction',
 	'fantasy','poème','littérature','bandes dessinées');
-*/
 
 CREATE TABLE Langue(
 	idLangue serial PRIMARY KEY, 
@@ -83,22 +81,20 @@ CREATE TABLE Auteur (
 	telAuteur integer, 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
-/*
-CREATE TABLE ReferentEtablissemnt (
+ 
+CREATE TABLE Referent (
 	idReferent serial PRIMARY KEY,
-	-- idEtablissement int, -- ajouter l'id de l'établessement?
 	nomReferent varChar(30) not null, 
 	prénomReferent varChar(30) not null,
 	emailReferent varChar(50) not null,
-	telReferent integer,
-	-- FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement)); -- si on ajoute l'établissement
-*/
+	telReferent integer;
+
 CREATE TABLE Voeux (
 	idVoeux serial PRIMARY KEY,
 	idEtablissement int not null,
-	coordonnesReferent text, -- faire une classe ou non ? si oui, il faut mettre: idReferent not null constraint fk_Referent REFERENCES ReferentEtablissemnt(idReferent)
 	dateEnvoie date,
 	prioriteVoeux int not null CHECK (prioriteVoeux in ('1','2','3')),
+ 	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent),
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
 CREATE TABLE Edition ( 
