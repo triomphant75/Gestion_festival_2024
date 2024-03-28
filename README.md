@@ -55,7 +55,7 @@ CREATE TABLE Interprete(
 
 CREATE TABLE Etablissemnt ( 
 	idEtablissement serial PRIMARY KEY, 
-	mailEtablissement  varChar(30) not null check (mailEtablissement REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	emailEtablissement  varChar(30) not null check (emailEtablissement REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
 	typeEtablissement type EnumTypeEtablissement, 
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
