@@ -142,7 +142,7 @@ CREATE TABLE Intervention(
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
 	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
-CREATE TABLE SAUVEGARDE(
+CREATE TABLE Sauvegarde(
 	idSauvegarde serial PRIMARY KEY, 
 	tauxDeParticipation DECIMAL(10,2) not null, 
 	nombreDeParicipantPresentParIntervention int not null, 
@@ -163,7 +163,19 @@ CREATE TABLE LanguesInterprete (
 	idInterprete int not null, 
 	FOREIGN KEY (idLangue) REFERENCES Langue(idLangue),
 	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete));
-	
+
+CREATE TABLE AuteurOeuvre ( 
+	idAuteur int not null, 
+	idOeuvre int not null, 
+	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
+
+CREATE TABLE VoeuFormule ( 
+	idVoeux int not null, 
+	idEtablissement int not null, 
+	FOREIGN KEY (idVoeux) REFERENCES Voeux(idVoeux),
+	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
+
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
 */
