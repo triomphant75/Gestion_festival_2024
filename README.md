@@ -51,7 +51,7 @@ CREATE TABLE Interprete(
  	adresseInterprete varChar(50),
 	telInterprete VARCHAR(15) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
-/*anikati*/
+
 
 CREATE TABLE Etablissemnt ( 
 	idEtablissement serial PRIMARY KEY, 
@@ -86,7 +86,6 @@ CREATE TABLE Auteur (
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
 	
 	
- /*Warda*/
  
 CREATE TABLE Referent (
 	idReferent serial PRIMARY KEY,
@@ -120,11 +119,6 @@ CREATE TABLE OuvragesSelectionnes (
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
 
-
-
-
- 
-/*Moustapha*/
 CREATE TABLE Referent ( 
 	idReferent serial PRIMARY KEY, 
 	nomReferent varChar(30) not null, 
@@ -146,9 +140,7 @@ CREATE TABLE Edition (
 	dateFinEdition date not null, 
 	anneeEdition int not null check (anneeEdition>=2024), 
 	descriptionEditon text) ;
-
-
-/*SAli*/
+ 
 CREATE TABLE OuvragesSelectionnes (
 idOeuvre int not null,
 idEdition int not null,
@@ -197,11 +189,6 @@ idIntervation int not null,
 FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
 FOREIGN KEY (idIntervatio) REFERENCES Intervatio(idIntervatio);
 
-
-	
-
-/*Salimata*/
-
 CREATE TABLE LanguesAuteurs (
 	idLangue int not null, 
 	idAuteur int not null,
@@ -225,6 +212,10 @@ CREATE TABLE VoeuFormule (
 	idEtablissement int not null, 
 	FOREIGN KEY (idVoeux) REFERENCES Voeux(idVoeux),
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
+
+
+
+
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
