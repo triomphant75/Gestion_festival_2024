@@ -30,25 +30,27 @@ CREATE TABLE Accompagnateur(
 	idAccompagnateur serial PRIMARY KEY, 
 	nomAccompagnateur varChar(30) not null, 
 	prenomAccompagnateur varChar(30) not null, 
-	loginAccompagnateur varChar(30) not null,  -- pseudo
+	loginAccompagnateur varChar(30) unique not null,  -- pseudo
 	motDePasseAccompagnateur varChar(30) not null, 
-	emailAccompagnateur varChar(50) not null, 
-	dateInscriptionAcommpagnateur date, 
-	dateNaissanceAcommpagnateur date, 
-	telAcommpagnateur integer, 
-	adresseAccompagnateur varChar(50));
+	emailAccompagnateur VARCHAR(50) NOT NULL check (emailAccompagnateur REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
+	dateInscriptionAcommpagnateur date check (dateInscriptionAcommpagnateur=current date), 
+	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current date), 
+ 	adresseAccompagnateur varChar(50),
+	telAcommpagnateur VARCHAR(15) NOT NULL check (telAcommpagnateur REGEXP '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'));
+	
 	
 CREATE TABLE Interprete(
 	idInterprete serial PRIMARY KEY, 
 	nomInterprete varChar(30) not null, 
 	prenomInterprete varChar(30) not null, 
-	loginInterprete varChar(30) not null, 
+	loginInterprete varChar(30) unique not null, 
 	motDePasseInterprete varChar(30) not null, 
-	emailInterprete varChar(50) not null, 
-	dateInscriptionInterprete date, 
-	dateNaissanceInterprete date, 
-	telInterprete integer, 
-	adresseInterprete varChar(50)); 
+	emailInterprete VARCHAR(50) NOT NULL check (emailInterprete REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	dateInscriptionInterprete date check (dateInscriptionInterprete=current date), 
+	dateNaissanceInterprete date check (dateNaissanceInterprete<current date), 
+ 	adresseInterprete varChar(50),
+	telInterprete VARCHAR(15) NOT NULL check (telInterprete REGEXP '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'));
+	
 /*anikati*/
 
 CREATE TABLE Etablissemnt ( 
