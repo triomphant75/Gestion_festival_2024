@@ -55,7 +55,7 @@ CREATE TABLE Interprete(
 
 CREATE TABLE Etablissemnt ( 
 	idEtablissement serial PRIMARY KEY, 
-	mailEtablissement  varChar(30) not null, 
+	mailEtablissement  varChar(30) not null check (mailEtablissement REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
 	typeEtablissement type EnumTypeEtablissement, 
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
@@ -78,10 +78,10 @@ CREATE TABLE Auteur (
 	prénomAuteur varChar(30) not null, 
 	loginAuteur varChar(30) not null, 
 	motDePasseAuteur varChar(30) not null,
-	emailAuteur varChar(50) not null,  
+	emailAuteur varChar(50) not null check ( emailAuteur REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),  
 	DateInscriptionAuteur date check (DateInscriptionAuteur = current_date), 
 	DateNaissanceAuteur date check (DateNaissanceAuteur > current_date ), 
-	telAuteur VarChar(15), 
+	telAuteur VarChar(15) check (telAuteur REGEXP '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'), 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
 	
