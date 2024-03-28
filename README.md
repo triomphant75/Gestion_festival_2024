@@ -55,11 +55,11 @@ CREATE TABLE Interprete(
 
 CREATE TABLE Etablissemnt ( 
 	idEtablissement serial PRIMARY KEY, 
-	mailEtablissement varChar(30) not null, 
+	mailEtablissement  varChar(30) not null, 
 	typeEtablissement type EnumTypeEtablissement, 
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
-	nombreParticipant integer ); 
+	nombreParticipant integer check(nombreParticipant >'0')  ); 
 	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
@@ -68,8 +68,8 @@ CREATE TABLE Oeuvre(
 	descriptionOeuvre text not null, 
 	publicCible type EnumPublicCible,
 	prixLitteraire varChar(50) null, 
-	anneePublication date, 
-	ggenreLitteraire type EnumGenreLitteraire,
+	anneePublication date (anneePublication < current_date), 
+	genreLitteraire type EnumGenreLitteraire,
 	
 CREATE TABLE Auteur (
 	idAuteur serial PRIMARY KEY,
@@ -79,11 +79,13 @@ CREATE TABLE Auteur (
 	loginAuteur varChar(30) not null, 
 	motDePasseAuteur varChar(30) not null,
 	emailAuteur varChar(50) not null,  
-	DateInscriptionAuteur date, 
-	DateNaissanceAuteur date, 
-	telAuteur integer, 
+	DateInscriptionAuteur date check (DateInscriptionAuteur = current_date), 
+	DateNaissanceAuteur date check (DateNaissanceAuteur > current_date ), 
+	telAuteur VarChar(15), 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
+	
+	
  /*Warda*/
  
 CREATE TABLE Referent (
@@ -117,6 +119,11 @@ CREATE TABLE OuvragesSelectionnes (
 	PRIMARY KEY (idOeuvre, idEdition),
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+
+
+
+
+ 
 /*Moustapha*/
 
 
