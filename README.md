@@ -11,150 +11,151 @@ CREATE TYPE EnumNiveauLangue AS ENUM (
 
 CREATE TYPE EnumTypeEtat AS ENUM (
 	'Programmée','En attente','Annulée','Remplacée');
-/*
+
 CREATE TYPE EnumPublicCible AS ENUM (
 	'jeune', 'jeune adulte','adulte','enfant','tout public');
-*/
 
-/*
+
 CREATE TYPE EnumGenreLitteraire AS ENUM (
 	'roman', 'thriller','science-fiction',
 	'fantasy','poème','littérature','bandes dessinées');
-*/
 
 CREATE TABLE Langue(
 	idLangue serial PRIMARY KEY, 
-	nomLangue type EnumTypeLangue, 
-	niveauLangueEcrit type EnumNiveauLangue, 
-	niveauLangueParle type EnumNiveauLangue);
+	nomLangue EnumTypeLangue, 
+	niveauLangueEcrit EnumNiveauLangue, 
+	niveauLangueParle EnumNiveauLangue);
 
 CREATE TABLE Accompagnateur(
 	idAccompagnateur serial PRIMARY KEY, 
 	nomAccompagnateur varChar(30) not null, 
 	prenomAccompagnateur varChar(30) not null, 
-	loginAccompagnateur varChar(30) not null,  -- pseudo
+	loginAccompagnateur varChar(30) unique not null,  -- pseudo
 	motDePasseAccompagnateur varChar(30) not null, 
-	emailAccompagnateur varChar(50) not null, 
-	dateInscriptionAcommpagnateur date, 
-	dateNaissanceAcommpagnateur date, 
-	telAcommpagnateur integer, 
-	adresseAccompagnateur varChar(50));
+	emailAccompagnateur VARCHAR(50) NOT NULL check (emailAccompagnateur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
+	dateInscriptionAcommpagnateur date check (dateInscriptionAcommpagnateur=current_date), 
+	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current_date), 
+ 	adresseAccompagnateur varChar(50),
+	telAcommpagnateur VARCHAR(15) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	
 	
 CREATE TABLE Interprete(
 	idInterprete serial PRIMARY KEY, 
 	nomInterprete varChar(30) not null, 
 	prenomInterprete varChar(30) not null, 
-	loginInterprete varChar(30) not null, 
+	loginInterprete varChar(30) unique not null, 
 	motDePasseInterprete varChar(30) not null, 
-	emailInterprete varChar(50) not null, 
-	dateInscriptionInterprete date, 
-	dateNaissanceInterprete date, 
-	telInterprete integer, 
-	adresseInterprete varChar(50)); 
+	emailInterprete VARCHAR(50) NOT NULL check (emailInterprete  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	dateInscriptionInterprete date check (dateInscriptionInterprete=current_date), 
+	dateNaissanceInterprete date check (dateNaissanceInterprete<current_date), 
+ 	adresseInterprete varChar(50),
+	telInterprete VARCHAR(15) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	
 
-CREATE TABLE Etablissemnt ( 
+
+CREATE TABLE Etablissement ( 
 	idEtablissement serial PRIMARY KEY, 
-	mailEtablissement varChar(30) not null, 
-	typeEtablissement type EnumTypeEtablissement, 
+	emailEtablissement  varChar(30) not null check (emailEtablissement  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	typeEtablissement  EnumTypeEtablissement, 
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
-	nombreParticipant integer ); 
+	nombreParticipant integer check(nombreParticipant >'0')  ); 
 	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
 	titre varchar(200) not null, 
 	editionOeuvre varChar(50), 
 	descriptionOeuvre text not null, 
-	publicCible text, -- un enum ou pas ? si oui: publicCible type EnumPublicCible,
+	publicCible EnumPublicCible,
 	prixLitteraire varChar(50) null, 
-	anneePublication date, 
-	genreLitteraire varChar(50)); -- un enum ou pas ? si oui: genreLitteraire type EnumGenreLitteraire,
+	anneePublication date check (anneePublication < current_date), 
+	genreLitteraire EnumGenreLitteraire);
 	
 CREATE TABLE Auteur (
-	idAuteur serial constraint pk_Auteur PRIMARY KEY,
+	idAuteur serial PRIMARY KEY,
 	idOeuvre int not null,
 	nomAuteur varChar(30) not null, 
 	prénomAuteur varChar(30) not null, 
 	loginAuteur varChar(30) not null, 
 	motDePasseAuteur varChar(30) not null,
-	emailAuteur varChar(50) not null,  
-	DateInscriptionAuteur date, 
-	DateNaissanceAuteur date, 
-	telAuteur integer, 
+	emailAuteur varChar(50) not null check ( emailAuteur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),  
+	DateInscriptionAuteur date check (DateInscriptionAuteur = current_date), 
+	DateNaissanceAuteur date check (DateNaissanceAuteur > current_date ), 
+	telAuteur VarChar(15) check (telAuteur  ~ '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'), 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
-/*
-CREATE TABLE ReferentEtablissemnt (
-	idReferent serial PRIMARY KEY,
-	-- idEtablissement int, -- ajouter l'id de l'établessement?
+	
+
+CREATE TABLE Referent ( 
+	idReferent serial PRIMARY KEY, 
 	nomReferent varChar(30) not null, 
 	prénomReferent varChar(30) not null,
 	emailReferent varChar(50) not null,
-	telReferent integer,
-	-- FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement)); -- si on ajoute l'établissement
-*/
-CREATE TABLE Voeux (
-	idVoeux serial PRIMARY KEY,
-	idEtablissement int not null,
-	coordonnesReferent text, -- faire une classe ou non ? si oui, il faut mettre: idReferent not null constraint fk_Referent REFERENCES ReferentEtablissemnt(idReferent)
-	dateEnvoie date,
-	prioriteVoeux int not null CHECK (prioriteVoeux in ('1','2','3')),
+	telReferent VARCHAR(15) NOT NULL check (telReferent ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$')); 
+
+CREATE TABLE Voeux ( 
+	idVoeux serial PRIMARY KEY, 
+	idEtablissement int not null, 
+	idReferent int not null,
+	dateEnvoie date, 
+	prioriteVoeux int not null CHECK (prioriteVoeux>= 1  and prioriteVoeux>=  3), 
+	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
 CREATE TABLE Edition ( 
 	idEdition serial PRIMARY KEY, 
-	dateDebuteEdition date not null, 
+	dateDebuteEdition date not null check (dateDebuteEdition>=current_date and dateDebuteEdition<=dateFinEdition) , 
 	dateFinEdition date not null, 
-	anneeEdition date not null, 
+	anneeEdition int not null check (anneeEdition>=2024), 
 	descriptionEditon text) ;
-
-CREATE TABLE OuvragesSelectionnes ( 
-	idOeuvre int not null, 
-	idEdition int not null,
-	dateSelection date,
-	description text,
-	quantitesOuvrageSelectionne int,
-	PRIMARY KEY (idOeuvre, idEdition),
-	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+ 
+CREATE TABLE OuvragesSelectionnes (
+idOeuvre int not null,
+idEdition int not null,
+dateSelection date check (dateSelection<= current_date),
+description text not null,
+quantitesOuvrageSelectionne int check (quantitesOuvrageSelectionne> 0),
+PRIMARY KEY (idOeuvre, idEdition),
+FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
 
 CREATE TABLE Inscription(
-	idInscription serial not null, 
-	dateInscription date not null,
-	idInterprete int not null, 
-	idAuteur int not null, 
-	idAccompagnateur int not null, 
-	idEdition int not null,
-	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+idInscription serial not null,
+dateInscription date not null check(dateInscription = current_date),
+idInterprete int not null,
+idAuteur int not null,
+idAccompagnateur int not null,
+idEdition int not null,
+FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
-CREATE TABLE Intervention( 
-	idIntervention serial PRIMARY KEY, 
-	dureeIntervention time not null, 
-	dateDebutIntervention date time not null, 
-	dateFinIntervention date time not null, 
-	lieuIntervention varchar(50), 
-	etatIntervention type EnumTypeEtat,
-	idInterprete int not null, 
-	idAuteur int not null, 
-	idAccompagnateur int not null,  
-	idEdition int not null,
-	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+CREATE TABLE Intervention(
+idIntervention serial PRIMARY KEY,
+dureeIntervention time not null check (dureeIntervention>='2:00:00' AND dureeIntervention<='4:00:00'),
+dateDebutIntervention timestamp not null check(dateDebutIntervention >= current_date),
+dateFinIntervention timestamp not null check(dateFinIntervention > dateDebutIntervention),
+lieuIntervention varchar(50) not null ,
+etatIntervention  EnumTypeEtat,
+idInterprete int not null,
+idAuteur int not null,
+idAccompagnateur int not null,
+idEdition int not null,
+FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
-CREATE TABLE SAUVEGARDE(
-	idSauvegarde serial PRIMARY KEY, 
-	tauxDeParticipation DECIMAL(10,2) not null, 
-	nombreDeParicipantPresentParIntervention int not null, 
-	annee date not null, 
-	idEdition int not null, 
-	idIntervation int not null,
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-	FOREIGN KEY (idIntervatio) REFERENCES Intervatio(idIntervatio);
+CREATE TABLE Sauvegarde(
+idSauvegarde serial PRIMARY KEY,
+tauxDeParticipation DECIMAL(10,2) not null,
+nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
+annee int not null,
+idEdition int not null,
+idIntervention int not null,
+FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+FOREIGN KEY (idIntervention) REFERENCES Intervention(idIntervention));
 
 CREATE TABLE LanguesAuteurs (
 	idLangue int not null, 
@@ -167,7 +168,23 @@ CREATE TABLE LanguesInterprete (
 	idInterprete int not null, 
 	FOREIGN KEY (idLangue) REFERENCES Langue(idLangue),
 	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete));
-	
+
+CREATE TABLE AuteurOeuvre ( 
+	idAuteur int not null, 
+	idOeuvre int not null, 
+	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
+
+CREATE TABLE VoeuFormule ( 
+	idVoeux int not null, 
+	idEtablissement int not null, 
+	FOREIGN KEY (idVoeux) REFERENCES Voeux(idVoeux),
+	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
+
+
+
+
+
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
 */
