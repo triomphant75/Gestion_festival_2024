@@ -23,8 +23,8 @@ CREATE TYPE EnumGenreLitteraire AS ENUM (
 CREATE TABLE Langue(
 	idLangue serial PRIMARY KEY, 
 	nomLangue EnumTypeLangue, 
-	niveauLangueEcrit  EnumNiveauLangue, 
-	niveauLangueParle  EnumNiveauLangue);
+	niveauLangueEcrit EnumNiveauLangue, 
+	niveauLangueParle EnumNiveauLangue);
 
 CREATE TABLE Accompagnateur(
 	idAccompagnateur serial PRIMARY KEY, 
@@ -32,12 +32,11 @@ CREATE TABLE Accompagnateur(
 	prenomAccompagnateur varChar(30) not null, 
 	loginAccompagnateur varChar(30) unique not null,  -- pseudo
 	motDePasseAccompagnateur varChar(30) not null, 
-	emailAccompagnateur VARCHAR(50) NOT NULL check (emailAccompagnateur ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
+	emailAccompagnateur VARCHAR(50) NOT NULL check (emailAccompagnateur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
 	dateInscriptionAcommpagnateur date check (dateInscriptionAcommpagnateur=current_date), 
 	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current_date), 
  	adresseAccompagnateur varChar(50),
-	telAcommpagnateur VARCHAR(15) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
-	
+	telAcommpagnateur VARCHAR(25) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
 CREATE TABLE Interprete(
 	idInterprete serial PRIMARY KEY, 
@@ -45,25 +44,21 @@ CREATE TABLE Interprete(
 	prenomInterprete varChar(30) not null, 
 	loginInterprete varChar(30) unique not null, 
 	motDePasseInterprete varChar(30) not null, 
-	emailInterprete VARCHAR(50) NOT NULL check (emailInterprete ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	emailInterprete VARCHAR(50) NOT NULL check (emailInterprete  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
 	dateInscriptionInterprete date check (dateInscriptionInterprete=current_date), 
 	dateNaissanceInterprete date check (dateNaissanceInterprete<current_date), 
  	adresseInterprete varChar(50),
-	telInterprete VARCHAR(15) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telInterprete VARCHAR(25) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 	
-
-
 CREATE TABLE Etablissement ( 
 	idEtablissement serial PRIMARY KEY, 
-	emailEtablissement  varChar(30) not null check (emailEtablissement ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
-	typeEtablissement EnumTypeEtablissement, 
+	emailEtablissement  varChar(30) not null check (emailEtablissement  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
+	typeEtablissement  EnumTypeEtablissement, 
 	nomEtablissement varChar(50) not null, 
-	adresseEtablissement varChar(50),
-	telEtablissement VARCHAR(15) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'),
-	nombreParticipant integer check(nombreParticipant >'0')  ); 
+	adresseEtablissement varChar(50), 
+	nombreParticipant integer check(nombreParticipant >'0')
+ 	telEtablissement VARCHAR(25) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
 
-
-	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
 	titre varchar(200) not null, 
@@ -72,7 +67,7 @@ CREATE TABLE Oeuvre(
 	publicCible EnumPublicCible,
 	prixLitteraire varChar(50) null, 
 	anneePublication date check (anneePublication < current_date), 
-	genreLitteraire  EnumGenreLitteraire);
+	genreLitteraire EnumGenreLitteraire);
 	
 CREATE TABLE Auteur (
 	idAuteur serial PRIMARY KEY,
@@ -81,85 +76,85 @@ CREATE TABLE Auteur (
 	prénomAuteur varChar(30) not null, 
 	loginAuteur varChar(30) not null, 
 	motDePasseAuteur varChar(30) not null,
-	emailAuteur varChar(50) not null check ( emailAuteur ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),  
+	emailAuteur varChar(50) not null check ( emailAuteur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),  
 	DateInscriptionAuteur date check (DateInscriptionAuteur = current_date), 
-	DateNaissanceAuteur date check (DateNaissanceAuteur > current_date ), 
-	telAuteur VarChar(15) check (telAuteur ~'^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'), 
+	DateNaissanceAuteur date check (DateNaissanceAuteur < current_date ), 
+	telAuteur VarChar(25) check (telAuteur  ~ '^\\+?[0-9]{1,3}?[-.\\s]?\\(?[0-9]{1,3}?\\)?[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$'), 
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
 	
-	CREATE TABLE Referent ( 
+CREATE TABLE Referent ( 
 	idReferent serial PRIMARY KEY, 
 	nomReferent varChar(30) not null, 
 	prénomReferent varChar(30) not null,
 	emailReferent varChar(50) not null,
-	telReferent VARCHAR(15) NOT NULL check (telReferent ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$')); 
+	telReferent VARCHAR(25) NOT NULL check (telReferent ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$')); 
 
-CREATE TABLE Voeux (
-	idVoeux serial PRIMARY KEY,
-	idEtablissement int not null,
-	dateEnvoie date,
-	prioriteVoeux int not null CHECK (prioriteVoeux <=1 and prioriteVoeux>=3),
- 	idReferent int not null REFERENCES Referent(idReferent),
+CREATE TABLE Voeux ( 
+	idVoeux serial PRIMARY KEY, 
+	idEtablissement int not null, 
+	idReferent int not null,
+	dateEnvoie date, 
+	prioriteVoeux int not null CHECK (prioriteVoeux>= 1  and prioriteVoeux>=  3), 
+	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
 CREATE TABLE Edition ( 
 	idEdition serial PRIMARY KEY, 
-	dateDebuteEdition date  not null check (dateDebuteEdition >= current_date and dateDebuteEdition <= dateFinEdition), 
+	dateDebuteEdition date not null check (dateDebuteEdition>=current_date and dateDebuteEdition<=dateFinEdition) , 
 	dateFinEdition date not null, 
 	anneeEdition int not null check (anneeEdition>=2024), 
 	descriptionEditon text) ;
  
 CREATE TABLE OuvragesSelectionnes (
-idOeuvre int not null,
-idEdition int not null,
-dateSelection date check (dateSelection<= current_date),
-description text not null,
-quantitesOuvrageSelectionne int check (quantitesOuvrageSelectionne> 0),
-PRIMARY KEY (idOeuvre, idEdition),
-FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
-FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+	idOeuvre int not null,
+	idEdition int not null,
+	dateSelection date check (dateSelection<= current_date),
+	description text not null,
+	quantitesOuvrageSelectionne int check (quantitesOuvrageSelectionne> 0),
+	PRIMARY KEY (idOeuvre, idEdition),
+	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
+	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
 
 CREATE TABLE Inscription(
-idInscription serial not null,
-dateInscription date not null check(dateInscription = current_date),
-idInterprete int not null,
-idAuteur int not null,
-idAccompagnateur int not null,
-idEdition int not null,
-idEtablissement int not null references Etablissement(idEtablissement),
-FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
-
+	idInscription serial not null,
+	dateInscription date not null check(dateInscription = current_date),
+	idInterprete int not null,
+	idAuteur int not null,
+	idAccompagnateur int not null,
+	idEdition int not null,
+	idEtablissement int not null references Etablissement(idEtablissement),
+	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 
 CREATE TABLE Intervention(
-idIntervention serial PRIMARY KEY,
-dureeIntervention time not null check (dureeIntervention>='2:00:00' AND dureeIntervention<='4:00:00'),
-dateDebutIntervention timestamp not null check(dateDebutIntervention >= current_date),
-dateFinIntervention timestamp not null check(dateFinIntervention > dateDebutIntervention),
-lieuIntervention varchar(50) not null ,
-etatIntervention EnumTypeEtat,
-idInterprete int not null,
-idAuteur int not null,
-idAccompagnateur int not null,
-idEdition int not null,
-FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+	idIntervention serial PRIMARY KEY,
+	dureeIntervention time not null check (dureeIntervention>='2:00:00' AND dureeIntervention<='4:00:00'),
+	dateDebutIntervention timestamp not null check(dateDebutIntervention >= current_date),
+	dateFinIntervention timestamp not null check(dateFinIntervention > dateDebutIntervention),
+	lieuIntervention varchar(50) not null ,
+	etatIntervention  EnumTypeEtat,
+	idInterprete int not null,
+	idAuteur int not null,
+	idAccompagnateur int not null,
+	idEdition int not null,
+	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
+	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
+	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 CREATE TABLE Sauvegarde(
-idSauvegarde serial PRIMARY KEY,
-tauxDeParticipation DECIMAL(10,2) not null,
-nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
-annee int not null,
-idEdition int not null,
-idIntervention int not null,
-FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
-FOREIGN KEY (idIntervention) REFERENCES Intervention(idIntervention));
+	idSauvegarde serial PRIMARY KEY,
+	tauxDeParticipation DECIMAL(10,2) not null,
+	nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
+	annee int not null,
+	idEdition int not null,
+	idIntervention int not null,
+	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idIntervention) REFERENCES Intervention(idIntervention));
 
 CREATE TABLE LanguesAuteurs (
 	idLangue int not null, 
@@ -184,7 +179,6 @@ CREATE TABLE VoeuFormule (
 	idEtablissement int not null, 
 	FOREIGN KEY (idVoeux) REFERENCES Voeux(idVoeux),
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
-	
 
 INSERT INTO Langue (nomLangue, niveauLangueEcrit, niveauLangueParle)
 VALUES
@@ -212,7 +206,18 @@ VALUES
     ('Le Petit Prince', 'Reynal & Hitchcock', 'Un conte philosophique d Antoine de Saint-Exupéry qui aborde des thèmes tels que l amitié et la quête de sens.', 'enfant', NULL, '1943-04-06', 'littérature'),
     ('Watchmen', 'DC Comics', 'Une bande dessinée de Alan Moore et Dave Gibbons qui déconstruit le genre des super-héros.', 'jeune adulte', 'Prix Hugo', '1986-09-01', 'bandes dessinées');
 
-
+INSERT INTO Edition (dateDebuteEdition, dateFinEdition, anneeEdition, descriptionEditon)
+VALUES
+    ('2024-04-01', '2024-04-10', 2024, 'Festival du Livre de Nancy'),
+    ('2024-05-15', '2024-05-20', 2024, 'Salon du Roman Policier'),
+    ('2024-06-10', '2024-06-15', 2024, 'Foire du Livre d été'),
+    ('2024-07-20', '2024-07-25', 2024, 'Semaine de la Bande Dessinée'),
+    ('2024-08-05', '2024-08-10', 2024, 'Festival de la Poésie'),
+    ('2024-09-15', '2024-09-20', 2024, 'Salon de la Science-Fiction'),
+    ('2024-10-10', '2024-10-15', 2024, 'Foire du Livre Ancien'),
+    ('2024-11-05', '2024-11-10', 2024, 'Semaine du Roman Historique'),
+    ('2024-12-01', '2024-12-10', 2024, 'Festival de la Littérature Contemporaine'),
+    ('2024-05-01', '2024-05-10', 2024, 'Salon du Livre Jeunesse');
 
 
 /* La table Langue : 
