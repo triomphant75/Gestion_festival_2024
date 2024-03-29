@@ -283,6 +283,19 @@ VALUES
     (9, 8, '2024-03-29', 3),
     (10, 10, '2024-03-29', 2);
 
+INSERT INTO VoeuFormule (idVoeux, idEtablissement)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10);
+
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
 */
