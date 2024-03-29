@@ -219,6 +219,20 @@ VALUES
     ('2024-12-01', '2024-12-10', 2024, 'Festival de la Littérature Contemporaine'),
     ('2024-05-01', '2024-05-10', 2024, 'Salon du Livre Jeunesse');
 
+INSERT INTO Etablissement (emailEtablissement, typeEtablissement, nomEtablissement, adresseEtablissement, nombreParticipant, telEtablissement)
+VALUES
+    ('contact@universite.fr', 'université', 'Université de Nancy', '123 Avenue des Étudiants', 5000, '03 12 34 56 78'),
+    ('lycee.general@example.com', 'lycée général', 'Lycée Victor Hugo', '45 Rue des Écoliers', 800, '03 45 67 89 10'),
+    ('lycee.pro@example.com', 'lycée professionnel', 'Lycée des Métiers', '78 Boulevard des Artisans', 600, '03 23 45 67 89'),
+    ('college@example.com', 'collège', 'Collège Jean Moulin', '56 Rue des Collégiens', 400, '03 56 78 90 12'),
+    ('ecole.primaire@example.com', 'école primaire', 'École Élémentaire Saint-Exupéry', '10 Rue des Écoliers', 300, '03 78 90 12 34'),
+    ('maternelle@example.com', 'maternelle', 'École Maternelle Les Petits', '2 Rue des Tout-Petits', 200, '03 90 12 34 56'),
+    ('medico-social@example.com', 'établissement médico-sociaux', 'Centre Médico-Social', '15 Rue de la Santé', 100, '03 12 34 56 78'),
+    ('penitentiaire@example.com', 'établissement pénitentiaire', 'Centre de Détention', '20 Rue des Détenus', 50, '03 78 90 12 34'),
+    ('centre.culturel@example.com', 'établissement médico-sociaux', 'Maison de la Culture', '30 Rue des Artistes', 150, '03 56 78 90 12'),
+    ('bibliotheque@example.com', 'établissement médico-sociaux', 'Bibliothèque Municipale', '5 Rue des Livres', 80, '03 90 12 34 56');
+
+
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
