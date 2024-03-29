@@ -233,6 +233,18 @@ VALUES
     ('bibliotheque@example.com', 'établissement médico-sociaux', 'Bibliothèque Municipale', '5 Rue des Livres', 80, '03 90 12 34 56');
 
 
+INSERT INTO OuvragesSelectionnes (idOeuvre, idEdition, dateSelection, description, quantitesOuvrageSelectionne)
+VALUES
+    (1, 1, '2024-03-29', 'Sélectionné pour le festival du livre', 50),
+    (2, 2, '2024-03-29', 'Choisi pour le salon du roman policier', 30),
+    (3, 3, '2024-03-29', 'Inclus dans la foire du livre d\'été', 20),
+    (4, 4, '2024-03-29', 'Sélectionné pour la semaine de la bande dessinée', 40),
+    (5, 5, '2024-03-29', 'Retenu pour la foire du livre ancien', 15),
+    (6, 6, '2024-03-29', 'Sélectionné pour le festival de la poésie', 25),
+    (7, 7, '2024-03-29', 'Inclus dans le salon de la science-fiction', 35),
+    (8, 8, '2024-03-29', 'Choisi pour la semaine du roman historique', 10),
+    (9, 9, '2024-03-29', 'Sélectionné pour le festival de la littérature contemporaine', 18),
+    (10, 10, '2024-03-29', 'Retenu pour le salon du livre jeunesse', 22);
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
