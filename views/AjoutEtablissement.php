@@ -250,60 +250,52 @@
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-
              <div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Intervention </h4>
-                            <p class="card-description"> Ajouter une intervention</p>
+                            <h4 class="card-title">PAGE ETABLISSEMENT </h4>
+                            <p class="card-description"> Ajouter un établissement</p>
                             <form class="forms-sample">
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Durée</label>
-                                    <input type="time" class="form-control" id="exampleInputUsername1" placeholder="Durée">
+                                    <label for="exampleInputUsername1">Mail</label>
+                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Mail">
                                 </div>
                                 <div class="form-group">
-                                    <label for="start_date">Date de début</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date de début">
-                                </div>
-                                <div class="form-group">
-                                    <label for="end_date">Date de fin</label>
-                                    <input type="date" class="form-control" id="end_date" placeholder="Date de fin">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Etat</label>
+                                    <label for="exampleFormControlSelect1">TypEtablissement</label>
                                     <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>En cours</option>
-                                        <option>Annulé</option>
-                                        <option>Reporté</option>
+                                        <option>Université</option>
+                                        <option>Lycée génréral</option>
+                                        <option>Lycée Professionnel</option>
+                                        <option>collège</option>
+                                        <option>école primaire</option>
+                                        <option>maternelle</option>
+                                        <option>établissement médico-sociaux</option>
+                                        <option>établissement pénitentiaire</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Lieu</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Lieu">
+                                    <label for="exampleInputUsername1">Nom</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Auteur</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>....</option>
-                                    
-                                    </select>
+                                    <label for="exampleInputUsername1">Adresse</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Adresse">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nbreParticipant">Nombre de participants</label>
+                                    <input type="number" class="form-control" id="nbreParticipant" placeholder="participant">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Accompagnateur</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>...</option>
-                                       
-                                    </select>
+                                    <label for="exampleInputUsername4">Public</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername4" placeholder="public">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Interprete</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>...</option>
-                                    
-                                      
-                                    </select>
+                                    <label for="exampleInputUsername1">Téléphone</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
                                 </div>
+                
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                 <button class="btn btn-light">Annuler</button>
                             </form>
@@ -311,23 +303,23 @@
                     </div>
             </div>
 
-    <!-- Datagrid de liste d'œuvres -->
+    <!-- Datagrid de liste des participants -->
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Listes des Interventions </h6>
+                <h6 class="card-title">Listes des Etablissements </h6>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Durée</th>
-                                <th>Date de début</th>
-                                <th>Date de fin</th>
-                                <th>Etat de l'intervention</th>
-                                <th>Auteur </th>
-                                <th>Accompagnateur</th>
-                                <th>Interprete</th>
+                                <th>Mail</th>
+                                <th>TypeEtablissement</th>
+                                <th>Nom</th>
+                                <th>Adresse</th>
+                                <th>Nombre Participants</th>
+                                <th>Public</th>
+                                <th>Téléphone</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -340,13 +332,11 @@
                                 <td>XXXXXX</td>
                                 <td>XXXXXX</td>
                                 <td>XXXXXX</td>
-                                <td>XXXXXX</td>                                
                                 <td>XXXXXX</td>
-
+                                <td>XXXXXX</td>
                                 <td>
-
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                                       Modifier
                                     </button>
 
@@ -355,7 +345,7 @@
                                       <div class="modal-dialog">
                                         <div class="modal-content">
                                           <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une intervention</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                               <span aria-hidden="true">&times;</span>
                                             </button>
@@ -369,8 +359,7 @@
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-
+                                    </div>                                    
 
                                     <!-- bouton supprimer -->
                                     <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
@@ -384,7 +373,6 @@
         </div>
     </div>
 </div>
-
 
 
               <!-- fin de la partie blanche -->

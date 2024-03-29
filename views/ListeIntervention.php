@@ -216,6 +216,9 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutParticipant.php">Ajouter un participant</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeParticipant.php"> Liste des participants</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+
 
                 </ul>
               </div>
@@ -263,6 +266,9 @@
                                 <th>Date de début</th>
                                 <th>Date de fin</th>
                                 <th>Etat de l'intervention</th>
+                                <th>Auteur </th>
+                                <th>Accompagnateur</th>
+                                <th>Interprete</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -274,8 +280,35 @@
                                 <td>XXXXXX</td>
                                 <td>XXXXXX</td>
                                 <td>XXXXXX</td>
+                                <td>XXXXXX</td>
+                                <td>XXXXXX</td>
+                                <td>XXXXXX</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm selectWork">Modifier</button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                      Modifier
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une intervention</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            ...
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn btn-primary">confirmer</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                 </td>
                             </tr>
                             <!-- Ajoutez d'autres lignes de données au besoin -->

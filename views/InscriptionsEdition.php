@@ -138,7 +138,7 @@
         </div>
       </nav>
       <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
+      <<div class="container-fluid page-body-wrapper">
         <!-- partial:../../partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
@@ -200,9 +200,8 @@
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutParticipant.php">Ajouter oeuvre</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeParticipant.php"> Liste des oeuvres</a></li>
-
+                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
                 </ul>
               </div>
             </li>
@@ -214,8 +213,10 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutParticipant.php">Ajouter un participant</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeParticipant.php"> Liste des participants</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>
               </div>

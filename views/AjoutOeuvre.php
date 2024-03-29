@@ -188,6 +188,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>
               </div>
@@ -250,7 +252,7 @@
              <!-- Début de la partie blanche -->
 
              <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
+                <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">PAGE OEUVRES </h4>
@@ -261,8 +263,12 @@
                                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Titre">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Auteur</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Auteur">
+                                    <label for="exampleFormControlSelect1">Auteur</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Josh</option>
+                                        <option>Senbem </option>
+                                       
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Edition</label>
@@ -296,7 +302,7 @@
             </div>
 
     <!-- Datagrid de liste d'œuvres -->
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Listes des Oeuvres </h6>
@@ -329,7 +335,33 @@
                                 <td>XXXXXX</td>
                                 <td>XXXXXX</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm selectWork">Modifier</button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                      Modifier
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            ...
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn btn-primary">confirmer</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!--bouton supprimer -->
                                     <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
                                 </td>
                             </tr>
