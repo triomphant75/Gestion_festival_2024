@@ -270,6 +270,19 @@ VALUES
     ('Chen', 'Wei', 'wei.chen@example.com', '01 98 76 54 32'),
     ('Dubois', 'Sophie', 'sophie.dubois@example.com', '06 78 90 12 34');
 
+INSERT INTO Voeux (idEtablissement, idReferent, dateEnvoie, prioriteVoeux)
+VALUES
+    (1, 1, '2024-03-29', 2),
+    (2, 3, '2024-03-29', 1),
+    (3, 2, '2024-03-29', 3),
+    (4, 5, '2024-03-29', 2),
+    (5, 4, '2024-03-29', 1),
+    (6, 6, '2024-03-29', 3),
+    (7, 7, '2024-03-29', 2),
+    (8, 9, '2024-03-29', 1),
+    (9, 8, '2024-03-29', 3),
+    (10, 10, '2024-03-29', 2);
+
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
 */
