@@ -60,6 +60,11 @@ CREATE TABLE Etablissement (
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
 	nombreParticipant integer check(nombreParticipant >'0')  ); 
+ 
+alter table etablissement
+Add COLUMN telEtablissement VARCHAR(15) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$');
+
+ 
 	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
@@ -126,10 +131,12 @@ idInterprete int not null,
 idAuteur int not null,
 idAccompagnateur int not null,
 idEdition int not null,
+idEtablissement int not null references Etablissement(idEtablissement),
 FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
 FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
 FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
 FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
+
 
 CREATE TABLE Intervention(
 idIntervention serial PRIMARY KEY,
