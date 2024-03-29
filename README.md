@@ -64,8 +64,6 @@ CREATE TABLE Etablissement (
 alter table etablissement
 Add COLUMN telEtablissement VARCHAR(25) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$');
 
- 
-	
 CREATE TABLE Oeuvre(
 	idOeuvre serial PRIMARY KEY, 
 	titre varchar(200) not null, 
@@ -90,7 +88,6 @@ CREATE TABLE Auteur (
 	adresseAuteur varChar(50), 
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
 	
-
 CREATE TABLE Referent ( 
 	idReferent serial PRIMARY KEY, 
 	nomReferent varChar(30) not null, 
