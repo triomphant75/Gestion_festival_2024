@@ -95,7 +95,7 @@ CREATE TABLE Voeux (
 	idEtablissement int not null, 
 	idReferent int not null,
 	dateEnvoie date, 
-	prioriteVoeux int not null CHECK (prioriteVoeux>= 1  and prioriteVoeux>=  3), 
+	prioriteVoeux int not null CHECK (prioriteVoeux>= 1  and prioriteVoeux<=  3), 
 	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
