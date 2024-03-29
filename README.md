@@ -257,6 +257,18 @@ VALUES
     ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com', '2024-03-29', '1998-12-05', 'Shanghai, China', '01 98 76 54 32'),
     ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com', '2024-03-29', '1993-06-30', 'Paris, France', '06 78 90 12 34');
 
+INSERT INTO Referent (nomReferent, prénomReferent, emailReferent, telReferent)
+VALUES
+    ('Dupont', 'Marie', 'marie.dupont@example.com', '06 12 34 56 78'),
+    ('Smith', 'John', 'john.smith@example.com', '01 25 55 12 34'),
+    ('García', 'Ana', 'ana.garcia@example.com', '07 78 90 12 34'),
+    ('Kim', 'Ji-hoon', 'jihoon.kim@example.com', '10 12 34 56 78'),
+    ('Müller', 'Hans', 'hans.muller@example.com', '30 98 76 54 32'),
+    ('Sato', 'Yuki', 'yuki.sato@example.com', '03 12 34 56 78'),
+    ('Ivanov', 'Dmitri', 'dmitri.ivanov@example.com', '09 59 87 65 43'),
+    ('López', 'Carlos', 'carlos.lopez@example.com', '06 78 12 34 56'),
+    ('Chen', 'Wei', 'wei.chen@example.com', '01 98 76 54 32'),
+    ('Dubois', 'Sophie', 'sophie.dubois@example.com', '06 78 90 12 34');
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
