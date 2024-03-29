@@ -129,7 +129,6 @@ CREATE TABLE Inscription(
 	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
 	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
-
 CREATE TABLE Intervention(
 	idIntervention serial PRIMARY KEY,
 	dureeIntervention time not null check (dureeIntervention>='2:00:00' AND dureeIntervention<='4:00:00'),
@@ -232,7 +231,6 @@ VALUES
     ('centre.culturel@example.com', 'établissement médico-sociaux', 'Maison de la Culture', '30 Rue des Artistes', 150, '03 56 78 90 12'),
     ('bibliotheque@example.com', 'établissement médico-sociaux', 'Bibliothèque Municipale', '5 Rue des Livres', 80, '03 90 12 34 56');
 
-
 INSERT INTO OuvragesSelectionnes (idOeuvre, idEdition, dateSelection, description, quantitesOuvrageSelectionne)
 VALUES
     (1, 1, '2024-03-29', 'Sélectionné pour le festival du livre', 50),
@@ -245,6 +243,20 @@ VALUES
     (8, 8, '2024-03-29', 'Choisi pour la semaine du roman historique', 10),
     (9, 9, '2024-03-29', 'Sélectionné pour le festival de la littérature contemporaine', 18),
     (10, 10, '2024-03-29', 'Retenu pour le salon du livre jeunesse', 22);
+
+INSERT INTO Accompagnateur (nomAccompagnateur, prenomAccompagnateur, loginAccompagnateur, motDePasseAccompagnateur, emailAccompagnateur, dateInscriptionAcommpagnateur, dateNaissanceAcommpagnateur, adresseAccompagnateur, telAcommpagnateur)
+VALUES
+    ('Dupont', 'Marie', 'mdupont', 'secret123', 'marie.dupont@example.com', '2024-03-29', '1990-05-15', 'Paris, France', '06 12 34 56 78'),
+    ('Smith', 'John', 'jsmith', 'password123', 'john.smith@example.com', '2024-03-29', '1985-02-20', 'New York, USA', '01 25 55 12 34'),
+    ('García', 'Ana', 'agarcia', 'clave123', 'ana.garcia@example.com', '2024-03-29', '1992-09-10', 'Madrid, Spain', '06 78 90 12 34'),
+    ('Kim', 'Ji-hoon', 'jkim', 'secretpass', 'jihoon.kim@example.com', '2024-03-29', '1988-11-03', 'Seoul, South Korea', '06 12 34 56 78'),
+    ('Müller', 'Hans', 'hmuller', 'geheim123', 'hans.muller@example.com', '2024-03-29', '1977-07-01', 'Berlin, Germany', '30 98 76 54 32'),
+    ('Sato', 'Yuki', 'ysato', 'sakurapass', 'yuki.sato@example.com', '2024-03-29', '1995-04-12', 'Tokyo, Japan', '03 12 34 56 78'),
+    ('Ivanov', 'Dmitri', 'divanov', 'topsecret', 'dmitri.ivanov@example.com', '2024-03-29', '1980-08-25', 'Moscow, Russia', '09 59 87 65 43'),
+    ('López', 'Carlos', 'clopez', 'contraseña', 'carlos.lopez@example.com', '2024-03-29', '1983-03-18', 'Barcelona, Spain', '06 78 12 34 56'),
+    ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com', '2024-03-29', '1998-12-05', 'Shanghai, China', '01 98 76 54 32'),
+    ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com', '2024-03-29', '1993-06-30', 'Paris, France', '06 78 90 12 34');
+
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
