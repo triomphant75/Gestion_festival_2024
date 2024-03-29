@@ -10,7 +10,7 @@
   position: fixed;
   height: 100%;
   width: 240px;
-  background: #0a2558;
+  background: #055dff;
   transition: all 0.5s ease;
 }
 .sidebar.active {
@@ -436,4 +436,42 @@ nav .profile-details i {
     left: 60px;
     width: calc(100% - 60px);
   }
+
+  .dropdown .sub-menu {
+    display: none;
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .dropdown:hover .sub-menu {
+    display: block;
+  }
+  
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .dropdown-toggle i {
+    margin-right: 5px;
+  }
+  
+  .sub-menu li {
+    padding: 5px 0;
+  }
+  
+  .sub-menu a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .sub-menu a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  
 }
