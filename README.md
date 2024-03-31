@@ -100,7 +100,7 @@ CREATE TABLE Voeux (
 	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
-CREATE TABLE Edition ( 
+CREATE TABLE Editions ( 
 	idEdition serial PRIMARY KEY, 
 	dateDebuteEdition date not null check (dateDebuteEdition>=current_date and dateDebuteEdition<=dateFinEdition) , 
 	dateFinEdition date not null, 
@@ -115,7 +115,7 @@ CREATE TABLE OuvragesSelectionnes (
 	quantitesOuvrageSelectionne int check (quantitesOuvrageSelectionne> 0),
 	PRIMARY KEY (idOeuvre, idEdition),
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition));
+	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition));
 
 CREATE TABLE Inscription( 
 	idInscription serial not null,
@@ -126,7 +126,7 @@ CREATE TABLE Inscription(
 	idEdition int not null,
 	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
 	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
 	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 CREATE TABLE Intervention( 
@@ -142,7 +142,7 @@ CREATE TABLE Intervention(
 	idEdition int not null,
 	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
 	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
 	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 CREATE TABLE Sauvegarde( 
@@ -152,7 +152,7 @@ CREATE TABLE Sauvegarde(
 	annee int not null,
 	idEdition int not null,
 	idIntervention int not null,
-	FOREIGN KEY (idEdition) REFERENCES Edition(idEdition),
+	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
 	FOREIGN KEY (idIntervention) REFERENCES Intervention(idIntervention));
 
 CREATE TABLE LanguesAuteurs (
@@ -215,7 +215,7 @@ VALUES
     ('Le Petit Prince', 'Reynal & Hitchcock', 'Un conte philosophique d Antoine de Saint-Exupéry qui aborde des thèmes tels que l amitié et la quête de sens.', 'enfant', NULL, '1943-04-06', 'littérature'),
     ('Watchmen', 'DC Comics', 'Une bande dessinée de Alan Moore et Dave Gibbons qui déconstruit le genre des super-héros.', 'jeune adulte', 'Prix Hugo', '1986-09-01', 'bandes dessinées');
 
-INSERT INTO Edition (dateDebuteEdition, dateFinEdition, anneeEdition, descriptionEditon)
+INSERT INTO Editions (dateDebuteEdition, dateFinEdition, anneeEdition, descriptionEditon)
 VALUES
     ('2024-04-01', '2024-04-10', 2024, 'Festival du Livre de Nancy'),
     ('2024-05-15', '2024-05-20', 2024, 'Salon du Roman Policier'),
