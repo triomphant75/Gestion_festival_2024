@@ -160,7 +160,7 @@ CREATE TABLE Intervention(
 
 CREATE TABLE Sauvegarde( 
 	idSauvegarde serial PRIMARY KEY,
-	tauxDeParticipation DECIMAL(10,2) not null,
+	tauxDeParticipation DECIMAL(10,2) not null check(0<=tauxDeParticipation<=1),
 	nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
 	annee int not null,
 	idEdition int not null,
