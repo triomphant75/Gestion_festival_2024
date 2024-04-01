@@ -77,7 +77,7 @@ CREATE TABLE Auteur (
 	emailAuteur varChar(50) not null check ( emailAuteur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
 	DateNaissanceAuteur date check (DateNaissanceAuteur < current_date ), 
 	telAuteur VarChar(25) check (telAuteur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'), 
-	adresseAuteur varChar(50);
+	adresseAuteur varChar(50));
 	
 
 CREATE TABLE Referent ( 
@@ -305,7 +305,7 @@ VALUES
     (10, 10);
 
 
-INSERT INTO Auteur (idOeuvre, nomAuteur, prénomAuteur, loginAuteur, motDePasseAuteur, emailAuteur, DateNaissanceAuteur, telAuteur, adresseAuteur)
+INSERT INTO Auteur (nomAuteur, prénomAuteur, loginAuteur, motDePasseAuteur, emailAuteur, DateNaissanceAuteur, telAuteur, adresseAuteur)
 VALUES
     ('Dumas', 'Alexandre', 'adumas', 'secret123', 'alex.dumas@example.com', '1802-07-24', '06 12 34 56 78', 'Paris, France'),
     ('Orwell', 'George', 'gorwell', '1984pass', 'george.orwell@example.com', '1903-06-25', '07 12 34 56 78', 'London, UK'),
@@ -497,3 +497,4 @@ VALUES
 	l’année d’une édition doit être inférieure ou égale à l’année en cours➜  Statique forte
 	le nombre de participants doit  être positif ➜  Statique forte
 */
+
