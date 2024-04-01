@@ -255,45 +255,36 @@
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-4 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">PAGE ETABLISSEMENT </h4>
-                            <p class="card-description"> Ajouter un établissement</p>
+                            <h4 class="card-title">PAGE PARTICIPANT </h4>
+                            <p class="card-description"> Ajouter un interprete</p>
                             <form class="forms-sample">
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Mail</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Mail">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">TypEtablissement</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>Université</option>
-                                        <option>Lycée génréral</option>
-                                        <option>Lycée Professionnel</option>
-                                        <option>collège</option>
-                                        <option>école primaire</option>
-                                        <option>maternelle</option>
-                                        <option>établissement médico-sociaux</option>
-                                        <option>établissement pénitentiaire</option>
-                                    </select>
+                                    <label for="exampleInputUsername1">Login</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Nom</label>
                                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Adresse</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Adresse">
+                                    <label for="exampleInputUsername1">Prenom</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Email</label>
+                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="nbreParticipant">Nombre de participants</label>
-                                    <input type="number" class="form-control" id="nbreParticipant" placeholder="participant">
+                                    <label for="start_date">Date Inscription</label>
+                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername4">Public</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername4" placeholder="public">
+                                    <label for="start_date">Date de Naissance</label>
+                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Téléphone</label>
@@ -308,21 +299,21 @@
             </div>
 
     <!-- Datagrid de liste des participants -->
-    <div class="col-md-12 grid-margin stretch-card">
+    <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Listes des Etablissements </h6>
+                <h6 class="card-title">Listes des interpretes </h6>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Mail</th>
-                                <th>TypeEtablissement</th>
+                                <th>Login</th>
                                 <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Nombre Participants</th>
-                                <th>Public</th>
+                                <th>Prenom</th>
+                                <th>Email</th>
+                                <th>Date Inscription</th>
+                                <th>Date Naissance</th>
                                 <th>Téléphone</th>
                                 <th>Action</th>
                             </tr>
