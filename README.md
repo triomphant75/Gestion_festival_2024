@@ -162,7 +162,7 @@ CREATE TABLE Sauvegarde(
 	idSauvegarde serial PRIMARY KEY,
 	tauxDeParticipation DECIMAL(10,2) not null check(0<=tauxDeParticipation<=1),
 	nombreDeParicipantPresentParIntervention int not null check(nombreDeParicipantPresentParIntervention>0),
-	annee int not null,
+	annee INT NOT NULL CHECK (YEAR(annee) <= YEAR(CURRENT_DATE)),
 	idEdition int not null,
 	idIntervention int not null,
 	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
