@@ -70,7 +70,6 @@ CREATE TABLE Oeuvre(
 	
 CREATE TABLE Auteur (
 	idAuteur serial PRIMARY KEY,
-	idOeuvre int not null,
 	nomAuteur varChar(30) not null, 
 	prénomAuteur varChar(30) not null, 
 	loginAuteur varChar(30) not null, 
@@ -78,8 +77,7 @@ CREATE TABLE Auteur (
 	emailAuteur varChar(50) not null check ( emailAuteur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
 	DateNaissanceAuteur date check (DateNaissanceAuteur < current_date ), 
 	telAuteur VarChar(25) check (telAuteur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'), 
-	adresseAuteur varChar(50), 
-	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre));
+	adresseAuteur varChar(50);
 	
 
 CREATE TABLE Referent ( 
@@ -309,16 +307,16 @@ VALUES
 
 INSERT INTO Auteur (idOeuvre, nomAuteur, prénomAuteur, loginAuteur, motDePasseAuteur, emailAuteur, DateNaissanceAuteur, telAuteur, adresseAuteur)
 VALUES
-    (1, 'Dumas', 'Alexandre', 'adumas', 'secret123', 'alex.dumas@example.com', '1802-07-24', '06 12 34 56 78', 'Paris, France'),
-    (2, 'Orwell', 'George', 'gorwell', '1984pass', 'george.orwell@example.com', '1903-06-25', '07 12 34 56 78', 'London, UK'),
-    (3, 'Camus', 'Albert', 'acamus', 'existentialism', 'albert.camus@example.com', '1913-11-07', '04 56 78 90 12', 'Algiers, Algeria'),
-    (4, 'Rowling', 'J.K.', 'jkrowling', 'magic123', 'jk.rowling@example.com', '1965-07-31', '06 98 76 54 32', 'Edinburgh, UK'),
-    (5, 'Hugo', 'Victor', 'vhugo', 'lesmis1862', 'victor.hugo@example.com','1802-02-26', '01 23 45 67 89', 'Paris, France'),
-    (6, 'Tolkien', 'J.R.R.', 'jrrtolkien', 'hobbit123', 'jrr.tolkien@example.com', '1892-01-03', '07 76 54 32 10', 'Oxford, UK'),
-    (7, 'Dostoïevski', 'Fiodor', 'fdostoevski', 'guiltcomplex', 'fiodor.dostoevski@example.com', '1821-11-11', '07 95 23 45 67', 'Saint Petersburg, Russia'),
-    (8, 'Melville', 'Herman', 'hmelville', 'whalehunt', 'herman.melville@example.com', '1819-08-01', '01 25 55 12 34', 'New York, USA'),
-    (9, 'Saint-Exupéry', 'Antoine de', 'saintexupery', 'rose123', 'antoine.saintexupery@example.com', '1900-06-29', '05 43 21 65 87', 'Lyon, France'),
-    (10, 'Moore', 'Alan', 'alanmoore', 'watchmen', 'alan.moore@example.com','1953-11-18', '0 87 65 43 21', 'Northampton, UK');
+    ('Dumas', 'Alexandre', 'adumas', 'secret123', 'alex.dumas@example.com', '1802-07-24', '06 12 34 56 78', 'Paris, France'),
+    ('Orwell', 'George', 'gorwell', '1984pass', 'george.orwell@example.com', '1903-06-25', '07 12 34 56 78', 'London, UK'),
+    ('Camus', 'Albert', 'acamus', 'existentialism', 'albert.camus@example.com', '1913-11-07', '04 56 78 90 12', 'Algiers, Algeria'),
+    ('Rowling', 'J.K.', 'jkrowling', 'magic123', 'jk.rowling@example.com', '1965-07-31', '06 98 76 54 32', 'Edinburgh, UK'),
+    ('Hugo', 'Victor', 'vhugo', 'lesmis1862', 'victor.hugo@example.com','1802-02-26', '01 23 45 67 89', 'Paris, France'),
+    ('Tolkien', 'J.R.R.', 'jrrtolkien', 'hobbit123', 'jrr.tolkien@example.com', '1892-01-03', '07 76 54 32 10', 'Oxford, UK'),
+    ('Dostoïevski', 'Fiodor', 'fdostoevski', 'guiltcomplex', 'fiodor.dostoevski@example.com', '1821-11-11', '07 95 23 45 67', 'Saint Petersburg, Russia'),
+    ('Melville', 'Herman', 'hmelville', 'whalehunt', 'herman.melville@example.com', '1819-08-01', '01 25 55 12 34', 'New York, USA'),
+    ('Saint-Exupéry', 'Antoine de', 'saintexupery', 'rose123', 'antoine.saintexupery@example.com', '1900-06-29', '05 43 21 65 87', 'Lyon, France'),
+    ('Moore', 'Alan', 'alanmoore', 'watchmen', 'alan.moore@example.com','1953-11-18', '0 87 65 43 21', 'Northampton, UK');
 
 
 INSERT INTO AuteurOeuvre (idAuteur, idOeuvre)
