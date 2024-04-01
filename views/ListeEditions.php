@@ -1,3 +1,8 @@
+<?
+session_start();
+include_once "../function/EditionFunction.php"
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -267,27 +272,29 @@
                     </div>
 
                     <table class="table table-bordered">
-                        <thead>
+                        
                             <tr>
-                                <th> ID </th>
                                 <th> Date de début de l'édition</th>
                                 <th> Date de fin de l'édition</th>
                                 <th> Année de l'édition</th>
                                 <th> Description</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> 15 mai 2015 </td>
-                                <td> 15 Septembre 2015 </td>
-                                <td> 2015</td>
-                                <td> XXXXXXXXXXX </td>
-                            </tr>
-                    <!-- Ajoutez d'autres lignes de données au besoin -->
-
-                </tbody>
-            </table>
+                            <?php
+                              $editions = getEdition();
+                              if (!empty($editions)&& is_array($editions)){
+                                foreach ($editions as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['datedebuteedition']?></td>
+                                    <td><?=$value['datefinedition']?></td>
+                                    <td><?=$value['anneeedition']?></td>
+                                    <td><?=$value['descriptionediton']?></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
+                    </table>
         </div>
     </div>
 </div>

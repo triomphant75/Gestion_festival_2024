@@ -14288,4 +14288,22 @@ dl {
     margin: auto 0;
     color: #b1b1b1; }
 
+  /*Alert*/
+ .alert {
+  margin: 8px;
+  padding: 8px;
+  color: white;
+  border-radius: 8px;
+}
+
+.alert.danger{
+  background-color: #f00e24 ;
+}
+.alert.success{
+  background-color: #06e270;
+}
+.alert.warning{
+  background-color: #ffae00;
+}
+
 /*# sourceMappingURL=style.css.map */

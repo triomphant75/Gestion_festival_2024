@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -257,26 +259,40 @@
         <div class="card-body">
             <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
             <p class="card-description"> Créer une édition </p>
-            <form class="forms-sample">
+            <form class="forms-sample" method="POST" action="../models/Edition.php">
                 <div class="form-group">
                     <label for="start_date">Date de début</label>
-                    <input type="date" class="form-control" id="start_date" placeholder="Date de début">
+                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
                 </div>
                 <div class="form-group">
                     <label for="end_date">Date de fin</label>
-                    <input type="date" class="form-control" id="end_date" placeholder="Date de fin">
+                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
                 </div>
                 <div class="form-group">
                     <label for="year">Année</label>
-                    <input type="number" class="form-control" id="year" placeholder="Année">
+                    <input type="number" class="form-control" name="year" id="year" placeholder="Année">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" rows="4" placeholder="Description"></textarea>
+                    <textarea class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mr-2">Créer</button>
                 <button class="btn btn-light">Annuler</button>
+
+                
             </form>
+            <?php
+                    //si le message d'alert n'est pas vide 
+                    if(!empty($_SESSION['message']['text'])){
+                      //affiche
+                      ?>
+                      <div class="alert <?=$_SESSION['message']['type']?>">
+
+                          <?=$_SESSION['message']['text']?>
+                      </div>
+                      <?php
+                    }  
+                ?>
         </div>
     </div>
 </div>
