@@ -1,3 +1,4 @@
+Nom de la base de donnée : SWAAM_FESTILIVRE
 
 CREATE TYPE EnumTypeEtablissement AS ENUM  ( 
 	'université','lycée général','lycée professionnel',
