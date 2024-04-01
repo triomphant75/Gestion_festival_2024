@@ -1,4 +1,4 @@
-Nom de la base de donnée : SWAAM_FESTILIVRE
+-- Nom de la base de donnée : SWAAM_FESTILIVRE
 
 CREATE TYPE EnumTypeEtablissement AS ENUM  ( 
 	'université','lycée général','lycée professionnel',
@@ -26,6 +26,24 @@ CREATE TABLE Langue(
 	nomLangue EnumTypeLangue, 
 	niveauLangueEcrit EnumNiveauLangue, 
 	niveauLangueParle EnumNiveauLangue);
+	
+	
+create sequence edition_idEdition_seq start with 1;
+CREATE TABLE Editions ( 
+	idEdition serial PRIMARY KEY, 
+	dateDebuteEdition date not null check (dateDebuteEdition>=current_date and dateDebuteEdition<=dateFinEdition) , 
+	dateFinEdition date not null, 
+	anneeEdition int not null check (anneeEdition>=2024), 
+	descriptionEditon text) ;
+	
+	
+	
+
+CREATE TABLE Inscription( 
+	idInscription serial PRIMARY KEY,
+	dateInscription date not null check(dateInscription = current_date),
+	idEdition int not null,
+	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition));
 
 CREATE TABLE Accompagnateur(
 	idAccompagnateur serial PRIMARY KEY, 
@@ -36,7 +54,10 @@ CREATE TABLE Accompagnateur(
 	emailAccompagnateur VARCHAR(50) NOT NULL check ( emailAccompagnateur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
 	dateNaissanceAcommpagnateur date check (dateNaissanceAcommpagnateur<current_date), 
  	adresseAccompagnateur varChar(50),
-	telAcommpagnateur VARCHAR(25) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telAcommpagnateur VARCHAR(25) check (telAcommpagnateur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'),
+ 	idInscription int not null,
+	FOREIGN KEY (idInscription) REFERENCES Inscription(idInscription));
+	
 	
 CREATE TABLE Interprete(
 	idInterprete serial PRIMARY KEY, 
@@ -47,8 +68,11 @@ CREATE TABLE Interprete(
 	emailInterprete VARCHAR(50) NOT NULL check ( emailInterprete  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
 	dateNaissanceInterprete date check (dateNaissanceInterprete<current_date), 
  	adresseInterprete varChar(50),
-	telInterprete VARCHAR(25) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telInterprete VARCHAR(25) check (telInterprete ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'),
+	idInscription int not null,
+	FOREIGN KEY (idInscription) REFERENCES Inscription(idInscription));
 
+ 
 CREATE TABLE Etablissement ( 
 	idEtablissement serial PRIMARY KEY, 
 	emailEtablissement  varChar(30) not null check ( emailEtablissement  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), 
@@ -56,10 +80,15 @@ CREATE TABLE Etablissement (
 	nomEtablissement varChar(50) not null, 
 	adresseEtablissement varChar(50), 
 	nombreParticipant integer check(nombreParticipant >'0'),
-	telEtablissement VARCHAR(25) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'));
+	telEtablissement VARCHAR(25) check (telEtablissement ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'),
+	idInscription int not null,
+	FOREIGN KEY (idInscription) REFERENCES Inscription(idInscription));
 	
+	/*idOeuvre int default nextval('oeuvre_idoeuvre_seq')PRIMARY KEY,
+	create sequence edition_idoeuvre_seq start with 1;
+	drop table Oeuvre;*/
 CREATE TABLE Oeuvre(
-	idOeuvre serial PRIMARY KEY, 
+	idOeuvre serial PRIMARY KEY,
 	titre varchar(200) not null, 
 	editionOeuvre varChar(50), 
 	descriptionOeuvre text not null, 
@@ -77,7 +106,9 @@ CREATE TABLE Auteur (
 	emailAuteur varChar(50) not null check ( emailAuteur  ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
 	DateNaissanceAuteur date check (DateNaissanceAuteur < current_date ), 
 	telAuteur VarChar(25) check (telAuteur ~ '^\+?[0-9]{1,3}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$'), 
-	adresseAuteur varChar(50));
+	adresseAuteur varChar(50),
+ 	idInscription int not null,
+	FOREIGN KEY (idInscription) REFERENCES Inscription(idInscription));
 	
 
 CREATE TABLE Referent ( 
@@ -96,12 +127,7 @@ CREATE TABLE Voeux (
 	FOREIGN KEY (idReferent) REFERENCES Referent(idReferent), 
 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement));
 
-CREATE TABLE Editions ( 
-	idEdition serial PRIMARY KEY, 
-	dateDebuteEdition date not null check (dateDebuteEdition>=current_date and dateDebuteEdition<=dateFinEdition) , 
-	dateFinEdition date not null, 
-	anneeEdition int not null check (anneeEdition>=2024), 
-	descriptionEditon text) ;
+
  
 CREATE TABLE OuvragesSelectionnes (
 	idOeuvre int not null,
@@ -112,18 +138,6 @@ CREATE TABLE OuvragesSelectionnes (
 	PRIMARY KEY (idOeuvre, idEdition),
 	FOREIGN KEY (idOeuvre) REFERENCES Oeuvre(idOeuvre),
 	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition));
-
-CREATE TABLE Inscription( 
-	idInscription serial not null,
-	dateInscription date not null check(dateInscription = current_date),
-	idInterprete int not null,
-	idAuteur int not null,
-	idAccompagnateur int not null,
-	idEdition int not null,
-	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
-	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
-	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
-	FOREIGN KEY (idAccompagnateur) REFERENCES Accompagnateur(idAccompagnateur));
 
 CREATE TABLE Intervention( 
 	idIntervention serial PRIMARY KEY,
@@ -137,6 +151,8 @@ CREATE TABLE Intervention(
 	idAuteur int not null,
 	idAccompagnateur int not null,
 	idEdition int not null,
+	idEtablissement int not null,
+ 	FOREIGN KEY (idEtablissement) REFERENCES Etablissement(idEtablissement),
 	FOREIGN KEY (idInterprete) REFERENCES Interprete(idInterprete),
 	FOREIGN KEY (idAuteur) REFERENCES Auteur(idAuteur),
 	FOREIGN KEY (idEdition) REFERENCES Editions(idEdition),
@@ -198,7 +214,103 @@ VALUES
     ('GR', 'B1', 'B2'),
     ('US', 'C1', 'C2'),
     ('FR', 'B2', 'C1');
+	
+	INSERT INTO Editions (dateDebuteEdition, dateFinEdition, anneeEdition, descriptionEditon)
+VALUES
+    ('2024-04-01', '2024-04-10', 2024, 'Festival du Livre de Nancy'),
+    ('2024-05-15', '2024-05-20', 2024, 'Salon du Roman Policier'),
+    ('2024-06-10', '2024-06-15', 2024, 'Foire du Livre d été'),
+    ('2024-07-20', '2024-07-25', 2024, 'Semaine de la Bande Dessinée'),
+    ('2024-08-05', '2024-08-10', 2024, 'Festival de la Poésie'),
+    ('2024-09-15', '2024-09-20', 2024, 'Salon de la Science-Fiction'),
+    ('2024-10-10', '2024-10-15', 2024, 'Foire du Livre Ancien'),
+    ('2024-11-05', '2024-11-10', 2024, 'Semaine du Roman Historique'),
+    ('2024-12-01', '2024-12-10', 2024, 'Festival de la Littérature Contemporaine'),
+    ('2024-05-01', '2024-05-10', 2024, 'Salon du Livre Jeunesse');
+	
+INSERT INTO Inscription (dateInscription, idEdition)
+VALUES
+    ('2024-04-01',4),
+    ('2024-04-01', 8),
+    ('2024-04-01',2),
+    ('2024-04-01',6),
+    ('2024-04-01', 10),
+    ('2024-04-01', 5),
+    ('2024-04-01', 9),
+    ('2024-04-01', 3),
+    ('2024-04-01', 7),
+    ('2024-04-01', 1),
+    ('2024-04-01',4),
+    ('2024-04-01', 8),
+    ('2024-04-01',2),
+    ('2024-04-01',6),
+    ('2024-04-01', 10),
+    ('2024-04-01', 5),
+    ('2024-04-01', 9),
+    ('2024-04-01', 3),
+    ('2024-04-01', 7),
+    ('2024-04-01', 1),
+    ('2024-04-01',4),
+    ('2024-04-01', 8),
+    ('2024-04-01',2),
+    ('2024-04-01',6),
+    ('2024-04-01', 10),
+    ('2024-04-01', 5),
+    ('2024-04-01', 9),
+    ('2024-04-01', 3),
+    ('2024-04-01', 7),
+    ('2024-04-01', 1),
+    ('2024-04-01',4),
+    ('2024-04-01', 8),
+    ('2024-04-01',2),
+    ('2024-04-01',6),
+    ('2024-04-01', 10),
+    ('2024-04-01', 5),
+    ('2024-04-01', 9),
+    ('2024-04-01', 3),
+    ('2024-04-01', 7),
+    ('2024-04-01', 1);
+	
+	INSERT INTO Accompagnateur (nomAccompagnateur, prenomAccompagnateur, loginAccompagnateur, motDePasseAccompagnateur, emailAccompagnateur, dateNaissanceAcommpagnateur, adresseAccompagnateur, telAcommpagnateur,idInscription)
+VALUES
+    ('Dupont', 'Marie', 'mdupont', 'secret123', 'marie.dupont@example.com', '1990-05-15', 'Paris, France', '06 12 34 56 78',11),
+    ('Smith', 'John', 'jsmith', 'password123', 'john.smith@example.com', '1985-02-20', 'New York, USA', '01 25 55 12 34',12),
+    ('García', 'Ana', 'agarcia', 'clave123', 'ana.garcia@example.com','1992-09-10', 'Madrid, Spain', '06 78 90 12 34',13),
+    ('Kim', 'Ji-hoon', 'jkim', 'secretpass', 'jihoon.kim@example.com', '1988-11-03', 'Seoul, South Korea', '06 12 34 56 78',14),
+    ('Müller', 'Hans', 'hmuller', 'geheim123', 'hans.muller@example.com', '1977-07-01', 'Berlin, Germany', '30 98 76 54 32',15),
+    ('Sato', 'Yuki', 'ysato', 'sakurapass', 'yuki.sato@example.com', '1995-04-12', 'Tokyo, Japan', '03 12 34 56 78',16),
+    ('Ivanov', 'Dmitri', 'divanov', 'topsecret', 'dmitri.ivanov@example.com', '1980-08-25', 'Moscow, Russia', '09 59 87 65 43',17),
+    ('López', 'Carlos', 'clopez', 'contraseña', 'carlos.lopez@example.com', '1983-03-18', 'Barcelona, Spain', '06 78 12 34 56',18),
+    ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com', '1998-12-05', 'Shanghai, China', '01 98 76 54 32',19),
+    ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com', '1993-06-30', 'Paris, France', '06 78 90 12 34',20);
 
+INSERT INTO Interprete (nomInterprete, prenomInterprete, loginInterprete, motDePasseInterprete, emailInterprete, dateNaissanceInterprete, adresseInterprete, telInterprete,idInscription)
+VALUES
+    ('Dupont', 'Marie', 'mdupont', 'secret123', 'marie.dupont@example.com', '1990-05-15', 'Paris, France', '06 12 34 56 78',31),
+    ('Smith', 'John', 'jsmith', 'password123', 'john.smith@example.com', '1985-02-20', 'New York, USA', '01 25 55 12 34',32),
+    ('García', 'Ana', 'agarcia', 'clave123', 'ana.garcia@example.com',  '1992-09-10', 'Madrid, Spain', '06 78 90 12 34',33),
+    ('Kim', 'Ji-hoon', 'jkim', 'secretpass', 'jihoon.kim@example.com',  '1988-11-03', 'Seoul, South Korea', '10 12 34 56 78',34),
+    ('Müller', 'Hans', 'hmuller', 'geheim123', 'hans.muller@example.com',  '1977-07-01', 'Berlin, Germany', '30 98 76 54 32',35),
+    ('Sato', 'Yuki', 'ysato', 'sakurapass', 'yuki.sato@example.com',  '1995-04-12', 'Tokyo, Japan', '03 12 34 56 78',36),
+    ('Ivanov', 'Dmitri', 'divanov', 'topsecret', 'dmitri.ivanov@example.com', '1980-08-25', 'Moscow, Russia', '09 59 87 65 43',37),
+    ('López', 'Carlos', 'clopez', 'contraseña', 'carlos.lopez@example.com',  '1983-03-18', 'Barcelona, Spain', '06 78 12 34 56',38),
+    ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com',  '1998-12-05', 'Shanghai, China', '01 98 76 54 32',39),
+    ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com',  '1993-06-30', 'Paris, France', '06 78 90 12 34',40);
+
+INSERT INTO Etablissement (emailEtablissement, typeEtablissement, nomEtablissement, adresseEtablissement, nombreParticipant, telEtablissement,idInscription)
+VALUES
+    ('contact@universite.fr', 'université', 'Université de Nancy', '123 Avenue des Étudiants', 5000, '03 12 34 56 78',1),
+    ('lycee.general@example.com', 'lycée général', 'Lycée Victor Hugo', '45 Rue des Écoliers', 800, '03 45 67 89 10',2),
+    ('lycee.pro@example.com', 'lycée professionnel', 'Lycée des Métiers', '78 Boulevard des Artisans', 600, '03 23 45 67 89',3),
+    ('college@example.com', 'collège', 'Collège Jean Moulin', '56 Rue des Collégiens', 400, '03 56 78 90 12',4),
+    ('ecole.primaire@example.com', 'école primaire', 'École Élémentaire Saint-Exupéry', '10 Rue des Écoliers', 300, '03 78 90 12 34',5),
+    ('maternelle@example.com', 'maternelle', 'École Maternelle Les Petits', '2 Rue des Tout-Petits', 200, '03 90 12 34 56',6),
+    ('medico-social@example.com', 'établissement médico-sociaux', 'Centre Médico-Social', '15 Rue de la Santé', 100, '03 12 34 56 78',7),
+    ('penitentiaire@example.com', 'établissement pénitentiaire', 'Centre de Détention', '20 Rue des Détenus', 50, '03 78 90 12 34',8),
+    ('centre.culturel@example.com', 'établissement médico-sociaux', 'Maison de la Culture', '30 Rue des Artistes', 150, '03 56 78 90 12',9),
+    ('bibliotheque@example.com', 'établissement médico-sociaux', 'Bibliothèque Municipale', '5 Rue des Livres', 80, '03 90 12 34 56',10);
+
+	
 INSERT INTO Oeuvre (titre, editionOeuvre, descriptionOeuvre, publicCible, prixLitteraire, anneePublication, genreLitteraire)
 VALUES
     ('Le Maître et Marguerite', 'Édition originale', 'Un roman fantastique et satirique écrit par Mikhaïl Boulgakov.', 'adulte', NULL, '1967-01-01', 'roman'),
@@ -212,58 +324,19 @@ VALUES
     ('Le Petit Prince', 'Reynal & Hitchcock', 'Un conte philosophique d Antoine de Saint-Exupéry qui aborde des thèmes tels que l amitié et la quête de sens.', 'enfant', NULL, '1943-04-06', 'littérature'),
     ('Watchmen', 'DC Comics', 'Une bande dessinée de Alan Moore et Dave Gibbons qui déconstruit le genre des super-héros.', 'jeune adulte', 'Prix Hugo', '1986-09-01', 'bandes dessinées');
 
-INSERT INTO Editions (dateDebuteEdition, dateFinEdition, anneeEdition, descriptionEditon)
+INSERT INTO Auteur (nomAuteur, prénomAuteur, loginAuteur, motDePasseAuteur, emailAuteur, DateNaissanceAuteur, telAuteur, adresseAuteur,idInscription)
 VALUES
-    ('2024-04-01', '2024-04-10', 2024, 'Festival du Livre de Nancy'),
-    ('2024-05-15', '2024-05-20', 2024, 'Salon du Roman Policier'),
-    ('2024-06-10', '2024-06-15', 2024, 'Foire du Livre d été'),
-    ('2024-07-20', '2024-07-25', 2024, 'Semaine de la Bande Dessinée'),
-    ('2024-08-05', '2024-08-10', 2024, 'Festival de la Poésie'),
-    ('2024-09-15', '2024-09-20', 2024, 'Salon de la Science-Fiction'),
-    ('2024-10-10', '2024-10-15', 2024, 'Foire du Livre Ancien'),
-    ('2024-11-05', '2024-11-10', 2024, 'Semaine du Roman Historique'),
-    ('2024-12-01', '2024-12-10', 2024, 'Festival de la Littérature Contemporaine'),
-    ('2024-05-01', '2024-05-10', 2024, 'Salon du Livre Jeunesse');
-	
-INSERT INTO Etablissement (emailEtablissement, typeEtablissement, nomEtablissement, adresseEtablissement, nombreParticipant, telEtablissement)
-VALUES
-    ('contact@universite.fr', 'université', 'Université de Nancy', '123 Avenue des Étudiants', 5000, '03 12 34 56 78'),
-    ('lycee.general@example.com', 'lycée général', 'Lycée Victor Hugo', '45 Rue des Écoliers', 800, '03 45 67 89 10'),
-    ('lycee.pro@example.com', 'lycée professionnel', 'Lycée des Métiers', '78 Boulevard des Artisans', 600, '03 23 45 67 89'),
-    ('college@example.com', 'collège', 'Collège Jean Moulin', '56 Rue des Collégiens', 400, '03 56 78 90 12'),
-    ('ecole.primaire@example.com', 'école primaire', 'École Élémentaire Saint-Exupéry', '10 Rue des Écoliers', 300, '03 78 90 12 34'),
-    ('maternelle@example.com', 'maternelle', 'École Maternelle Les Petits', '2 Rue des Tout-Petits', 200, '03 90 12 34 56'),
-    ('medico-social@example.com', 'établissement médico-sociaux', 'Centre Médico-Social', '15 Rue de la Santé', 100, '03 12 34 56 78'),
-    ('penitentiaire@example.com', 'établissement pénitentiaire', 'Centre de Détention', '20 Rue des Détenus', 50, '03 78 90 12 34'),
-    ('centre.culturel@example.com', 'établissement médico-sociaux', 'Maison de la Culture', '30 Rue des Artistes', 150, '03 56 78 90 12'),
-    ('bibliotheque@example.com', 'établissement médico-sociaux', 'Bibliothèque Municipale', '5 Rue des Livres', 80, '03 90 12 34 56');
+    ('Dumas', 'Alexandre', 'adumas', 'secret123', 'alex.dumas@example.com', '1802-07-24', '06 12 34 56 78', 'Paris, France',21),
+    ('Orwell', 'George', 'gorwell', '1984pass', 'george.orwell@example.com', '1903-06-25', '07 12 34 56 78', 'London, UK',22),
+    ('Camus', 'Albert', 'acamus', 'existentialism', 'albert.camus@example.com', '1913-11-07', '04 56 78 90 12', 'Algiers, Algeria',23),
+    ('Rowling', 'J.K.', 'jkrowling', 'magic123', 'jk.rowling@example.com', '1965-07-31', '06 98 76 54 32', 'Edinburgh, UK',24),
+    ('Hugo', 'Victor', 'vhugo', 'lesmis1862', 'victor.hugo@example.com','1802-02-26', '01 23 45 67 89', 'Paris, France',25),
+    ('Tolkien', 'J.R.R.', 'jrrtolkien', 'hobbit123', 'jrr.tolkien@example.com', '1892-01-03', '07 76 54 32 10', 'Oxford, UK',26),
+    ('Dostoïevski', 'Fiodor', 'fdostoevski', 'guiltcomplex', 'fiodor.dostoevski@example.com', '1821-11-11', '07 95 23 45 67', 'Saint Petersburg, Russia',27),
+    ('Melville', 'Herman', 'hmelville', 'whalehunt', 'herman.melville@example.com', '1819-08-01', '01 25 55 12 34', 'New York, USA',28),
+    ('Saint-Exupéry', 'Antoine de', 'saintexupery', 'rose123', 'antoine.saintexupery@example.com', '1900-06-29', '05 43 21 65 87', 'Lyon, France',29),
+    ('Moore', 'Alan', 'alanmoore', 'watchmen', 'alan.moore@example.com','1953-11-18', '0 87 65 43 21', 'Northampton, UK',30);
 
-
-INSERT INTO OuvragesSelectionnes (idOeuvre, idEdition, dateSelection, description, quantitesOuvrageSelectionne)
-VALUES
-    (1, 1, '2024-03-29', 'Sélectionné pour le festival du livre', 50),
-    (2, 2, '2024-03-29', 'Choisi pour le salon du roman policier', 30),
-    (3, 3, '2024-03-29', 'Inclus dans la foire du livre d été', 20),
-    (4, 4, '2024-03-29', 'Sélectionné pour la semaine de la bande dessinée', 40),
-    (5, 5, '2024-03-29', 'Retenu pour la foire du livre ancien', 15),
-    (6, 6, '2024-03-29', 'Sélectionné pour le festival de la poésie', 25),
-    (7, 7, '2024-03-29', 'Inclus dans le salon de la science-fiction', 35),
-    (8, 8, '2024-03-29', 'Choisi pour la semaine du roman historique', 10),
-    (9, 9, '2024-03-29', 'Sélectionné pour le festival de la littérature contemporaine', 18),
-    (10, 10, '2024-03-29', 'Retenu pour le salon du livre jeunesse', 22);
-
-INSERT INTO Accompagnateur (nomAccompagnateur, prenomAccompagnateur, loginAccompagnateur, motDePasseAccompagnateur, emailAccompagnateur, dateNaissanceAcommpagnateur, adresseAccompagnateur, telAcommpagnateur)
-VALUES
-    ('Dupont', 'Marie', 'mdupont', 'secret123', 'marie.dupont@example.com', '1990-05-15', 'Paris, France', '06 12 34 56 78'),
-    ('Smith', 'John', 'jsmith', 'password123', 'john.smith@example.com', '1985-02-20', 'New York, USA', '01 25 55 12 34'),
-    ('García', 'Ana', 'agarcia', 'clave123', 'ana.garcia@example.com','1992-09-10', 'Madrid, Spain', '06 78 90 12 34'),
-    ('Kim', 'Ji-hoon', 'jkim', 'secretpass', 'jihoon.kim@example.com', '1988-11-03', 'Seoul, South Korea', '06 12 34 56 78'),
-    ('Müller', 'Hans', 'hmuller', 'geheim123', 'hans.muller@example.com', '1977-07-01', 'Berlin, Germany', '30 98 76 54 32'),
-    ('Sato', 'Yuki', 'ysato', 'sakurapass', 'yuki.sato@example.com', '1995-04-12', 'Tokyo, Japan', '03 12 34 56 78'),
-    ('Ivanov', 'Dmitri', 'divanov', 'topsecret', 'dmitri.ivanov@example.com', '1980-08-25', 'Moscow, Russia', '09 59 87 65 43'),
-    ('López', 'Carlos', 'clopez', 'contraseña', 'carlos.lopez@example.com', '1983-03-18', 'Barcelona, Spain', '06 78 12 34 56'),
-    ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com', '1998-12-05', 'Shanghai, China', '01 98 76 54 32'),
-    ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com', '1993-06-30', 'Paris, France', '06 78 90 12 34');
 
 INSERT INTO Referent (nomReferent, prénomReferent, emailReferent, telReferent)
 VALUES
@@ -277,8 +350,9 @@ VALUES
     ('López', 'Carlos', 'carlos.lopez@example.com', '06 78 12 34 56'),
     ('Chen', 'Wei', 'wei.chen@example.com', '01 98 76 54 32'),
     ('Dubois', 'Sophie', 'sophie.dubois@example.com', '06 78 90 12 34');
-
-INSERT INTO Voeux (idEtablissement, idReferent, dateEnvoie, prioriteVoeux)
+	
+	
+	INSERT INTO Voeux (idEtablissement, idReferent, dateEnvoie, prioriteVoeux)
 VALUES
     (1, 1, '2024-04-01', 2),
     (2, 3, '2024-04-01', 1),
@@ -290,6 +364,88 @@ VALUES
     (8, 9, '2024-04-01', 1),
     (9, 8, '2024-04-01', 3),
     (10, 10, '2024-04-01', 2);
+
+	
+INSERT INTO OuvragesSelectionnes (idOeuvre, idEdition, dateSelection, description, quantitesOuvrageSelectionne)
+VALUES
+    (1, 1, '2024-03-29', 'Sélectionné pour le festival du livre', 50),
+    (2, 2, '2024-03-29', 'Choisi pour le salon du roman policier', 30),
+    (3, 3, '2024-03-29', 'Inclus dans la foire du livre d été', 20),
+    (4, 4, '2024-03-29', 'Sélectionné pour la semaine de la bande dessinée', 40),
+    (5, 5, '2024-03-29', 'Retenu pour la foire du livre ancien', 15),
+    (6, 6, '2024-03-29', 'Sélectionné pour le festival de la poésie', 25),
+    (7, 7, '2024-03-29', 'Inclus dans le salon de la science-fiction', 35),
+    (8, 8, '2024-03-29', 'Choisi pour la semaine du roman historique', 10),
+    (9, 9, '2024-03-29', 'Sélectionné pour le festival de la littérature contemporaine', 18),
+    (10, 10, '2024-03-29', 'Retenu pour le salon du livre jeunesse', 22);
+
+
+INSERT INTO Intervention (dateIntervention, dureeIntervention, debutIntervention, finIntervention, lieuIntervention, etatIntervention, idEtablissement, idInterprete, idAuteur, idAccompagnateur, idEdition)
+VALUES
+    ('2024-04-03','03:00:00', '08:00:00', '11:00:00', 'Salle A', 'Programmée',1, 1, 2, 3, 4),
+    ('2024-05-01','02:30:00', '09:00:00', '11:30:00', 'Amphithéâtre B', 'En attente',2, 5, 6, 7, 8),
+    ('2024-05-02', '04:00:00', '08:00:00', '12:00:00', 'Salle C', 'Annulée',3, 9, 10, 1, 2),
+    ('2024-06-04', '03:30:00', '13:00:00', '16:30:00', 'Auditorium', 'Remplacée', 4, 3, 4, 5, 6),
+    ('2024-06-03', '02:15:00', '14:00:00', '18:15:00', 'Salle D', 'Programmée', 5,7, 8, 9, 10),
+    ('2024-07-06', '03:45:00', '14:00:00', '17:45:00', 'Salle E', 'En attente',6, 2, 3, 4, 5),
+    ('2024-08-05', '03:20:00', '15:00:00', '18:20:00', 'Salle F', 'En attente',7, 6, 7, 8, 9),
+    ('2024-09-08', '02:50:00', '08:00:00', '10:50:00', 'Salle G', 'Programmée',8, 10, 1, 2, 3),
+    ('2024-10-07', '03:10:00', '09:00:00', '12:10:00' , 'Salle H', 'En attente',9, 4, 5, 6, 7),
+    ('2024-11-09', '03:30:00', '10:00:00', '13:30:00', 'Salle I', 'Programmée',10, 8, 9, 10, 1);
+
+INSERT INTO Sauvegarde (tauxDeParticipation, nombreDeParicipantPresentParIntervention, annee, idEdition, idIntervention)
+VALUES
+    (0.75, 20, 2024, 1, 2),
+    (0.90, 30, 2024, 3, 4),
+    (0.80, 25, 2024, 5, 6),
+    (0.70, 18, 2024, 7, 8),
+    (0.95, 40, 2024, 9, 10),
+    (0.60, 15, 2024, 10, 9),
+    (0.85, 28, 2024, 8, 7),
+    (0.78, 22, 2024, 6, 5),
+    (0.88, 35, 2024, 2, 3),
+    (0.92, 38, 2024, 4, 1);
+	
+	INSERT INTO LanguesAuteurs (idLangue, idAuteur)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10);
+	
+	INSERT INTO LanguesInterprete (idLangue, idInterprete)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10);
+	
+	INSERT INTO AuteurOeuvre (idAuteur, idOeuvre)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10);
+
+
 
 INSERT INTO VoeuFormule (idVoeux, idEtablissement)
 VALUES
@@ -305,112 +461,21 @@ VALUES
     (10, 10);
 
 
-INSERT INTO Auteur (nomAuteur, prénomAuteur, loginAuteur, motDePasseAuteur, emailAuteur, DateNaissanceAuteur, telAuteur, adresseAuteur)
-VALUES
-    ('Dumas', 'Alexandre', 'adumas', 'secret123', 'alex.dumas@example.com', '1802-07-24', '06 12 34 56 78', 'Paris, France'),
-    ('Orwell', 'George', 'gorwell', '1984pass', 'george.orwell@example.com', '1903-06-25', '07 12 34 56 78', 'London, UK'),
-    ('Camus', 'Albert', 'acamus', 'existentialism', 'albert.camus@example.com', '1913-11-07', '04 56 78 90 12', 'Algiers, Algeria'),
-    ('Rowling', 'J.K.', 'jkrowling', 'magic123', 'jk.rowling@example.com', '1965-07-31', '06 98 76 54 32', 'Edinburgh, UK'),
-    ('Hugo', 'Victor', 'vhugo', 'lesmis1862', 'victor.hugo@example.com','1802-02-26', '01 23 45 67 89', 'Paris, France'),
-    ('Tolkien', 'J.R.R.', 'jrrtolkien', 'hobbit123', 'jrr.tolkien@example.com', '1892-01-03', '07 76 54 32 10', 'Oxford, UK'),
-    ('Dostoïevski', 'Fiodor', 'fdostoevski', 'guiltcomplex', 'fiodor.dostoevski@example.com', '1821-11-11', '07 95 23 45 67', 'Saint Petersburg, Russia'),
-    ('Melville', 'Herman', 'hmelville', 'whalehunt', 'herman.melville@example.com', '1819-08-01', '01 25 55 12 34', 'New York, USA'),
-    ('Saint-Exupéry', 'Antoine de', 'saintexupery', 'rose123', 'antoine.saintexupery@example.com', '1900-06-29', '05 43 21 65 87', 'Lyon, France'),
-    ('Moore', 'Alan', 'alanmoore', 'watchmen', 'alan.moore@example.com','1953-11-18', '0 87 65 43 21', 'Northampton, UK');
 
 
-INSERT INTO AuteurOeuvre (idAuteur, idOeuvre)
-VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10);
-
-INSERT INTO LanguesAuteurs (idLangue, idAuteur)
-VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10);
 
 
-INSERT INTO Interprete (nomInterprete, prenomInterprete, loginInterprete, motDePasseInterprete, emailInterprete, dateNaissanceInterprete, adresseInterprete, telInterprete)
-VALUES
-    ('Dupont', 'Marie', 'mdupont', 'secret123', 'marie.dupont@example.com', '1990-05-15', 'Paris, France', '06 12 34 56 78'),
-    ('Smith', 'John', 'jsmith', 'password123', 'john.smith@example.com', '1985-02-20', 'New York, USA', '01 25 55 12 34'),
-    ('García', 'Ana', 'agarcia', 'clave123', 'ana.garcia@example.com',  '1992-09-10', 'Madrid, Spain', '06 78 90 12 34'),
-    ('Kim', 'Ji-hoon', 'jkim', 'secretpass', 'jihoon.kim@example.com',  '1988-11-03', 'Seoul, South Korea', '10 12 34 56 78'),
-    ('Müller', 'Hans', 'hmuller', 'geheim123', 'hans.muller@example.com',  '1977-07-01', 'Berlin, Germany', '30 98 76 54 32'),
-    ('Sato', 'Yuki', 'ysato', 'sakurapass', 'yuki.sato@example.com',  '1995-04-12', 'Tokyo, Japan', '03 12 34 56 78'),
-    ('Ivanov', 'Dmitri', 'divanov', 'topsecret', 'dmitri.ivanov@example.com', '1980-08-25', 'Moscow, Russia', '09 59 87 65 43'),
-    ('López', 'Carlos', 'clopez', 'contraseña', 'carlos.lopez@example.com',  '1983-03-18', 'Barcelona, Spain', '06 78 12 34 56'),
-    ('Chen', 'Wei', 'wchen', 'password123', 'wei.chen@example.com',  '1998-12-05', 'Shanghai, China', '01 98 76 54 32'),
-    ('Dubois', 'Sophie', 'sdubois', 'secret123', 'sophie.dubois@example.com',  '1993-06-30', 'Paris, France', '06 78 90 12 34');
+
 
 	
-INSERT INTO LanguesInterprete (idLangue, idInterprete)
-VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10);
 
-INSERT INTO Inscription (dateInscription, idInterprete, idAuteur, idAccompagnateur, idEdition)
-VALUES
-    ('2024-04-01', 1, 2, 3, 4),
-    ('2024-04-01', 5, 6, 7, 8),
-    ('2024-04-01', 9, 10, 1, 2),
-    ('2024-04-01', 3, 4, 5, 6),
-    ('2024-04-01', 7, 8, 9, 10),
-    ('2024-04-01', 2, 3, 4, 5),
-    ('2024-04-01', 6, 7, 8, 9),
-    ('2024-04-01', 10, 1, 2, 3),
-    ('2024-04-01', 4, 5, 6, 7),
-    ('2024-04-01', 8, 9, 10, 1);
 
-INSERT INTO Intervention (dateIntervention, dureeIntervention, debutIntervention, finIntervention, lieuIntervention, etatIntervention, idInterprete, idAuteur, idAccompagnateur, idEdition)
-VALUES
-    ('2024-04-03','03:00:00', '08:00:00', '11:00:00', 'Salle A', 'Programmée', 1, 2, 3, 4),
-    ('2024-05-01','02:30:00', '09:00:00', '11:30:00', 'Amphithéâtre B', 'En attente', 5, 6, 7, 8),
-    ('2024-05-02', '04:00:00', '08:00:00', '12:00:00', 'Salle C', 'Annulée', 9, 10, 1, 2),
-    ('2024-06-04', '03:30:00', '13:00:00', '16:30:00', 'Auditorium', 'Remplacée', 3, 4, 5, 6),
-    ('2024-06-03', '02:15:00', '14:00:00', '18:15:00', 'Salle D', 'Programmée', 7, 8, 9, 10),
-    ('2024-07-06', '03:45:00', '14:00:00', '17:45:00', 'Salle E', 'En attente', 2, 3, 4, 5),
-    ('2024-08-05', '03:20:00', '15:00:00', '18:20:00', 'Salle F', 'En attente', 6, 7, 8, 9),
-    ('2024-09-08', '02:50:00', '08:00:00', '10:50:00', 'Salle G', 'Programmée', 10, 1, 2, 3),
-    ('2024-10-07', '03:10:00', '09:00:00', '12:10:00' , 'Salle H', 'En attente', 4, 5, 6, 7),
-    ('2024-11-09', '03:30:00', '10:00:00', '13:30:00', 'Salle I', 'Programmée', 8, 9, 10, 1);
 
-INSERT INTO Sauvegarde (tauxDeParticipation, nombreDeParicipantPresentParIntervention, annee, idEdition, idIntervention)
-VALUES
-    (0.75, 20, 2024, 1, 2),
-    (0.90, 30, 2024, 3, 4),
-    (0.80, 25, 2024, 5, 6),
-    (0.70, 18, 2024, 7, 8),
-    (0.95, 40, 2024, 9, 10),
-    (0.60, 15, 2024, 10, 9),
-    (0.85, 28, 2024, 8, 7),
-    (0.78, 22, 2024, 6, 5),
-    (0.88, 35, 2024, 2, 3),
-    (0.92, 38, 2024, 4, 1);
+    
+
+
+
+
 
 /* La table Langue : 
 	La langue avec ses attribut de niveau doit être indiqué pendant l’inscription à une édition mais pas obligatoire pendant la création de son compte ➜ statique faible 
