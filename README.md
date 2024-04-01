@@ -497,4 +497,32 @@ VALUES
 	l’année d’une édition doit être inférieure ou égale à l’année en cours➜  Statique forte
 	le nombre de participants doit  être positif ➜  Statique forte
 */
+-----------------------------------------------------PROCEDURE/FONCTION TRIGGER----------------------------------------------------------
+/* Les voeux formulés ne peuvent pas dépasser plus de 3 choix
 
+CREATE OR REPLACE FUNCTION check_voeux_limit()
+RETURNS TRIGGER AS $$
+DECLARE
+    voeux_count INTEGER;
+BEGIN
+    -- On Compte le nombre de voeux formulés pour l'établissement concerné
+    SELECT COUNT(*)
+    INTO voeux_count
+    FROM Voeux
+    WHERE idetablissement = NEW.idetablissement;
+
+    -- Puis on vérifie si le nombre de voeux formulés dépasse 3
+    IF voeux_count >= 3 THEN
+        -- on affiche un message d'erreur si c'est le cas 
+        RAISE EXCEPTION 'Le nombre maximal de voeux formulés (3) pour cet établissement est atteint';
+    END IF;
+
+    -- Si la condition n'est pas violée, on continue normalement
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER voeux_limit_trigger
+BEFORE INSERT OR UPDATE ON Voeux
+FOR EACH ROW
+EXECUTE FUNCTION check_voeux_limit();
