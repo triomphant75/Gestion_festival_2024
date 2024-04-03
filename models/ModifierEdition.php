@@ -7,9 +7,11 @@ if (
     && !empty($_POST['end_date'])
     && !empty($_POST['year'])
     && !empty($_POST['description'])
+    && !empty($_POST['idedition'])
 ){
-    $sql = "INSERT INTO editions (datedebuteedition,datefinedition,anneeedition,descriptionediton )
-            VALUES(?,?,?,?)";
+    $sql = "UPDATE editions  SET datedebuteedition=?,datefinedition=? ,anneeedition=?,descriptionediton=?,
+    WHERE idedition=?";
+          
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
@@ -17,15 +19,16 @@ if (
         $_POST['end_date'],
         $_POST['year'],
         $_POST['description'],
+        $_POST['idedition']
 
     ));
     if ($req->rowCount()!=0){
-        $_SESSION ['message'] ['text']= "edition créée avec succès";
+        $_SESSION ['message'] ['text']= "edition modifié avec succès";
         $_SESSION ['message'] ['type']= "success";
 
     }else{
-        $_SESSION ['message'] ['text']= "une erreur s'est produit lors de la création de l'édition";
-        $_SESSION ['message'] ['type']= "danger";
+        $_SESSION ['message'] ['text']= "rien n'a été modifié ";
+        $_SESSION ['message'] ['type']= "warning";
     }
 
 } else{

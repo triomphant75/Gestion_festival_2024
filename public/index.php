@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -21,7 +21,7 @@
   </head>
 <body>
 <?php
-include "../views/PageConnexion.php"
+include "../views/PageInscription.php"
 
 ?>
   

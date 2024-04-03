@@ -1,3 +1,15 @@
+<?php
+include '../cores/connexion.php';
+
+if (isset($_POST['valider'])){
+  if(!empty($_POST['email']) AND !empty($_POST['password'])) {
+
+  }else{
+    $message="veuillez remplir tous les champs";
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,20 +48,26 @@
                 <h6 class="font-weight-light">Connectez-vous pour continuer.</h6>
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Login">
+                    <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Login">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="mot de passe">
+                    <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="mot de passe">
                   </div>
                   <div class="mt-3">
-                    <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="dashboard.php">Connexion</a>
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="valider" href="./dashboard.php">Connexion</a>
                   </div>
-                  <div class="my-2 d-flex justify-content-between align-items-center">
-                    <a href="#" class="auth-link text-black">Mot de passe oublié ?</a>
-                  </div>
-                  <div class="text-center mt-4 font-weight-light"> Vous n'avez pas un compte ? <a href="register.html" class="text-primary">Créer</a>
+                    <p class="text-center">
+                      <i style="color:red">
+                        <?php
+                        if(isset($message)){
+                          echo $message."<br />"; 
+                        }
+                        ?>
+                      </i>
+                    </p>
                   </div>
                 </form>
+
               </div>
             </div>
           </div>

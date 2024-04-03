@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+include_once '../function/EditionFunction.php';
+
+if (!empty($_GET['idedition'])){
+  $edition = getEdition($_GET['idedition']);
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -252,22 +263,49 @@
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-                            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
                             <p class="card-description">Editions Actuelle </p>
+                <form class="forms-sample" method="POST" action="../models/Inscription.php">
+                <div class="form-group">
+                    <label for="start_date">Date debut Inscription</label>
+                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">Date de fin Inscription</label>
+                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
+                </div>
+                <div class="form-group">
+                    <label for="id">Edition</label>
+                    <select name="id" id="id">
+                    <?php
 
-                            <table class="table table-bordered">
+                      $editions = getEdition();
+                      if(!empty($editions) && is_array($editions)){
+                        foreach($editions as $key => $value){
+                        ?>
+                          <option value="<?= $value['idedition']?>"><?= $value['idedition']?></option>
+                        <?php 
+
+                        }
+                      }
+                      ?>
+                    </select>
+                    
+                    <input type="number" class="form-control" name="year" id="year" placeholder="Année">
+                </div>
+                
+                            <!-- <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th> ID </th>
-                                        <th> Date de début de l'édition</th>
-                                        <th> Date de fin de l'édition</th>
-                                        <th> Année de l'édition</th>
-                                        <th> Description</th>
+                                        <th> Date de début d'Inscription</th>
+                                        <th> Date de fin de l'inscription</th>
+                                        
                                     </tr>
-                                </thead>
+                               <!-- </thead>
                                 <tbody>
                                     <tr>
                                         <td> 1 </td>

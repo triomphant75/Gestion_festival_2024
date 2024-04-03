@@ -260,36 +260,44 @@
                         <div class="card-body">
                             <h4 class="card-title">PAGE PARTICIPANT </h4>
                             <p class="card-description"> Ajouter un auteur</p>
-                            <form class="forms-sample">
+                            <form class="forms-sample" action="../models/Auteur.php" method="POST" >
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
+                                    <input type="text" class="form-control" id="login_auteur" placeholder="Login">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
+                                    <input type="text" class="form-control" id="name_auteur" placeholder="Nom">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
+                                    <input type="text" class="form-control" id="prenom_auteur" placeholder="Prenom">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Mot de passe</label>
+                                    <input type="email" class="form-control" id="mdp_auteur" placeholder="Email">
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="start_date">Date Inscription</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <input type="email" class="form-control" id="mail_auteur" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <input type="date" class="form-control" id="date_naissauteur" placeholder="Date">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
+                                    <input type="text" class="form-control" id="telAUteur" placeholder="+33 7 67 34 12 09">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Adresse</label>
+                                    <input type="text" class="form-control" id="AdresseAUteur" placeholder="adresse">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Incription</label>
+                                    <input type="text" class="form-control" id="Inscriptin_auteur" placeholder="">
+                                
                 
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                 <button class="btn btn-light">Annuler</button>

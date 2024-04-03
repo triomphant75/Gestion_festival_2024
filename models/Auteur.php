@@ -1,5 +1,5 @@
 <?php
-include '../cores/connexion.php';
+include "../cores/connexion.php";
 
 if (
 
@@ -35,6 +35,6 @@ if (
 
 
 //redirection vers la vue 
-header('Location: ../views/AjoutEdition.php');
+header('Location: ../views/AjoutAuteur.php');
  
-?>
+

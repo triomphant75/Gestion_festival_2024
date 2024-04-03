@@ -1,6 +1,6 @@
-<?
+<?php
 session_start();
-include_once "../function/EditionFunction.php"
+include_once '../function/EditionFunction.php';
 ?>
 
 <!DOCTYPE html>
@@ -293,6 +293,7 @@ include_once "../function/EditionFunction.php"
                                     <td><?=$value['datefinedition']?></td>
                                     <td><?=$value['anneeedition']?></td>
                                     <td><?=$value['descriptionediton']?></td>
+                                    <td><a href ="AjoutEdition.php?idedition=<?= $value['idedition'] ?>"><ion-icon name="create"></ion-icon><a></td>
                                   </tr>
                                   <?php
                                 }
@@ -337,5 +338,9 @@ include_once "../function/EditionFunction.php"
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

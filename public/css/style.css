@@ -492,3 +492,44 @@ nav .profile-details i {
 .alert.warning{
   background-color: #ffae00;
 }
+
+/* Accueil */ 
+.bg-image {
+  background-image: url('../img/livre-roman.jpg'); /* Remplacez 'background-image.jpg' par le chemin de votre image */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.joyful-font {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Choisissez la police qui vous semble joyeuse */
+  color: #ffff0e;
+}
+
+.btn-auteur:hover {
+  background-color: #c70505; /* Rouge */
+}
+
+.btn-accompagnateur:hover {
+  background-color: #189c18; /* Vert */
+}
+
+.btn-etablissement:hover {
+  background-color: #cf00b4; /* Bleu */
+}
+
+.btn-interprete:hover {
+  background-color: #ffff0e; /* Jaune */
+}
+h2 {
+  color: rgb(255, 255, 255); /* Changez 'blue' à la couleur que vous souhaitez utiliser */
+}
+.text-connexion{
+  color: #ff3e0e;
+  padding: 136px;
+  
+}
+.btn a {
+  color: white; /* Couleur du texte */
+  text-decoration: none; /* Supprimer le soulignement */
+}
