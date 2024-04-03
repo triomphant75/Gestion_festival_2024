@@ -9,6 +9,7 @@ function getEdition($idedition=null){
         $req= $GLOBALS['connexion']->prepare($sql);
 
         $req->execute(array($idedition));
+<<<<<<< HEAD
         return $req->fetch(); // recupère la première valeur qu'il trouve 
     }
     else {
@@ -19,6 +20,18 @@ function getEdition($idedition=null){
 
         //retourne tout le resultat de la requete
         return $req->fetchAll();
+=======
+        return $req->fetch();
+    }
+    else {
+    $sql="SELECT * FROM editions";
+    $req= $GLOBALS['connexion']->prepare($sql);
+
+    $req->execute();
+
+    //retourne tout le resultat de la requete
+    return $req->fetchAll();
+>>>>>>> origin/main
 
 
     }

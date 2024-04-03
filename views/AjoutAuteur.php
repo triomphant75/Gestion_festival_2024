@@ -282,6 +282,14 @@
                                     <label for="exampleInputUsername1">Email</label>
                                     <input type="email" class="form-control" id="mail_auteur" placeholder="Email">
                                 </div>
+<<<<<<< HEAD
+=======
+
+                                <div class="form-group">
+                                    <label for="start_date">Date Inscription</label>
+                                    <input type="date" class="form-control" id="dateInscrAuteur" placeholder="Date">
+                                </div>
+>>>>>>> origin/main
                                 <div class="form-group">
                                     <label for="start_date">Date de Naissance</label>
                                     <input type="date" class="form-control" id="date_naissauteur" placeholder="Date">

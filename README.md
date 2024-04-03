@@ -562,8 +562,17 @@ VALUES
 	l’année d’une édition doit être inférieure ou égale à l’année en cours➜  Statique forte
 	le nombre de participants doit  être positif ➜  Statique forte
 */
+<<<<<<< HEAD
 -----------------------------------------------------PROCEDURE/FONCTION TRIGGER----------------------------------------------------------
 /* Les voeux formulés ne peuvent pas dépasser plus de 3 choix
+=======
+
+
+
+
+-----------------------------------------------------PROCEDURE/FONCTION TRIGGER----------------------------------------------------------
+/*Les voeux formulés ne peuvent pas dépasser plus de 3 choix*/
+>>>>>>> origin/main
 
 CREATE OR REPLACE FUNCTION check_voeux_limit()
 RETURNS TRIGGER AS $$
@@ -591,3 +600,66 @@ CREATE TRIGGER voeux_limit_trigger
 BEFORE INSERT OR UPDATE ON Voeux
 FOR EACH ROW
 EXECUTE FUNCTION check_voeux_limit();
+<<<<<<< HEAD
+=======
+
+
+
+/*un participant ne peut pas s’inscrire plusieurs fois à une édition*/
+
+CREATE OR REPLACE FUNCTION check_enregistrement_participant() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM Etablissement e
+        WHERE e.idetablissement = NEW.idetablissement
+        AND e.idedition = NEW.idedition
+    ) THEN
+        RAISE EXCEPTION 'Un établissement ne peut pas s''inscrire plusieurs fois à un événement.';
+    END IF;
+    RETURN NEW;
+	
+	IF EXISTS (
+        SELECT 1
+        FROM Auteur a
+        WHERE a.idauteur = NEW.idauteur
+        AND a.idedition = NEW.idedition
+    ) THEN
+        RAISE EXCEPTION 'un auteur ne peut pas s''inscrire plusieurs fois à un événement.';
+    END IF;
+    RETURN NEW;
+	
+	
+	IF EXISTS (
+        SELECT 1
+        FROM Accompagnateur ac
+        WHERE ac.idaccompagnateur = NEW.idaccompagnateur
+        AND ac.idedition = NEW.idedition
+    ) THEN
+        RAISE EXCEPTION 'Un accompagnateur ne peut pas s''inscrire plusieurs fois à un événement.';
+    END IF;
+    RETURN NEW;
+	
+	
+	IF EXISTS (
+        SELECT 1
+        FROM Interprete i
+        WHERE i.idinterprete = NEW.idinterprete
+        AND i.idedition = NEW.idedition
+    ) THEN
+        RAISE EXCEPTION 'Un interprète ne peut pas s''inscrire plusieurs fois à un événement.';
+    END IF;
+    RETURN NEW;
+	
+	
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+-- Création du déclencheur
+CREATE TRIGGER check_duplicate_registration_trigger
+BEFORE INSERT ON Inscription
+FOR EACH ROW EXECUTE FUNCTION check_enregistrement_participant();
+
+>>>>>>> origin/main

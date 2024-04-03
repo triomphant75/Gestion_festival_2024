@@ -2,6 +2,7 @@
 session_start();
 
 include_once '../function/EditionFunction.php';
+<<<<<<< HEAD
 
 if (!empty($_GET['idedition'])){
   $edition = getEdition($_GET['idedition']);
@@ -9,6 +10,10 @@ if (!empty($_GET['idedition'])){
 ?>
 
 
+=======
+?>
+
+>>>>>>> origin/main
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -263,7 +268,11 @@ if (!empty($_GET['idedition'])){
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
+<<<<<<< HEAD
             <div class="col-lg-12 grid-margin stretch-card">
+=======
+                            <div class="col-lg-12 grid-margin stretch-card">
+>>>>>>> origin/main
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
@@ -278,7 +287,11 @@ if (!empty($_GET['idedition'])){
                     <input type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
                 </div>
                 <div class="form-group">
+<<<<<<< HEAD
                     <label for="id">Edition</label>
+=======
+                    <label for="idEdition">Edition</label>
+>>>>>>> origin/main
                     <select name="id" id="id">
                     <?php
 
@@ -286,14 +299,21 @@ if (!empty($_GET['idedition'])){
                       if(!empty($editions) && is_array($editions)){
                         foreach($editions as $key => $value){
                         ?>
+<<<<<<< HEAD
                           <option value="<?= $value['idedition']?>"><?= $value['idedition']?></option>
+=======
+                          <option value="<?= $value['idedition']?>"></option>
+>>>>>>> origin/main
                         <?php 
 
                         }
                       }
                       ?>
                     </select>
+<<<<<<< HEAD
                     
+=======
+>>>>>>> origin/main
                     <input type="number" class="form-control" name="year" id="year" placeholder="Année">
                 </div>
                 

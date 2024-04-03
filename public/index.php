@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
+=======
+!DOCTYPE html>
+>>>>>>> origin/main
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -21,7 +25,11 @@
   </head>
 <body>
 <?php
+<<<<<<< HEAD
 include "../views/PageInscription.php"
+=======
+include "../views/PageConnexion.php"
+>>>>>>> origin/main
 
 ?>
   

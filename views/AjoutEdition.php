@@ -2,7 +2,12 @@
 session_start();
 
 if (!empty($_GET['idedition'])){
+<<<<<<< HEAD
   $editionI = getEdition($_GET['idedition']);
+=======
+  $editionid = getEdition($_GET['idedition']);
+
+>>>>>>> origin/main
 }
 ?>
 
@@ -270,6 +275,7 @@ if (!empty($_GET['idedition'])){
             <form class="forms-sample"  action="<?= !empty($_GET['idedition']) ? "../models/ModifierEdition" : "../models/Edition.php" ?>" method="POST">
                 <div class="form-group">
                     <label for="start_date">Date de début</label>
+<<<<<<< HEAD
                     <input value="<?= !empty($_GET['idedition']) ? $editionI['datedebuteedition'] : "" ?>" type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
                     <input value="<?= !empty($_GET['idedition']) ? $editionI['idedition'] : "" ?>" type="hidden" class="form-control" name="idedition" id="idedition" >
 
@@ -285,6 +291,22 @@ if (!empty($_GET['idedition'])){
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea value="<?= !empty($_GET['idedition']) ? $editionI['descriptionediton']: "" ?>" class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
+=======
+                    <input value="<?= !empty($_GET['idedition']) ? $editionid['datedebuteedition'] : "" ?>" type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
+                    <input value="<?= !empty($_GET['idedition']) ? $editionid['idedition'] : "" ?>" type="hidden" class="form-control" name="id" id="id">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">Date de fin</label>
+                    <input value="<?= !empty($_GET['idedition']) ? $editionid['datefinedition']: "" ?>" type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
+                </div>
+                <div class="form-group">
+                    <label for="year">Année</label>
+                    <input value="<?= !empty($_GET['idedition']) ? $editionid['anneeedition']: "" ?>" type="number" class="form-control" name="year" id="year" placeholder="Année">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea value="<?= !empty($_GET['idedition']) ? $editionid['descriptionediton']: "" ?>" class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
+>>>>>>> origin/main
                 </div>
                 <button type="submit" class="btn btn-primary mr-2">Créer</button>
                 <button class="btn btn-light">Annuler</button>

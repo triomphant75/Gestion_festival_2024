@@ -6,7 +6,11 @@ session_start();
 $host = 'localhost'; // Ou l'adresse IP de votre serveur PostgreSQL
 $dbname = 'SWAAM_FESTILIVRE';
 $username = 'postgres';
+<<<<<<< HEAD
 $password = 'root';
+=======
+$password = '3004';
+>>>>>>> origin/main
 
 try {
     $connexion = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
