@@ -2,19 +2,18 @@
 include '../cores/connexion.php';
 
 if (
-    !empty($_POST['NomInterprete'])
-    && !empty($_POST['PrenomInterprete'])
-    && ! empty($_POST['loginInterprete'])
-    && !empty($_POST['PwdInterprete']) 
-    && !empty($_POST['EmailInterprete'])
-    && !empty($_POST['DateNaisInterprete'])
-    && !empty($_POST['AdresseInterprete'])
-    && !empty($_POST['TelInterprete']) 
+    !empty($_POST['NomEtablissement'])
+    && ! empty($_POST['loginEtablissement'])
+    && ! empty($_POST['loginEtablissement'])
+    && !empty($_POST['PwdEtablissement']) 
+    && !empty($_POST['typeEtablissement'])
+    && !empty($_POST['AdresseEtablissement'])
+    && !empty($_POST['TelEtablissement']) 
     && !empty($_POST['DateIInterprete'])
    
     
 ){
-    $sql = "INSERT INTO interprete (nomaccompagnateur,prenomaccompagnateur,loginaccompagnateur, motdepasseaccompagnateur, emailaccompagnateur,dateinscriptionacommpagnateur, datenaissanceacommpagnateur,adresseaccompagnateur,telacommpagnateur )
+    $sql = "INSERT INTO etablissement (nomaccompagnateur,prenomaccompagnateur,loginaccompagnateur, motdepasseaccompagnateur, emailaccompagnateur,dateinscriptionacommpagnateur, datenaissanceacommpagnateur,adresseaccompagnateur,telacommpagnateur )
             VALUES(?,?,?,?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 

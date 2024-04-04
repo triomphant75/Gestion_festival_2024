@@ -1,17 +1,17 @@
 <?php
 include '../cores/connexion.php';
-function getAccompagnateur($idaccompagnateur=null){
+function getAuteurs($idauteur=null){
 
-    if(!empty($idaccompagnateur)) { 
-        $sql="SELECT * FROM accompagnateur WHERE idaccompagnateur=?";
+    if(!empty($$idauteur)) { 
+        $sql="SELECT * FROM auteur WHERE $idauteur=?";
 
         $req= $GLOBALS['connexion']->prepare($sql);
 
-        $req->execute(array($idaccompagnateur));
+        $req->execute(array($$idauteur));
         return $req->fetch();
     }
     else {
-    $sql="SELECT * FROM accompagnateur";
+    $sql="SELECT * FROM auteur";
     $req= $GLOBALS['connexion']->prepare($sql);
 
     $req->execute();

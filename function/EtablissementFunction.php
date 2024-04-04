@@ -1,20 +1,20 @@
 <?php
 include '../cores/connexion.php';
-function getAccompagnateur($idaccompagnateur=null){
+function getEtablissement($idetablissement=null){
 
-    if(!empty($idaccompagnateur)) { 
-        $sql="SELECT * FROM accompagnateur WHERE idaccompagnateur=?";
+    if(!empty($$idetablissement)) { 
+        $sql="SELECT * FROM etablissement WHERE $idetablissement=?";
 
         $req= $GLOBALS['connexion']->prepare($sql);
 
-        $req->execute(array($idaccompagnateur));
+        $req->execute(array($$idetablissement));
         return $req->fetch();
     }
     else {
-    $sql="SELECT * FROM accompagnateur";
+    $sql="SELECT * FROM idetablissement";
     $req= $GLOBALS['connexion']->prepare($sql);
 
-    $req->execute();
+     $req->execute();
 
     //retourne tout le resultat de la requete
     return $req->fetchAll();

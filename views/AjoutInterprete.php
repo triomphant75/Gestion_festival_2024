@@ -1,3 +1,12 @@
+
+<?php
+include_once '../function/InterpreteFunction.php';
+
+if (!empty($_GET['idinterprete'])){
+  $interprete = getInterprete($_GET['idinterprete']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -261,36 +270,43 @@
                             <h4 class="card-title">PAGE PARTICIPANT </h4>
                             <p class="card-description"> Ajouter un interprete</p>
                             <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
-                                </div>
+                              
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
+                                    <input value="<?=!empty($_GET['idinterprete']) ? $interprete['nominterprete']: "" ?>" type="text" class="form-control" id="NomInterprete" placeholder="Nom">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
+                                    <input value="<?=!empty($_GET['idinterprete']) ? $interprete['prenominterprete']: "" ?>"  type="text" class="form-control" id="prenomInterprete" placeholder="Prenom">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
+                                    <label for="exampleInputUsername1">Login</label>
+                                    <input value="<?=!empty($_GET['idinterprete']) ? $interprete['logininterprete']: "" ?>"    type="text" class="form-control" id="loginInterprete" placeholder="Login">
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="start_date">Date Inscription</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <label for="exampleInputUsername1">Mot de passe</label>
+                                    <input  value="<?=!empty($_GET['idinterprete']) ? $interprete['motdepasseinterprete']: "" ?>"   type="text" class="form-control" id="PwdInterprete" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1"> Email</label>
+                                    <input value="<?=!empty($_GET['idinterprete']) ? $interprete['emailinterprete']: "" ?>"  type="email" class="form-control" id="EmailInterprete" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <input   value="<?=!empty($_GET['idinterprete']) ? $interprete['datenaissanceinterprete']: "" ?>" type="date" class="form-control" id="datenaissanceinterprete" placeholder="Date">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
+                                    <label for="start_date">Adresse</label>
+                                    <input value="<?= (!empty($_GET['idinterprete'])  && isset($interprete['adresseInterprete'])) ? $interprete['adresseInterprete'] :"" ?>"  type="text" class="form-control" id="adresseInterprete" name="adresseInterprete" placeholder="date">
                                 </div>
-                
+    <div class="form-group">
+    <label for="exampleInputUsername1">Téléphone</label>
+    <input value="<?= (!empty($_GET['idinterprete'])  && isset($interprete['telinterprete'])) ? $interprete['telinterprete'] :"" ?>"  type="text" class="form-control" id="telinterprete" name="telinterprete" placeholder="+33 7 67 34 12 09">
+</div>
+                               <div class="form-group">
+    <label for="start_date">Date Inscription</label>
+    <input value="<?= (!empty($_GET['idinterprete']) && isset($interprete['dateinscription'])) ? $interprete['dateinscription'] : "" ?>" type="date" class="form-control" id="datenscription" name="dateinscription" placeholder="Date">
+</div>
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                 <button class="btn btn-light">Annuler</button>
                             </form>
@@ -312,52 +328,44 @@
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
-                                <th>Date Inscription</th>
+                                <th>Login</th>
                                 <th>Date Naissance</th>
+                                <th>Adresse</th>
                                 <th>Téléphone</th>
+                                <th>Date Inscription</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
+                        <?php
+                              $interpretes = getInterprete();
+                              if (!empty($interpretes)&& is_array($interpretes)){
+                                foreach ($interpretes as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idinterprete']?></td>
+                                    <td><?=$value['nominterprete']?></td>
+                                    <td><?=$value['prenominterprete']?></td>
+                                    <td><?=$value['logininterprete']?></td>
+                                    <td><?=$value['emailinterprete']?></td>
+                                    <td><?=$value['motdepasseinterprete']?></td>
+                                    <td><?=$value['datenaissanceinterprete']?></td>
+                                    <td><?=$value['adresseinterprete']?></td>
+                                    <td><?=$value['telinterprete']?></td>
+                                    <td><?=$value['dateinscription']?></td>
+                                    <td><a href ="?idinterprete=<? $value['idinterprete'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
                                         </div>
                                       </div>
                                     </div>                                    
 
-                                    <!-- bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
+                                  
                                 </td>
                             </tr>
                             <!-- Ajoutez d'autres lignes de données au besoin -->
@@ -402,5 +410,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

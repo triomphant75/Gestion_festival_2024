@@ -1,3 +1,10 @@
+
+<?php
+
+include_once '../function/EtablissementFunction.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -259,7 +266,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Listes des Participants </h6>
+                <h6 class="card-title">Listes des Etablissement </h6>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -277,18 +284,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
+                          
+                        <?php
+                              $etablis = getEtablissement();
+                              if (!empty($etablis)&& is_array($etablis)){
+                                foreach ($etablis as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['datedebuteedition']?></td>
+                                    <td><?=$value['datefinedition']?></td>
+                                    <td><?=$value['anneeedition']?></td>
+                                    <td><?=$value['descriptionediton']?></td>
+                                    <td><a href ="?idetablissement=<? $value['idetablissement'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
                         </tbody>
                     </table>
                 </div>

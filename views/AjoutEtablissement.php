@@ -261,13 +261,21 @@
                             <h4 class="card-title">PAGE ETABLISSEMENT </h4>
                             <p class="card-description"> Ajouter un établissement</p>
                             <form class="forms-sample">
+                            <div class="form-group">
+                                    <label for="exampleInputUsername1">Nom Etablissement</label>
+                                    <input type="text" class="form-control" id="NomEtablissement" placeholder="Nom">
+                                </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Mail</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Mail">
+                                    <label for="exampleInputUsername1">Login</label>
+                                    <input type="email" class="form-control" id="LoginEtablissement" placeholder="Mail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Email</label>
+                                    <input type="email" class="form-control" id="emailEtablissement" placeholder="Mail">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">TypEtablissement</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
+                                    <select class="form-control" id="typeEtablissement">
                                         <option>Université</option>
                                         <option>Lycée génréral</option>
                                         <option>Lycée Professionnel</option>
@@ -277,14 +285,12 @@
                                         <option>établissement médico-sociaux</option>
                                         <option>établissement pénitentiaire</option>
                                     </select>
+                                
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
-                                </div>
+                               
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Adresse</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Adresse">
+                                    <input type="text" class="form-control" id="AdreeseEtablissement" placeholder="Adresse">
                                 </div>
 
                                 <div class="form-group">
@@ -292,12 +298,24 @@
                                     <input type="number" class="form-control" id="nbreParticipant" placeholder="participant">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername4">Public</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername4" placeholder="public">
+                                    <label for="exampleInputUsername1">Téléphone</label>
+                                    <input type="text" class="form-control" id="TelEtabissement" placeholder="+33 7 67 34 12 09">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
+                                    <label for="exampleInputUsername4">Public</label>
+                                    <select class="form-control" id="publicEtablissement">
+                                        <option>Jeune</option>
+                                        <option>Jeune Adulte</option>
+                                        <option>Adulte</option>
+                                        <option>Tout Public</option>
+                                        <option>Enfant</option>
+    
+                                    </select>
+                                </div>
+                          
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Date Inscription</label>
+                                    <input type="date" class="form-control" id="DateIEtabissement" placeholder="">
                                 </div>
                 
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>

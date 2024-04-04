@@ -3,20 +3,33 @@ include "../cores/connexion.php";
 
 if (
 
-    !empty($_POST['start_date'])
-    && !empty($_POST['end_date'])
-    && !empty($_POST['year'])
-    && !empty($_POST['description'])
+    !empty($_POST['nomAuteur'])
+    && !empty($_POST['prenomAuteur'])
+    && !empty($_POST['LoginAuteur'])
+    && !empty($_POST['mdpAuteur'])
+    && !empty($_POST['emailAuteur'])
+    && !empty($_POST['datenaisAuteur'])
+    && !empty($_POST['adresseAuteur'])
+    && !empty($_POST['"TelAuteur'])
+    && !empty($_POST['dateIAuteur'])
+   
+
 ){
-    $sql = "INSERT INTO editions (datedebuteedition,datefinedition,anneeedition,descriptionediton )
+    $sql = "INSERT INTO auteur (nomauteur,prénomauteur,loginauteur,motdepasseauteur,emailauteur,datenaissanceauteur,telauteur,adresseauteur,dateinscription )
             VALUES(?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
-        $_POST['start_date'],
-        $_POST['end_date'],
-        $_POST['year'],
-        $_POST['description'],
+    $_POST['nomAuteur'],
+    $_POST['prenomAuteur'],
+    $_POST['year'],
+    $_POST['LoginAuteur'],
+    $POST['mdpAuteur'],
+    $_POST['emailAuteur'],
+    $_POST['datenaisAuteur'],
+    $_POST['adresseAuteur'],
+    $_POST['"TelAuteur'],
+    $_POST['dateIAuteur'],
 
     ));
     if ($req->rowCount()!=0){

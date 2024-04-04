@@ -2,12 +2,10 @@
 <?php
 // A chaque fois qu'on se conecte à une session on appelle la fonction session_start() ( pour gérer l'affichage que l'inteface lié à la BD)
 session_start();
-
 $host = 'localhost'; // Ou l'adresse IP de votre serveur PostgreSQL
 $dbname = 'SWAAM_FESTILIVRE';
 $username = 'postgres';
 $password = '3004';
-
 try {
     $connexion = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
     // Configurer PDO pour afficher les erreurs

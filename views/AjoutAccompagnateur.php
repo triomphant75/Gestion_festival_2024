@@ -261,36 +261,47 @@
                             <h4 class="card-title">PAGE PARTICIPANT </h4>
                             <p class="card-description"> Ajouter un accompagnateur</p>
                             <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
-                                </div>
+      
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
+                                    <input type="text" class="form-control" id="nameAccomp" placeholder="Nom">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
+                                    <input type="text" class="form-control" id="prenAccomp" placeholder="Prenom">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Login</label>
+                                    <input type="text" class="form-control" id="LoginAccomp" placeholder="Login">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Mot de passe</label>
+                                    <input type="text" class="form-control" id="mdp_acomp" placeholder="mot de passe">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="start_date">Date Inscription</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <input type="email" class="form-control" id="emailAccomp" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
+                                    <input type="date" class="form-control" id="datenaissAccomp" placeholder="Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="start_date">Adresse</label>
+                                    <input type="text" class="form-control" id="adresseAccomp" placeholder="Adresse ">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
+                                    <input type="text" class="form-control" id="TeleAccomp" placeholder="+33 7 67 34 12 09">
                                 </div>
-                
+                                
+                                <div class="form-group">
+                                    <label for="start_date">Date Inscription</label>
+                                    <input type="date" class="form-control" id="dateInscrip" placeholder="Date">
+                                </div>
+                                
+                                
+                        
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                 <button class="btn btn-light">Annuler</button>
                             </form>
@@ -312,9 +323,9 @@
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
-                                <th>Date Inscription</th>
                                 <th>Date Naissance</th>
                                 <th>Téléphone</th>
+                                <th>Date Inscription</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
