@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+include_once '../function/AuteurFunction.php';
+
+if (!empty($_GET['nomauteur'])){
+  $edition = getAuteur($_GET['nomauteur']);
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -257,72 +269,79 @@
              <!-- Début de la partie blanche -->
 
              <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">PAGE OEUVRES </h4>
-                            <p class="card-description"> Ajouter une oeuvre</p>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Titre</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Titre">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Auteur</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>Josh</option>
-                                        <option>Senbem </option>
-                                       
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Edition</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Edition">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Public Cible</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Public Cible">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Prix littéraire</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prix littéraire">
-                                </div>
-                                <div class="form-group">
-                                    <label for="year">Année de publication</label>
-                                    <input type="number" class="form-control" id="year" placeholder="Année">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Genre littéraire</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Genre">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Description</label>
-                                    <textarea class="form-control" id="exampleInputUsername1" placeholder="Description"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                                <button class="btn btn-light">Annuler</button>
-                            </form>
-                        </div>
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">PAGE OEUVRES</h4>
+                <p class="card-description">Ajouter une oeuvre</p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Titre</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Titre">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Auteur</label>
+                        <select name="auteur" id="auteur" class="form-control">
+                            <?php
+                            $nomauteurs = getAuteur();
+                            if (!empty($nomauteurs) && is_array($nomauteurs)) {
+                                foreach ($nomauteurs as $key => $value) {
+                            ?>
+                                    <option value="<?= $value['nomauteur'] ?>"><?= $value['nomauteur'] ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Edition</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Edition">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Public Cible</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Public Cible">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Prix littéraire</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prix littéraire">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Année de publication</label>
+                        <input type="number" class="form-control" id="year" placeholder="Année">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Genre littéraire</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Genre">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Description</label>
+                        <textarea class="form-control" id="exampleInputUsername1" placeholder="Description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                    <button class="btn btn-light">Annuler</button>
+                </form>
             </div>
+        </div>
+    </div>
 
     <!-- Datagrid de liste d'œuvres -->
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Listes des Oeuvres </h6>
+                <h6 class="card-title">Listes des Oeuvres</h6>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>titre</th>
-                                <th>auteur</th>
-                                <th>edition</th>
-                                <th>public cible</th>
-                                <th>prix littéraire</th>
-                                <th>année de publication</th>
-                                <th>genre littéraire</th>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Edition</th>
+                                <th>Public Cible</th>
+                                <th>Prix littéraire</th>
+                                <th>Année de publication</th>
+                                <th>Genre littéraire</th>
                                 <th>Description</th>
                                 <th>Action</th>
                             </tr>
@@ -342,28 +361,28 @@
                                 <td>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
+                                        Modifier
                                     </button>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                    <button type="button" class="btn btn-primary">Confirmer</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                      </div>
                                     </div>
 
                                     <!--bouton supprimer -->

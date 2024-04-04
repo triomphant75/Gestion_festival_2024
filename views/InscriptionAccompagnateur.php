@@ -49,11 +49,6 @@ session_start();
                                     <label for="EmailAccompagnateur">Email</label>
                                     <input type="email" name="EmailAccompagnateur"  class="form-control" id="EmailAccompagnateur" placeholder="Email">
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="DateIAccompagnateur">Date Inscription</label>
-                                    <input type="date" name="DateIAccompagnateur"  class="form-control" id="DateIAccompagnateur" placeholder="Date">
-                                </div>
                                 <div class="form-group">
                                     <label for="DateNAccompagnateur">Date de Naissance</label>
                                     <input type="date" name="DateNAccompagnateur" class="form-control" id="DateNAccompagnateur" placeholder="Date">

@@ -7,11 +7,7 @@ if (
     && !empty($_POST['end_date'])
     && !empty($_POST['year'])
     && !empty($_POST['description'])
-<<<<<<< HEAD
     && !empty($_POST['idedition'])
-=======
-    && !empty($_POST['id'])
->>>>>>> origin/main
 ){
     $sql = "UPDATE editions  SET datedebuteedition=?,datefinedition=? ,anneeedition=?,descriptionediton=?,
     WHERE idedition=?";
@@ -23,11 +19,7 @@ if (
         $_POST['end_date'],
         $_POST['year'],
         $_POST['description'],
-<<<<<<< HEAD
         $_POST['idedition']
-=======
-        $_POST['id']
->>>>>>> origin/main
 
     ));
     if ($req->rowCount()!=0){

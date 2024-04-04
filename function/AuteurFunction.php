@@ -1,18 +1,18 @@
 <?php
 include '../cores/connexion.php';
 
-function getEdition($idedition=null){
+function getAuteur($nomauteur=null){
 
-    if(!empty($idedition)) { 
-        $sql="SELECT * FROM editions WHERE idedition=?";
+    if(!empty($nomauteur)) { 
+        $sql="SELECT * FROM auteur WHERE nomauteur=?";
 
         $req= $GLOBALS['connexion']->prepare($sql);
 
-        $req->execute(array($idedition));
+        $req->execute(array($nomauteur));
         return $req->fetch(); // recupère la première valeur qu'il trouve 
     }
     else {
-        $sql="SELECT * FROM editions";
+        $sql="SELECT * FROM auteur";
         $req= $GLOBALS['connexion']->prepare($sql);
 
         $req->execute();

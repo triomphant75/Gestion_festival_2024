@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,9 +40,9 @@
                                 <div class="form-group" >
                                     <label for="TypeEtablissement">TypEtablissement</label>
                                     <select class="form-control" name="TypeEtablissement" id="TypeEtablissement">
-                                        <option>Université</option>
-                                        <option>Lycée génréral</option>
-                                        <option>Lycée Professionnel</option>
+                                        <option>université</option>
+                                        <option>lycée général</option>
+                                        <option>lycée professionnel</option>
                                         <option>collège</option>
                                         <option>école primaire</option>
                                         <option>maternelle</option>
@@ -63,6 +67,10 @@
                                 <div class="form-group">
                                     <label for="telEtablissement">Téléphone</label>
                                     <input type="text" name="telEtablissement" class="form-control" id="telEtablissement" placeholder="+33 7 67 34 12 09">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwdEtablissement">Mot de passe</label>
+                                    <input type="password" name="pwdEtablissement" class="form-control" id="pwdEtablissement" >
                                 </div>
                 
                                 <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>

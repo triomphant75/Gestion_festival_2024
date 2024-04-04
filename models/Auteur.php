@@ -20,11 +20,11 @@ if (
 
     ));
     if ($req->rowCount()!=0){
-        $_SESSION ['message'] ['text']= "edition créée avec succès";
+        $_SESSION ['message'] ['text']= "auteur créée avec succès";
         $_SESSION ['message'] ['type']= "success";
 
     }else{
-        $_SESSION ['message'] ['text']= "une erreur s'est produit lors de la création de l'édition";
+        $_SESSION ['message'] ['text']= "une erreur s'est produit lors de la création de l'auteur";
         $_SESSION ['message'] ['type']= "danger";
     }
 

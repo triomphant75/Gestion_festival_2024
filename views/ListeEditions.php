@@ -293,11 +293,7 @@ include_once '../function/EditionFunction.php';
                                     <td><?=$value['datefinedition']?></td>
                                     <td><?=$value['anneeedition']?></td>
                                     <td><?=$value['descriptionediton']?></td>
-<<<<<<< HEAD
                                     <td><a href ="AjoutEdition.php?idedition=<?= $value['idedition'] ?>"><ion-icon name="create"></ion-icon><a></td>
-=======
-                                    <td><a href ="?idedition=<? $value['idedition'] ?>"><ion-icon name="create"></ion-icon></<a></td>
->>>>>>> origin/main
                                   </tr>
                                   <?php
                                 }
