@@ -202,6 +202,7 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+
                 </ul>
               </div>
             </li>
@@ -221,7 +222,6 @@
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
-
                 </ul>
               </div>
             </li>
@@ -254,55 +254,90 @@
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">BIENVENUE SUR LA PAGE VOEUX</h4>       
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">BIENVENUE SUR LA PAGE VOEUX</h4>
+            <p class="card-description">Lancement de la période de voeux </p>
 
-                        <!-- Datagrid de liste d'œuvres -->
-                        <h6 class="card-title">Listes des oeuvres </h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>titre</th>
-                                        <th>auteur</th>
-                                        <th>edition</th>
-                                        <th>public cible</th>
-                                        <th>prix littéraire</th>
-                                        <th>année de publication</th>
-                                        <th>genre littéraire</th>
-                                        <th>Description</th>
-                                        <th>Action</th> <!-- Nouvelle colonne pour les cases à cocher -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Lignes de données de la liste d'œuvres -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>L'avare</td>
-                                        <td>Molière</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm selectWork">Sélectionner</button></td> <!-- Bouton pour sélectionner l'œuvre -->
-                                    </tr>
-                                    <!-- Ajoutez d'autres lignes de données au besoin -->
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Boutons "Confirmer" et "Annuler" -->
-                        <div class="text-center mt-3">
-                            <button class="btn btn-success btn-lg px-4">Envoyer</button>
-                            <button class="btn btn-secondary btn-lg px-4 ml-3">Annuler</button> <!-- Bouton "Annuler" -->
-                        </div>
-                    </div>
+            <!-- Période avec Date de Départ et Date de Fin -->
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Période:</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="startDate" placeholder="Date de Départ">
+                </div>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="endDate" placeholder="Date de Fin">
                 </div>
             </div>
+
+            <!-- Datagrid de liste d'œuvres -->
+            <h6 class="card-title">Listes des voeux</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Edition</th>
+                            <th>Oeuvre</th>
+                            <th>Referent</th>
+                            <th>Date Envoie</th>
+                            <th>Priorité Voeux</th>
+                            <th>Etat Voeux</th>
+                            <th>Action</th> <!-- Nouvelle colonne pour les cases à cocher -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Lignes de données de la liste d'œuvres -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button type="button" class="btn btn-primary btn-sm selectWork">Sélectionner</button></td> <!-- Bouton pour sélectionner l'œuvre -->
+                        </tr>
+                          <!-- Lignes de données de la liste d'œuvres -->
+                             <!-- Lignes de données de la liste d'œuvres -->
+                             <?php
+                              $auteur = getAuteurs();
+                              if (!empty($auteur)&& is_array($auteur)){
+                                foreach ($auteur as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idauteur']?></td>
+                                    <td><?=$value['nomauteur']?></td>
+                                    <td><?=$value['prénomauteur']?></td>
+                                    <td><?=$value['loginauteur']?></td>
+                                    <td><?=$value['motdepasseauteur']?></td>
+                                    <td><?=$value['emailauteur']?></td>
+                                    <td><?=$value['datenaissanceauteur']?></td>
+                                    <td><?=$value['telauteur']?></td>
+                                    <td><?=$value['adresseauteur']?></td>
+                                    <td><?=$value['dateinscriptionauteur']?></td>
+                                    <td><a href ="?idauteur=<? $value['idauteur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?> 
+                        <!-- Ajoutez d'autres lignes de données au besoin -->
+                    </tbody>
+                </table>
+            </div>
+
+            
+
+            <!-- Bouton "Confirmer" -->
+            <div class="text-center mt-3">
+                <button class="btn btn-primary btn-lg px-4">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
