@@ -52,6 +52,10 @@ session_start();
                                     <input type="email" name="EmailAuteur" class="form-control" id="EmailAuteur" placeholder="Email">
                                 </div>
                                 <div class="form-group">
+                                    <label for="DateIAuteur">Date Inscription</label>
+                                    <input type="date" name="DateIAuteur"  class="form-control" id="DateIAuteur" placeholder="Date">
+                                </div>
+                                <div class="form-group">
                                     <label for="DateNAuteur">Date de Naissance</label>
                                     <input type="date" name="DateNAuteur"  class="form-control" id="DateNAuteur" placeholder="Date">
                                 </div>

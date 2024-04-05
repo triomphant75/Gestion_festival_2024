@@ -11,9 +11,10 @@ if (
     && !empty($_POST['DateNAuteur'])
     && !empty($_POST['TelAuteur'])
     && !empty($_POST['AdresseAuteur'])
+    && !empty($_POST['DateIAuteur'])
 ){
-    $sql = "INSERT INTO auteur (nomauteur,prénomauteur,loginauteur, motdepasseauteur, emailauteur , datenaissanceauteur, telauteur, adresseauteur  )
-            VALUES(?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO auteur (nomauteur,prénomauteur,loginauteur, motdepasseauteur, emailauteur , datenaissanceauteur, telauteur, adresseauteur, dateinscriptionauteur  )
+            VALUES(?,?,?,?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
@@ -24,7 +25,8 @@ if (
         $_POST['EmailAuteur'],
         $_POST['DateNAuteur'],
         $_POST['TelAuteur'],
-        $_POST['AdresseAuteur']
+        $_POST['AdresseAuteur'],
+        $_POST['DateIAuteur']
 
     ));
     if ($req->rowCount()!=0){

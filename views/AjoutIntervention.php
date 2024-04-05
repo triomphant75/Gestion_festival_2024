@@ -159,8 +159,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">

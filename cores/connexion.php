@@ -1,10 +1,10 @@
 
 <?php
 // A chaque fois qu'on se conecte à une session on appelle la fonction session_start() ( pour gérer l'affichage que l'inteface lié à la BD)
-session_start();
+//session_start();
 
 $host = 'localhost'; // Ou l'adresse IP de votre serveur PostgreSQL
-$dbname = 'SWAAM_FESTILIVRE';
+$dbname = 'SWAAM_FESTILIVRE_F';
 $username = 'postgres';
 $password = 'root';
 

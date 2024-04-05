@@ -34,6 +34,10 @@ session_start();
                             <p class="card-description">Créer votre compte</p>
                             <form class="forms-sample" action="../models/ModelInscritpitionEtablissement.php" method="POST">
                                 <div class="form-group">
+                                    <label for="LoginEtablissement">Login</label>
+                                    <input type="text" name="LoginEtablissement" class="form-control" id="LoginEtablissement" placeholder="Login">
+                                </div>
+                                <div class="form-group">
                                     <label for="mailEtablissement">Mail</label>
                                     <input type="email" name="mailEtablissement" class="form-control" id="mailEtablissement" placeholder="Mail">
                                 </div>
@@ -58,10 +62,18 @@ session_start();
                                     <label for="AdresseEtablissement">Adresse</label>
                                     <input type="text" name="AdresseEtablissement" class="form-control" id="AdresseEtablissement" placeholder="Adresse">
                                 </div>
+                                <div class="form-group">
+                                    <label for="DateIEtablissement">Date Inscription</label>
+                                    <input type="date" name="DateIEtablissement"  class="form-control" id="DateIEtablissement" placeholder="Date">
+                                </div>
 
                                 <div class="form-group">
-                                    <label for="NbreEtablissement">Nombre de participants</label>
+                                    <label for="NbreEtablissement">Nombre de participant</label>
                                     <input type="number" name="NbreEtablissement" class="form-control" id="NbreEtablissement" placeholder="participant">
+                                </div>
+                                <div class="form-group">
+                                    <label for="PublicEtablissement">Le public</label>
+                                    <input type="text" name="PublicEtablissement" class="form-control" id="PublicEtablissement" placeholder="le public">
                                 </div>
                                 
                                 <div class="form-group">

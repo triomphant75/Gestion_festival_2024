@@ -1,3 +1,9 @@
+
+<?php
+session_start();
+include_once '../function/OeuvreFunction.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +165,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -186,8 +192,8 @@
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
 
                 </ul>
               </div>
@@ -200,8 +206,8 @@
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutParticipant.php">Ajouter oeuvre</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeParticipant.php"> Liste des oeuvres</a></li>
 
                 </ul>
               </div>
@@ -214,7 +220,7 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
+                <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
@@ -222,7 +228,6 @@
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
-
                 </ul>
               </div>
             </li>
@@ -252,54 +257,74 @@
         </nav>
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
-             <!-- Début de la partie blanche -->
-             <!-- Datagrid de liste d'œuvres -->
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Oeuvres </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>titre</th>
-                                <th>auteur</th>
-                                <th>edition</th>
-                                <th>public cible</th>
-                                <th>prix littéraire</th>
-                                <th>année de publication</th>
-                                <th>genre littéraire</th>
-                                <th>Description</th>
-                              
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
+        <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Listes des Oeuvres</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>titre</th>
+                                        <th>edition</th>
+                                        <th>public cible</th>
+                                        <th>prix littéraire</th>
+                                        <th>année de publication</th>
+                                        <th>genre littéraire</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Lignes de données de la liste d'œuvres -->
+                                    <?php
+                                        $oeuvres = getOeuvre();
+                                        if (!empty($oeuvres) && is_array($oeuvres)){
+                                            foreach ($oeuvres as $value){    
+                                    ?>
+                                    <tr>
+                                        <td><?=$value['titre']?></td>
+                                        <td><?=$value['editionoeuvre']?></td>
+                                        <td><?=$value['publiccible']?></td>
+                                        <td><?=$value['prixlitteraire']?></td>
+                                        <td><?=$value['anneepublication']?></td>
+                                        <td><?=$value['genrelitteraire']?></td>
+                                        <td><?=$value['descriptionoeuvre']?></td>                                 
+                                        <td>
+                                            <a href="AjoutOeuvre.php?idoeuvre=<?= $value['idoeuvre'] ?>">
+                                                <ion-icon name="create"></ion-icon>
+                                            </a>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                Modifier
+                                            </button>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Votre contenu du formulaire de modification -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-              <!-- fin de la partie blanche -->
-            
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->

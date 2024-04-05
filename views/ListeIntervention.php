@@ -1,3 +1,9 @@
+
+<?php
+session_start();
+include_once '../function/InterventionFunction.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +165,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -256,76 +262,64 @@
              <!-- Début de la partie blanche -->
 
              <!-- Datagrid de liste d'œuvres -->
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Interventions </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+             <div class="col-md-12 grid-margin stretch-card">
+             <div class="card">
+    <div class="card-body">
+        <h6 class="card-title">Listes des Interventions </h6>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Durée intervention</th>
+                        <th>Date de début</th>
+                        <th>Date fin</th>
+                        <th>Lieu intervention</th>
+                        <th>Etat de l'intervention</th>
+                        <th>Etablissement</th>
+                        <th>Auteur</th>
+                        <th>Accompagnateur</th>
+                        <th>Interprète</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $interventions = getIntervention();
+                    if (!empty($interventions) && is_array($interventions)) {
+                        foreach ($interventions as $key => $value) {
+                    ?>
                             <tr>
-                                <th>ID</th>
-                                <th>Durée</th>
-                                <th>Date de début</th>
-                                <th>Date de fin</th>
-                                <th>Etat de l'intervention</th>
-                                <th>Auteur </th>
-                                <th>Accompagnateur</th>
-                                <th>Interprete</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
+                                <td><?= $value['dureeintervention'] ?></td>
+                                <td><?= $value['datedebutintervention'] ?></td>
+                                <td><?= $value['datefinintervention'] ?></td>
+                                <td><?= $value['lieuintervention'] ?></td>
+                                <td><?= $value['etatintervention'] ?></td>
+                                <td><?= $value['idetablissement'] ?></td>
+                                <td><?= $value['idauteur'] ?></td>
+                                <td><?= $value['idaccompagnateur'] ?></td>
+                                <td><?= $value['idinterprete'] ?></td>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
+                                  <!-- Bouton modifier -->
+                                  <button type="button" class="btn btn-success btn-sm selectWork">
+                                      <a href="?idintervention=<?= $value['idintervention'] ?>">Modifier</a>
+                                  </button>
+                              </td>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une intervention</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                </td>
                             </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
+</div>
 
 
-              <!-- fin de la partie blanche -->
-            
-          </div>
+</div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
           <footer class="footer">

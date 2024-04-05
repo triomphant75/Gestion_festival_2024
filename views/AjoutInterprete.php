@@ -1,3 +1,12 @@
+
+<?php
+include_once '../function/InterpreteFunction.php';
+
+if (!empty($_GET['idinterprete'])){
+  $interprete = getInterprete($_GET['idinterprete']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +168,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -255,114 +264,120 @@
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="row">
-                <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">PAGE PARTICIPANT </h4>
-                            <p class="card-description"> Ajouter un interprete</p>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
-                                </div>
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12 grid-margin stretch-card">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h4 class="card-title">INSCRIPTION</h4>
+                                  <p class="card-description">Créer votre compte</p>
+                                  <form class="forms-sample" action="../models/ModelinscriptionInterprete.php" method="POST">
+                                      <div class="form-group">
+                                          <label for="loginInterprete">Login</label>
+                                          <input type="text" name="loginInterprete" class="form-control" id="loginInterprete" placeholder="Login">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="NomInterprete">Nom</label>
+                                          <input type="text" name="NomInterprete" class="form-control" id="NomInterprete" placeholder="Nom">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="PrenomInterprete">Prenom</label>
+                                          <input type="text" name="PrenomInterprete" class="form-control" id="PrenomInterprete" placeholder="Prenom">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="EmailIntreprete">Email</label>
+                                          <input type="email" name="EmailIntreprete" class="form-control" id="EmailIntreprete" placeholder="Email">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="DateIInterprete">Date Inscription</label>
+                                          <input type="date" name="DateIInterprete" class="form-control" id="DateIInterprete" placeholder="Date">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="DateNInterprete">Date de Naissance</label>
+                                          <input type="date" name="DateNInterprete" class="form-control" id="DateNInterprete" placeholder="Date">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="TelInterprete">Téléphone</label>
+                                          <input type="text" name="TelInterprete" class="form-control" id="TelInterprete" placeholder="+33 7 67 34 12 09">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="AdresseInterprete">Adresse</label>
+                                          <input type="text" name="AdresseInterprete" class="form-control" id="AdresseInterprete" placeholder="adresse">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="PwdInterprete">Mot de passe</label>
+                                          <input type="password" name="PwdInterprete" class="form-control" id="PwdInterprete">
+                                      </div>
+                                      <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                                      <button class="btn btn-light">Annuler</button>
 
-                                <div class="form-group">
-                                    <label for="start_date">Date Inscription</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
-                                </div>
-                
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                                <button class="btn btn-light">Annuler</button>
-                            </form>
+                                      <?php
+                                      //si le message d'alert n'est pas vide 
+                                      if(!empty($_SESSION['message']['text'])){
+                                          //affiche
+                                      ?>
+                                      <div class="alert <?=$_SESSION['message']['type']?>">
+                                          <?=$_SESSION['message']['text']?>
+                                      </div>
+                                      <?php
+                                      }  
+                                      ?>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+            <!-- Datagrid de liste des participants -->
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Listes des interpretes</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Login</th>
+                                        <th>Nom</th>
+                                        <th>Prenom</th>
+                                        <th>Email</th>
+                                        <th>Login</th>
+                                        <th>Date Naissance</th>
+                                        <th>Adresse</th>
+                                        <th>Téléphone</th>
+                                        <th>Date Inscription</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $interpretes = getInterprete();
+                                    if (!empty($interpretes) && is_array($interpretes)){
+                                        foreach ($interpretes as $key => $value){    
+                                    ?>
+                                    <tr>
+                                        <td><?=$value['idinterprete']?></td>
+                                        <td><?=$value['nominterprete']?></td>
+                                        <td><?=$value['prenominterprete']?></td>
+                                        <td><?=$value['logininterprete']?></td>
+                                        <td><?=$value['emailinterprete']?></td>
+                                        <td><?=$value['motdepasseinterprete']?></td>
+                                        <td><?=$value['datenaissanceinterprete']?></td>
+                                        <td><?=$value['adresseinterprete']?></td>
+                                        <td><?=$value['telinterprete']?></td>
+                                        <td><?=$value['dateinscription']?></td>
+                                        <td><a href ="?idinterprete=<?=$value['idinterprete']?>"><ion-icon name="create"></ion-icon></a></td>
+                                    </tr>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-            </div>
-
-    <!-- Datagrid de liste des participants -->
-    <div class="col-md-8 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des interpretes </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Login</th>
-                                <th>Nom</th>
-                                <th>Prenom</th>
-                                <th>Email</th>
-                                <th>Date Inscription</th>
-                                <th>Date Naissance</th>
-                                <th>Téléphone</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>                                    
-
-                                    <!-- bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                </td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -402,5 +417,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

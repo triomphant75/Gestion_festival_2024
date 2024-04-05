@@ -10,11 +10,12 @@ if (
     && !empty($_POST['DateNAccompagnateur'])
     && !empty($_POST['AdresseAccompagnateur'])
     && !empty($_POST['TelAccompagnateur']) 
+    && !empty($_POST['DateIAccompagnateur'])
    
     
 ){
-    $sql = "INSERT INTO accompagnateur (nomaccompagnateur,prenomaccompagnateur,loginaccompagnateur, motdepasseaccompagnateur, emailaccompagnateur, datenaissanceacommpagnateur,adresseaccompagnateur,telacommpagnateur )
-            VALUES(?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO accompagnateur (nomaccompagnateur,prenomaccompagnateur,loginaccompagnateur, motdepasseaccompagnateur, emailaccompagnateur,datenaissanceacommpagnateur,adresseaccompagnateur,telacommpagnateur, dateinscriptionaccompagnateur )
+            VALUES(?,?,?,?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
@@ -26,6 +27,7 @@ if (
         $_POST['DateNAccompagnateur'],
         $_POST['AdresseAccompagnateur'],
         $_POST['TelAccompagnateur'],
+        $_POST['DateIAccompagnateur']
        
        
 

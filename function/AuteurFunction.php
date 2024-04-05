@@ -8,8 +8,8 @@ function getAuteur($nomauteur=null){
 
         $req= $GLOBALS['connexion']->prepare($sql);
 
-        $req->execute(array($nomauteur));
-        return $req->fetch(); // recupère la première valeur qu'il trouve 
+        $req->execute(array($nomauteur)); // Utiliser $nomauteur comme paramètre de la requête
+        return $req->fetch();
     }
     else {
         $sql="SELECT * FROM auteur";
@@ -19,8 +19,8 @@ function getAuteur($nomauteur=null){
 
         //retourne tout le resultat de la requete
         return $req->fetchAll();
-
-
     }
 }
+
+
 ?>

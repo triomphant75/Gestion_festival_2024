@@ -1,7 +1,3 @@
-<?php
-session_start();
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +37,7 @@ session_start();
                 <h6 class="font-weight-light">Connectez-vous pour continuer.</h6>
                 <form class="pt-3" action="../models/ModelConnexion.php" method="POST">
                   <div class="form-group">
-                    <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Login">
+                  <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
                   </div>
                   <div class="form-group">
                     <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="mot de passe">
@@ -49,7 +45,6 @@ session_start();
                   <div class="mt-3">
                   <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="valider" >Connexion</button>
                   </div>
-                    
                   </div>
                   <?php
                     //si le message d'alert n'est pas vide 

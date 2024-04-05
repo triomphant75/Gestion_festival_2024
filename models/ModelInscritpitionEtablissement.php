@@ -4,26 +4,37 @@ include '../cores/connexion.php';
 if (
 
     !empty($_POST['mailEtablissement'])
+    && !empty($_POST['LoginEtablissement'])
+    && !empty($_POST['pwdEtablissement'])
     && !empty($_POST['TypeEtablissement'])
     && !empty($_POST['NomEtablissement'])
     && !empty($_POST['AdresseEtablissement'])
-    && !empty($_POST['pwdEtablissement'])
     && !empty($_POST['NbreEtablissement'])
     && !empty($_POST['telEtablissement'])
+    && !empty($_POST['PublicEtablissement'])
+    && !empty($_POST['DateIEtablissement'])
+
+
+
+  
+
+
 ){
-    $sql = "INSERT INTO etablissement (emailetablissement,typeetablissement,nometablissement,adresseetablissement,motdeetablissement, nombreparticipant, teletablissement )
-            VALUES(?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO etablissement (emailetablissement, loginetablissement, motdepasseetablissement, typeetablissement, nometablissement, adresseetablissement, nombreparticipant, teletablissement,lepublic, dateinscriptionetablissement  )
+            VALUES(?,?,?,?,?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
         $_POST['mailEtablissement'],
+        $_POST['LoginEtablissement'],
+        $_POST['pwdEtablissement'],
         $_POST['TypeEtablissement'],
         $_POST['NomEtablissement'],
         $_POST['AdresseEtablissement'],
-        $_POST['pwdEtablissement'],
         $_POST['NbreEtablissement'],
         $_POST['telEtablissement'],
-
+        $_POST['PublicEtablissement'],
+        $_POST['DateIEtablissement']
     ));
     if ($req->rowCount()!=0){
         $_SESSION ['message'] ['text']= "etablissement créée avec succès";

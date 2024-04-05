@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once '../function/AuteurFunction.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +164,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -265,28 +270,50 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Login</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
+                                <th>Login</th>
+                                <th>mot de passe</th>
                                 <th>Email</th>
-                                <th>Date Inscription</th>
                                 <th>Date Naissance</th>
+                                <th>adresse auteur</th>
+                                <th>Desistement</th>
+                                <th>id inscription</th>
+                                <th>Date Inscription</th>
+                                
                                 <th>Téléphone</th>
                               
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                            </tr>
+                            <?php
+                              $auteur = getAuteur();
+                              if (!empty($auteur)&& is_array($auteur)){
+                                foreach ($auteur as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idauteur']?></td>
+                                    <td><?=$value['nomauteur']?></td>
+                                    <td><?=$value['prénomauteur']?></td>
+                                    <td><?=$value['loginauteur']?></td>
+                                    <td><?=$value['motdepasseauteur']?></td>
+                                    <td><?=$value['emailauteur']?></td>
+
+                                    <td><?=$value['datenaissanceauteur']?></td>
+                                    <td><?=$value['adresseauteur']?></td>
+                                    <td><?=$value['desistement']?></td>
+                                    <td><?=$value['idinscription']?></td>
+                                    <td><?=$value['dateinscription']?></td>
+                                    <td><?=$value['telephone']?></td>
+                                    
+                                    
+                                    <td><a href ="?idauteur=<? $value['idauteur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
                             <!-- Ajoutez d'autres lignes de données au besoin -->
                         </tbody>
                     </table>

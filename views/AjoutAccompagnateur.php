@@ -1,3 +1,15 @@
+<?php
+session_start();
+// Vérifiez si la variable de session $role est définie
+if(isset($_SESSION['role'])) {
+  $role = $_SESSION['role'];
+} else {
+  // Définissez un rôle par défaut si la variable de session n'est pas définie
+  $role = 'Non défini';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,7 +171,10 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+
+                  
                 </ul>
               </div>
             </li>
@@ -214,13 +229,15 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php if($role != 'Auteur') { ?>
+                 <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                 <?php } ?>
+                 <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                 <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>
@@ -255,118 +272,140 @@
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="row">
-                <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">PAGE PARTICIPANT </h4>
-                            <p class="card-description"> Ajouter un accompagnateur</p>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Login">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prenom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Email">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="start_date">Date Inscription</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="start_date" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
-                                </div>
-                
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                                <button class="btn btn-light">Annuler</button>
-                            </form>
-                        </div>
-                    </div>
-            </div>
-
-    <!-- Datagrid de liste des participants -->
-    <div class="col-md-8 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Accompagnateur </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Login</th>
-                                <th>Nom</th>
-                                <th>Prenom</th>
-                                <th>Email</th>
-                                <th>Date Inscription</th>
-                                <th>Date Naissance</th>
-                                <th>Téléphone</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-md-12 grid-margin stretch-card">
+                                          <div class="card">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">INSCRIPTION</h4>
+                                                  <p class="card-description">Créer votre compte</p>
+                                                  <form class="forms-sample" action="../models/ModelInscriptionAccompagnateur.php" method="POST">
+                                                      <div class="form-group">
+                                                          <label for="loginAccompagnateur">Login</label>
+                                                          <input type="text" name="loginAccompagnateur" class="form-control" id="loginAccompagnateur" placeholder="Login">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="NomAccompagnateur">Nom</label>
+                                                          <input type="text" name="NomAccompagnateur" class="form-control" id="NomAccompagnateur" placeholder="Nom">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="PrenomAccompagnateur">Prenom</label>
+                                                          <input type="text" name="PrenomAccompagnateur" class="form-control" id="PrenomAccompagnateur" placeholder="Prenom">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="EmailAccompagnateur">Email</label>
+                                                          <input type="email" name="EmailAccompagnateur"  class="form-control" id="EmailAccompagnateur" placeholder="Email">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="DateIAccompagnateur">Date Inscription</label>
+                                                          <input type="date" name="DateIAccompagnateur"  class="form-control" id="DateIAccompagnateur" placeholder="Date">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="DateNAccompagnateur">Date de Naissance</label>
+                                                          <input type="date" name="DateNAccompagnateur" class="form-control" id="DateNAccompagnateur" placeholder="Date">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="TelAccompagnateur">Téléphone</label>
+                                                          <input type="text" name="TelAccompagnateur" class="form-control" id="TelAccompagnateur" placeholder="+33 7 67 34 12 09">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="AdresseAccompagnateur">Adresse</label>
+                                                          <input type="text" name="AdresseAccompagnateur" class="form-control" id="AdresseAccompagnateur" placeholder="Adresse">
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="PwdAccompagnateur">Mot de passe </label>
+                                                          <input type="password" name="PwdAccompagnateur" class="form-control" id="PwdAccompagnateur">
+                                                      </div>
+                                                      <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                                                      <button class="btn btn-light">Annuler</button>
+                                                      <?php
+                                                      //si le message d'alert n'est pas vide 
+                                                      if(!empty($_SESSION['message']['text'])){
+                                                      //affiche
+                                                      ?>
+                                                      <div class="alert <?=$_SESSION['message']['type']?>">
+                                                          <?=$_SESSION['message']['text']?>
+                                                      </div>
+                                                      <?php
+                                                      }
+                                                      ?>
+                                                  </form>
+                                              </div>
                                           </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
-                                        </div>
                                       </div>
-                                    </div>                                    
+                                  </div>
+                              </div>
+                          </div>
 
-                                    <!-- bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                </td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
+                          <div class="col-md-12 grid-margin stretch-card">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <h6 class="card-title">Listes des Accompagnateurs</h6>
+                                      <div class="table-responsive">
+                                          <table class="table table-bordered">
+                                              <thead>
+                                                  <tr>
+                                                      <th>ID</th>
+                                                      <th>Login</th>
+                                                      <th>Nom</th>
+                                                      <th>Prenom</th>
+                                                      <th>Email</th>
+                                                      <th>Date Inscription</th>
+                                                      <th>Date Naissance</th>
+                                                      <th>Téléphone</th>
+                                                      <th>Action</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <!-- Lignes de données de la liste des accompagnateurs -->
+                                                  <tr>
+                                                      <td>1</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>XXXXXX</td>
+                                                      <td>
+                                                          <!-- Button trigger modal -->
+                                                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                              Modifier
+                                                          </button>
+
+                                                          <!-- Modal -->
+                                                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                              <div class="modal-dialog">
+                                                                  <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                          <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
+                                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                              <span aria-hidden="true">&times;</span>
+                                                                          </button>
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                          ...
+                                                                      </div>
+                                                                      <div class="modal-footer">
+                                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                          <button type="button" class="btn btn-primary">Confirmer</button>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                          <!-- bouton supprimer -->
+                                                          <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
+                                                      </td>
+                                                  </tr>
+                                                  <!-- Ajoutez d'autres lignes de données au besoin -->
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+</div>
 </div>
 
 

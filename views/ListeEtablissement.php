@@ -1,3 +1,10 @@
+
+<?php
+
+include_once '../function/EtablissementFunction.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +166,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -254,49 +261,53 @@
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-
-             <!-- Datagrid de liste des participants -->
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Participants </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Mail</th>
-                                <th>TypeEtablissement</th>
-                                <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Nombre Participants</th>
-                                <th>Public</th>
-                                <th>Téléphone</th>
-                               
-                              
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
-                </div>
+             <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Listes des Etablissement </h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mail</th>
+                            <th>Type Etablissement</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Adresse</th>
+                            <th>Nombre Participants</th>
+                            <th>Public</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $etablis = getEtablissement();
+                        if (!empty($etablis) && is_array($etablis)) {
+                            foreach ($etablis as $key => $value) {
+                        ?>
+                                <tr>
+                                    <td><?= $value['emailetablissement'] ?></td>
+                                    <td><?= $value['typeetablissement'] ?></td>
+                                    <td><?= $value['nometablissement'] ?></td>
+                                    <td><?= $value['dateinscriptionetablissement'] ?></td>
+                                    <td><?= $value['adresseetablissement'] ?></td>
+                                    <td><?= $value['nombreparticipant'] ?></td>
+                                    <td><?= $value['lepublic'] ?></td>
+                                    <td><?= $value['teletablissement'] ?></td>
+                                </tr>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
 
+           
               <!-- fin de la partie blanche -->
             
           </div>

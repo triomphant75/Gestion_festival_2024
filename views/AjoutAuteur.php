@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// récupération les rôles de l'utilisateur après une connexion réussie
+$rolesUtilisateur = array('emailauteur', 'emailaccompagnateur', 'emailinterprete', 'emailetablissement','emailadmin'); // À remplacer par les rôles réels récupérés
+
+// On stock les rôles de l'utilisateur dans la session
+$_SESSION['roles'] = $rolesUtilisateur;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +170,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -214,13 +225,13 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li><?php endif; ?>
+                 <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                 <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>
@@ -254,128 +265,141 @@
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-             <div class="row">
-                <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">PAGE PARTICIPANT </h4>
-                            <p class="card-description"> Ajouter un auteur</p>
-                            <form class="forms-sample" action="../models/Auteur.php" method="POST" >
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Login</label>
-                                    <input type="text" class="form-control" id="login_auteur" placeholder="Login">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="name_auteur" placeholder="Nom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Prenom</label>
-                                    <input type="text" class="form-control" id="prenom_auteur" placeholder="Prenom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Mot de passe</label>
-                                    <input type="email" class="form-control" id="mdp_auteur" placeholder="Email">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Email</label>
-                                    <input type="email" class="form-control" id="mail_auteur" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="start_date">Date de Naissance</label>
-                                    <input type="date" class="form-control" id="date_naissauteur" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="telAUteur" placeholder="+33 7 67 34 12 09">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Adresse</label>
-                                    <input type="text" class="form-control" id="AdresseAUteur" placeholder="adresse">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Incription</label>
-                                    <input type="text" class="form-control" id="Inscriptin_auteur" placeholder="">
-                                
-                
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                                <button class="btn btn-light">Annuler</button>
-                            </form>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">INSCRIPTION</h4>
+                        <p class="card-description">Créer votre compte</p>
+                        <form class="forms-sample" action="../models/ModelInscriptionAuteur.php" method="POST">
+                            <div class="form-group">
+                                <label for="LoginAuteur">Login</label>
+                                <input type="text" name="LoginAuteur"class="form-control" id="LoginAuteur" placeholder="Login">
+                            </div>
+                            <div class="form-group">
+                                <label for="NomAuteur">Nom</label>
+                                <input type="text" name="NomAuteur" class="form-control" id="NomAuteur" placeholder="Nom">
+                            </div>
+                            <div class="form-group">
+                                <label for="PrenomAuteur">Prenom</label>
+                                <input type="text" name="PrenomAuteur" class="form-control" id="PrenomAuteur" placeholder="Prenom">
+                            </div>
+                            <div class="form-group">
+                                <label for="EmailAuteur">Email</label>
+                                <input type="email" name="EmailAuteur" class="form-control" id="EmailAuteur" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="DateIAuteur">Date Inscription</label>
+                                <input type="date" name="DateIAuteur"  class="form-control" id="DateIAuteur" placeholder="Date">
+                            </div>
+                            <div class="form-group">
+                                <label for="DateNAuteur">Date de Naissance</label>
+                                <input type="date" name="DateNAuteur"  class="form-control" id="DateNAuteur" placeholder="Date">
+                            </div>
+                            <div class="form-group">
+                                <label for="TelAuteur">Téléphone</label>
+                                <input type="text" name="TelAuteur"  class="form-control" id="TelAuteur" placeholder="+33 7 67 34 12 09">
+                            </div>
+                            <div class="form-group">
+                                <label for="AdresseAuteur">Adresse</label>
+                                <input type="text" name="AdresseAuteur" class="form-control" id="AdresseAuteur" placeholder="adresse">
+                            </div>
+                            <div class="form-group">
+                                <label for="PwdAuteur">Mot de passe</label>
+                                <input type="password" name="PwdAuteur" class="form-control" id="PwdAuteur" placeholder="Mot de passe">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                            <button class="btn btn-light">Annuler</button>
+
+                            <?php
+                            //si le message d'alert n'est pas vide 
+                            if(!empty($_SESSION['message']['text'])){
+                                //affiche
+                            ?>
+                            <div class="alert <?=$_SESSION['message']['type']?>">
+                                <?=$_SESSION['message']['text']?>
+                            </div>
+                            <?php
+                            }  
+                            ?>
+                        </form>
                     </div>
+                </div>
             </div>
 
-    <!-- Datagrid de liste des participants -->
-    <div class="col-md-8 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Auteurs </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Login</th>
-                                <th>Nom</th>
-                                <th>Prenom</th>
-                                <th>Email</th>
-                                <th>Date Inscription</th>
-                                <th>Date Naissance</th>
-                                <th>Téléphone</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Listes des Auteurs</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Login</th>
+                                        <th>Nom</th>
+                                        <th>Prenom</th>
+                                        <th>Email</th>
+                                        <th>Date Inscription</th>
+                                        <th>Date Naissance</th>
+                                        <th>Téléphone</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Lignes de données de la liste des auteurs -->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                Modifier
                                             </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>                                    
 
-                                    <!-- bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                </td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un auteur</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Contenu du modal à remplir -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                            <button type="button" class="btn btn-primary">Confirmer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Bouton supprimer -->
+                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Ajoutez d'autres lignes de données au besoin -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
               <!-- fin de la partie blanche -->

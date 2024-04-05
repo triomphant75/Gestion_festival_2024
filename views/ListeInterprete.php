@@ -1,3 +1,7 @@
+
+<?php
+include_once '../function/InterpreteFunction.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,8 +163,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -265,29 +269,42 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Login</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
+                                <th>Login</th>
                                 <th>Email</th>
-                                <th>Date Inscription</th>
+                                <th>Mot de passe</th>
                                 <th>Date Naissance</th>
-                                <th>Téléphone</th>
-                              
-                            </tr>
+                                <th>Adresse</th>
+                                <th>Telephone</th>
+                                <th>Date Inscription</th>
+                              </tr>
                         </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
+          <!-- Lignes de données de la liste d'œuvres -->
+          <?php
+                              $interpretes = getInterprete();
+                              if (!empty($interpretes)&& is_array($interpretes)){
+                                foreach ($interpretes as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idinterprete']?></td>
+                                    <td><?=$value['nominterprete']?></td>
+                                    <td><?=$value['prenominterprete']?></td>
+                                    <td><?=$value['logininterprete']?></td>
+                                    <td><?=$value['emailinterprete']?></td>
+                                    <td><?=$value['motdepasseinterprete']?></td>
+                                    <td><?=$value['datenaissanceinterprete']?></td>
+                                    <td><?=$value['adresseinterprete']?></td>
+                                    <td><?=$value['telinterprete']?></td>
+                                    <td><?=$value['dateinscription']?></td>
+                                    
+                                   
+                                    <td><a href ="?idinterprete=<? $value['idinterprete'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
                         </tbody>
                     </table>
                 </div>

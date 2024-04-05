@@ -208,8 +208,10 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
-                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="#">Liste des inscriptions</a></li>
 
                 </ul>
               </div>
@@ -222,13 +224,13 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li><?php endif; ?>
+                 <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                 <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li><?php endif; ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>

@@ -1,11 +1,26 @@
+
 <?php
-session_start();
-
 include_once '../function/AuteurFunction.php';
+include_once '../function/OeuvreFunction.php';
 
-if (!empty($_GET['nomauteur'])){
-  $edition = getAuteur($_GET['nomauteur']);
+// Vérifie si un ID d'oeuvre est spécifié dans l'URL
+if (!empty($_GET['idoeuvre'])) {
+    // Récupère les détails de l'oeuvre correspondante
+    $oeuvre = getOeuvre($_GET['idoeuvre']);
 }
+if (!empty($_GET['nomauteur'])) {
+  // Récupère les détails de l'oeuvre correspondante
+  $auteurs = getAuteur($_GET['nomauteur']);
+}
+
+// Vérifie si $oeuvre est défini et non vide avant de l'utiliser
+$titre_oeuvre = !empty($oeuvre['titre']) ? $oeuvre['titre'] : '';
+$edition = !empty($oeuvre['editionoeuvre']) ? $oeuvre['editionoeuvre'] : '';
+$public_cible = !empty($oeuvre['publiccible']) ? $oeuvre['publiccible'] : '';
+$prix_litteraire = !empty($oeuvre['prixlitteraire']) ? $oeuvre['prixlitteraire'] : '';
+$annee_publication = !empty($oeuvre['anneepublication']) ? $oeuvre['anneepublication'] : '';
+$genre_litteraire = !empty($oeuvre['genrelitteraire']) ? $oeuvre['genrelitteraire'] : '';
+$description = !empty($oeuvre['descriptionoeuvre']) ? $oeuvre['descriptionoeuvre'] : '';
 ?>
 
 
@@ -171,8 +186,8 @@ if (!empty($_GET['nomauteur'])){
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -272,23 +287,25 @@ if (!empty($_GET['nomauteur'])){
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">PAGE OEUVRES</h4>
-                <p class="card-description">Ajouter une oeuvre</p>
-                <form class="forms-sample">
+                <h4 class="card-title">PAGE OEUVRES </h4>
+                <p class="card-description"> Ajouter une oeuvre</p>
+                <form class="forms-sample" method="POST" action="../models/Oeuvre.php">
                     <div class="form-group">
                         <label for="exampleInputUsername1">Titre</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Titre">
+                        <input value="<?= $titre_oeuvre ?>" type="text" class="form-control" name="titre_oeuvre" id="titre_oeuvre" placeholder="Titre de l'Oeuvre">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Auteur</label>
                         <select name="auteur" id="auteur" class="form-control">
                             <?php
-                            $nomauteurs = getAuteur();
-                            if (!empty($nomauteurs) && is_array($nomauteurs)) {
-                                foreach ($nomauteurs as $key => $value) {
-                            ?>
-                                    <option value="<?= $value['nomauteur'] ?>"><?= $value['nomauteur'] ?></option>
-                            <?php
+                            $auteurs = getAuteur();
+                            if (!empty($auteurs) && is_array($auteurs)) {
+                                foreach ($auteurs as $value) {
+                                    ?>
+                                      <option value="<?= $value['idauteur'] ?>" <?= !empty($_GET['idoeuvre']) && $oeuvre['idauteur'] == $value['idauteur'] ? 'selected' : '' ?>>
+                                          <?= $value['nomauteur'] ?>
+                                      </option>
+                                    <?php
                                 }
                             }
                             ?>
@@ -296,27 +313,28 @@ if (!empty($_GET['nomauteur'])){
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Edition</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Edition">
+                        <input value="<?=$edition ?>" type="text" class="form-control" name="edition" id="edition" placeholder="Edition de l'oeuvre">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Public Cible</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Public Cible">
+                        <input value="<?= $public_cible?>" type="text" class="form-control" name="public_cible" id="public_cible" placeholder="Public ciblé">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Prix littéraire</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Prix littéraire">
+                        <input value="<?=$prix_litteraire ?>" type="text" class="form-control" name="prix_litteraire" id="prix_litteraire" placeholder="Prix littéraire de l'Oeuvre">
                     </div>
                     <div class="form-group">
                         <label for="year">Année de publication</label>
-                        <input type="number" class="form-control" id="year" placeholder="Année">
+                        <input value="<?= $annee_publication ?>" type="date" class="form-control" name="annee_publication" id="annee_publication" placeholder="Année de publication">
                     </div>
+
                     <div class="form-group">
                         <label for="exampleInputUsername1">Genre littéraire</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Genre">
+                        <input value="<?= $genre_litteraire?>" type="text" class="form-control" name="genre_litteraire" id="genre_litteraire" placeholder="Genre littéraire">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Description</label>
-                        <textarea class="form-control" id="exampleInputUsername1" placeholder="Description"></textarea>
+                        <textarea class="form-control" name="description" id="description" rows="4" placeholder="Description"><?= $description ?></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                     <button class="btn btn-light">Annuler</button>
@@ -329,14 +347,12 @@ if (!empty($_GET['nomauteur'])){
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Listes des Oeuvres</h6>
+                <h6 class="card-title">Listes des Oeuvres </h6>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Titre</th>
-                                <th>Auteur</th>
                                 <th>Edition</th>
                                 <th>Public Cible</th>
                                 <th>Prix littéraire</th>
@@ -347,47 +363,40 @@ if (!empty($_GET['nomauteur'])){
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
+                            <?php
+                            $oeuvres = getOeuvre();
+                            if (!empty($oeuvres) && is_array($oeuvres)){
+                                foreach ($oeuvres as $value){    
+                            ?>
+                                    <tr>
+                                        <td><?= $value['titre'] ?></td>
+                                        <td><?= $value['editionoeuvre'] ?></td>
+                                        <td><?= $value['publiccible'] ?></td>
+                                        <td><?= $value['prixlitteraire'] ?></td>
+                                        <td><?= $value['anneepublication'] ?></td>
+                                        <td><?= $value['genrelitteraire'] ?></td>
+                                        <td><?= $value['descriptionoeuvre'] ?></td>  
+                                        <td>
+                                            <a href="AjoutOeuvre.php?idoeuvre=<?= $value['idoeuvre'] ?>">
+                                                <ion-icon name="create"></ion-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            }
+                            ?>  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                        Modifier
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                    <button type="button" class="btn btn-primary">Confirmer</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!--bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                </td>
+                                    
                             </tr>
                             <!-- Ajoutez d'autres lignes de données au besoin -->
                         </tbody>
@@ -428,6 +437,8 @@ if (!empty($_GET['nomauteur'])){
     <script src="../public/assets/js/off-canvas.js"></script>
     <script src="../public/assets/js/hoverable-collapse.js"></script>
     <script src="../public/assets/js/misc.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->

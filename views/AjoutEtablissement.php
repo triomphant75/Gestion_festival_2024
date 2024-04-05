@@ -202,6 +202,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
 
                 </ul>
               </div>
@@ -255,128 +257,151 @@
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">PAGE ETABLISSEMENT </h4>
-                            <p class="card-description"> Ajouter un établissement</p>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Mail</label>
-                                    <input type="email" class="form-control" id="exampleInputUsername1" placeholder="Mail">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">TypEtablissement</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>Université</option>
-                                        <option>Lycée génréral</option>
-                                        <option>Lycée Professionnel</option>
-                                        <option>collège</option>
-                                        <option>école primaire</option>
-                                        <option>maternelle</option>
-                                        <option>établissement médico-sociaux</option>
-                                        <option>établissement pénitentiaire</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Nom">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Adresse</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Adresse">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="nbreParticipant">Nombre de participants</label>
-                                    <input type="number" class="form-control" id="nbreParticipant" placeholder="participant">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername4">Public</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername4" placeholder="public">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Téléphone</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="+33 7 67 34 12 09">
-                                </div>
-                
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                                <button class="btn btn-light">Annuler</button>
-                            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">INSCRIPTION</h4>
+                        <p class="card-description">Créer votre compte</p>
+                        <form class="forms-sample" action="../models/ModelInscritpitionEtablissement.php" method="POST">
+                            <div class="form-group">
+                                <label for="LoginEtablissement">Login</label>
+                                <input type="text" name="LoginEtablissement" class="form-control" id="LoginEtablissement" placeholder="Login">
+                            </div>
+                            <div class="form-group">
+                                <label for="mailEtablissement">Mail</label>
+                                <input type="email" name="mailEtablissement" class="form-control" id="mailEtablissement" placeholder="Mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="TypeEtablissement">TypeEtablissement</label>
+                                <select class="form-control" name="TypeEtablissement" id="TypeEtablissement">
+                                    <option>université</option>
+                                    <option>lycée général</option>
+                                    <option>lycée professionnel</option>
+                                    <option>collège</option>
+                                    <option>école primaire</option>
+                                    <option>maternelle</option>
+                                    <option>établissement médico-sociaux</option>
+                                    <option>établissement pénitentiaire</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="NomEtablissement">Nom</label>
+                                <input type="text" name="NomEtablissement" class="form-control" id="NomEtablissement" placeholder="Nom">
+                            </div>
+                            <div class="form-group">
+                                <label for="AdresseEtablissement">Adresse</label>
+                                <input type="text" name="AdresseEtablissement" class="form-control" id="AdresseEtablissement" placeholder="Adresse">
+                            </div>
+                            <div class="form-group">
+                                <label for="DateIEtablissement">Date Inscription</label>
+                                <input type="date" name="DateIEtablissement" class="form-control" id="DateIEtablissement" placeholder="Date">
+                            </div>
+                            <div class="form-group">
+                                <label for="NbreEtablissement">Nombre de participant</label>
+                                <input type="number" name="NbreEtablissement" class="form-control" id="NbreEtablissement" placeholder="participant">
+                            </div>
+                            <div class="form-group">
+                                <label for="PublicEtablissement">Le public</label>
+                                <input type="text" name="PublicEtablissement" class="form-control" id="PublicEtablissement" placeholder="le public">
+                            </div>
+                            <div class="form-group">
+                                <label for="telEtablissement">Téléphone</label>
+                                <input type="text" name="telEtablissement" class="form-control" id="telEtablissement" placeholder="+33 7 67 34 12 09">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwdEtablissement">Mot de passe</label>
+                                <input type="password" name="pwdEtablissement" class="form-control" id="pwdEtablissement">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                            <button class="btn btn-light">Annuler</button>
+                            <?php
+                            //si le message d'alert n'est pas vide 
+                            if(!empty($_SESSION['message']['text'])){
+                                //affiche
+                            ?>
+                            <div class="alert <?=$_SESSION['message']['type']?>">
+                                <?=$_SESSION['message']['text']?>
+                            </div>
+                            <?php
+                            }  
+                            ?>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Datagrid de liste des participants -->
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Listes des Etablissements</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Mail</th>
+                                        <th>TypeEtablissement</th>
+                                        <th>Nom</th>
+                                        <th>Adresse</th>
+                                        <th>Nombre Participants</th>
+                                        <th>Public</th>
+                                        <th>Téléphone</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Lignes de données de la liste des établissements -->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>XXXXXX</td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                Modifier
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Contenu du modal à remplir -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                            <button type="button" class="btn btn-primary">Confirmer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- bouton supprimer -->
+                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Ajoutez d'autres lignes de données au besoin -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-            </div>
-
-    <!-- Datagrid de liste des participants -->
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Etablissements </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Mail</th>
-                                <th>TypeEtablissement</th>
-                                <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Nombre Participants</th>
-                                <th>Public</th>
-                                <th>Téléphone</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                      Modifier
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            ...
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary">confirmer</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>                                    
-
-                                    <!-- bouton supprimer -->
-                                    <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                </td>
-                            </tr>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
               <!-- fin de la partie blanche -->

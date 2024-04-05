@@ -11,9 +11,10 @@ if (
     && !empty($_POST['DateNInterprete'])
     && !empty($_POST['AdresseInterprete'])
     && !empty($_POST['TelInterprete']) 
+    && !empty($_POST['DateIInterprete']) 
 ){
-    $sql = "INSERT INTO interprete (nominterprete,prenominterprete,logininterprete,motdepasseinterprete,emailinterprete, datenaissanceinterprete, adresseinterprete, telinterprete  )
-            VALUES(?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO interprete (nominterprete,prenominterprete,logininterprete,motdepasseinterprete,emailinterprete, datenaissanceinterprete, adresseinterprete, telinterprete, dateinscriptioninterprete  )
+            VALUES(?,?,?,?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
@@ -25,6 +26,7 @@ if (
         $_POST['DateNInterprete'],
         $_POST['AdresseInterprete'],
         $_POST['TelInterprete'],
+        $_POST['DateIInterprete'],
     ));
     if ($req->rowCount()!=0){
         $_SESSION ['message'] ['text']= "Interprete créée avec succès";

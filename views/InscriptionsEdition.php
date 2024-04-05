@@ -2,10 +2,30 @@
 session_start();
 
 include_once '../function/EditionFunction.php';
+include_once '../function/AccompFunction.php';
+include_once '../function/AuteurFunction.php';
+include_once '../function/InterpreteFunction.php';
+include_once '../function/EtablissementFunction.php';
 
+if (!empty($_GET['nomauteur'])){
+  $nomauteur = getAuteur($_GET['nomauteur']);
+}
 if (!empty($_GET['idedition'])){
   $edition = getEdition($_GET['idedition']);
 }
+if (!empty($_GET['nominterprete'])){
+  $nominterprete = getNomInterprete($_GET['nominterprete']);
+}
+if (!empty($_GET['nomaccompagnateur'])){
+  $nomaccompagnateur = getNomAccompagnateur($_GET['nomaccompagnateur']);
+}
+if (!empty($_GET['nometablissement'])){
+  $nometablissement = getNomEtablissement($_GET['nometablissement']);
+}
+if (!empty($_GET['idinscription'])){
+  $EInscription = getEdition($_GET['idinscription']);
+}
+
 ?>
 
 
@@ -170,8 +190,8 @@ if (!empty($_GET['idedition'])){
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -263,68 +283,102 @@ if (!empty($_GET['idedition'])){
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-            <div class="col-lg-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
-                            <p class="card-description">Editions Actuelle </p>
-                <form class="forms-sample" method="POST" action="../models/Inscription.php">
+             <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
+            <p class="card-description">Gestion des inscriptions à une édition </p>
+            <form class="forms-sample" method="POST" action="../models/Inscription.php">
                 <div class="form-group">
-                    <label for="start_date">Date debut Inscription</label>
-                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
-                </div>
-                <div class="form-group">
-                    <label for="end_date">Date de fin Inscription</label>
-                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
+                    <label for="start_date">Date d'Inscription</label>
+                    <input type="date" class="form-control" name="dateInscription" id="start_date" placeholder="Date de début">
                 </div>
                 <div class="form-group">
                     <label for="id">Edition</label>
-                    <select name="id" id="id">
-                    <?php
-
-                      $editions = getEdition();
-                      if(!empty($editions) && is_array($editions)){
-                        foreach($editions as $key => $value){
-                        ?>
-                          <option value="<?= $value['idedition']?>"><?= $value['idedition']?></option>
-                        <?php 
-
+                    <select name="edition" id="id" class="form-control">
+                        <?php
+                        $editions = getEdition();
+                        if (!empty($editions) && is_array($editions)) {
+                            foreach ($editions as $key => $value) {
+                                ?>
+                                <option value="<?= $value['idedition'] ?>"><?= $value['idedition'] ?></option>
+                                <?php
+                            }
                         }
-                      }
-                      ?>
+                        ?>
                     </select>
-                    
-                    <input type="number" class="form-control" name="year" id="year" placeholder="Année">
+                </div>
+                <div class="form-group">
+                    <label for="id">Auteur</label>
+                    <select name="auteur" id="id" class="form-control">
+                        <?php
+                        $nomAuteurs = getAuteur();
+                        if (!empty($nomAuteurs) && is_array($nomAuteurs)) {
+                            foreach ($nomAuteurs as $key => $value) {
+                                ?>
+                                <option value="<?= $value['nomauteur'] ?>"><?= $value['nomauteur'] ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id">Acompagnateur</label>
+                    <select name="acompagnateur" id="id" class="form-control">
+                        <?php
+                        $nomaccompagnateurs = getNomAccompagnateur();
+                        if (!empty($nomaccompagnateurs) && is_array($nomaccompagnateurs)) {
+                            foreach ($nomaccompagnateurs as $key => $value) {
+                                ?>
+                                <option value="<?= $value['nomaccompagnateur'] ?>"><?= $value['nomaccompagnateur'] ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id">Interprete</label>
+                    <select name="interprete" id="id" class="form-control">
+                        <?php
+                        $nominterpretes = getNomInterprete();
+                        if (!empty($nominterpretes) && is_array($nominterpretes)) {
+                            foreach ($nominterpretes as $key => $value) {
+                                ?>
+                                <option value="<?= $value['nominterprete'] ?>"><?= $value['nominterprete'] ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id">Etablissement</label>
+                    <select name="etablissement" id="id" class="form-control">
+                        <?php
+                        $nometablissements = getNomEtablissement();
+                        if (!empty($nometablissements) && is_array($nometablissements)) {
+                            foreach ($nometablissements as $key => $value) {
+                                ?>
+                                <option value="<?= $value['nometablissement'] ?>"><?= $value['nometablissement'] ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
                 
-                            <!-- <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th> ID </th>
-                                        <th> Date de début d'Inscription</th>
-                                        <th> Date de fin de l'inscription</th>
-                                        
-                                    </tr>
-                               <!-- </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> 1 </td>
-                                        <td> 15 mai 2015 </td>
-                                        <td> 15 Septembre 2015 </td>
-                                        <td> 2015</td>
-                                        <td> XXXXXXXXXXX </td>
-                                    </tr>
-                                    <!-- Ajoutez d'autres lignes de données au besoin -->
-                                </tbody>
-                            </table>
-
-                            <!-- Bouton "S'inscrire" -->
-                            <div class="text-center mt-3 mb-2"> <!-- Ajout des marges pour déplacer le bouton vers le bas -->
-                                <button class="btn btn-primary btn-lg px-4">S'inscrire</button> <!-- Ajout de la classe btn-lg pour augmenter la taille du bouton -->
-                            </div>
-                        </div>
-                    </div>
+                <!-- Bouton "S'inscrire" -->
+                <div class="text-center mt-3 mb-2"> <!-- Ajout des marges pour déplacer le bouton vers le bas -->
+                    <button type="submit" name="inscrire" class="btn btn-primary btn-lg px-4">S'inscrire</button> <!-- Ajout de la classe btn-lg pour augmenter la taille du bouton -->
+                   
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
               <!-- fin de la partie blanche -->
             
