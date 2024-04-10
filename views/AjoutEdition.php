@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once '../function/EditionFunction.php';
 
 if (!empty($_GET['idedition'])){
   $editionI = getEdition($_GET['idedition']);
@@ -268,13 +269,15 @@ if (!empty($_GET['idedition'])){
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
-            <p class="card-description"> Créer une édition </p>
-            <form class="forms-sample"  action="<?= !empty($_GET['idedition']) ? "../models/ModifierEdition" : "../models/Edition.php" ?>" method="POST">
+            <p class="card-description"> Créer ou modifier une édition </p>
+            <form class="forms-sample" action="<?= !empty($_GET['idedition']) ? "../models/ModifierEdition.php" : "../models/Edition.php" ?>" method="POST">
+                <?php if (!empty($_GET['idedition'])): ?>
+                    <!-- Champ caché pour l'ID de l'édition à modifier -->
+                    <input type="hidden" name="idedition" value="<?= $_GET['idedition'] ?>">
+                <?php endif; ?>
                 <div class="form-group">
                     <label for="start_date">Date de début</label>
                     <input value="<?= !empty($_GET['idedition']) ? $editionI['datedebuteedition'] : "" ?>" type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
-                    <input value="<?= !empty($_GET['idedition']) ? $editionI['idedition'] : "" ?>" type="hidden" class="form-control" name="idedition" id="idedition" >
-
                 </div>
                 <div class="form-group">
                     <label for="end_date">Date de fin</label>
@@ -286,28 +289,23 @@ if (!empty($_GET['idedition'])){
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea value="<?= !empty($_GET['idedition']) ? $editionI['descriptionediton']: "" ?>" class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
+                    <textarea class="form-control" name="description" id="description" rows="4" placeholder="Description"><?= !empty($_GET['idedition']) ? $editionI['descriptionediton']: "" ?></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary mr-2">Créer</button>
+                <button type="submit" class="btn btn-primary mr-2"><?= !empty($_GET['idedition']) ? 'Modifier' : 'Créer' ?></button>
                 <button class="btn btn-light">Annuler</button>
-
-                
             </form>
             <?php
-                    //si le message d'alert n'est pas vide 
-                    if(!empty($_SESSION['message']['text'])){
-                      //affiche
-                      ?>
-                      <div class="alert <?=$_SESSION['message']['type']?>">
-
-                          <?=$_SESSION['message']['text']?>
-                      </div>
-                      <?php
-                    }  
-                ?>
+                // Si le message d'alerte n'est pas vide
+                if (!empty($_SESSION['message']['text'])):
+            ?>
+            <div class="alert <?= $_SESSION['message']['type'] ?>">
+                <?= $_SESSION['message']['text'] ?>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+
 
               <!-- ici la fin de  la partie blanche -->
           </div>

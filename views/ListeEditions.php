@@ -291,6 +291,7 @@ $_SESSION['roles'] = $rolesUtilisateur;
                                 <th> Date de fin de l'édition</th>
                                 <th> Année de l'édition</th>
                                 <th> Description</th>
+                                <th>Action</th>
                             </tr>
                             <?php
                               $editions = getEdition();
@@ -303,6 +304,7 @@ $_SESSION['roles'] = $rolesUtilisateur;
                                     <td><?=$value['anneeedition']?></td>
                                     <td><?=$value['descriptionediton']?></td>
                                     <td><a href ="AjoutEdition.php?idedition=<?= $value['idedition'] ?>"><ion-icon name="create"></ion-icon><a></td>
+                                    <td><a href ="../models/SupprimerEdition.php?idedition=<?= $value['idedition'] ?>"><ion-icon name="trash-bin-outline"></ion-icon></td>
                                   </tr>
                                   <?php
                                 }
