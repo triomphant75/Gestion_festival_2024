@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include '../function/AuteurFunction.php';
+
 // récupération les rôles de l'utilisateur après une connexion réussie
 $rolesUtilisateur = array('emailauteur', 'emailaccompagnateur', 'emailinterprete', 'emailetablissement','emailadmin'); // À remplacer par les rôles réels récupérés
 
@@ -272,7 +274,7 @@ $_SESSION['roles'] = $rolesUtilisateur;
                     <div class="card-body">
                         <h4 class="card-title">INSCRIPTION</h4>
                         <p class="card-description">Créer votre compte</p>
-                        <form class="forms-sample" action="../models/ModelInscriptionAuteur.php" method="POST">
+                        <form class="forms-sample" action="../models/Auteur.php" method="POST">
                             <div class="form-group">
                                 <label for="LoginAuteur">Login</label>
                                 <input type="text" name="LoginAuteur"class="form-control" id="LoginAuteur" placeholder="Login">
@@ -329,66 +331,55 @@ $_SESSION['roles'] = $rolesUtilisateur;
             </div>
 
             <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Listes des Auteurs</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Login</th>
-                                        <th>Nom</th>
-                                        <th>Prenom</th>
-                                        <th>Email</th>
-                                        <th>Date Inscription</th>
-                                        <th>Date Naissance</th>
-                                        <th>Téléphone</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Lignes de données de la liste des auteurs -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                                Modifier
-                                            </button>
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Listes des auteurs </h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Login</th>
+                                <th>mot de passe</th>
+                                <th>Email</th>
+                                <th>Date Naissance</th>
+                                <th>adresse auteur</th>
+                                <th>Date Inscription</th>
+                                
+                                <th>Téléphone</th>
+                                <th>Action</th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lignes de données de la liste d'œuvres -->
+                            <?php
+                              $auteur = getAuteur();
+                              if (!empty($auteur)&& is_array($auteur)){
+                                foreach ($auteur as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idauteur']?></td>
+                                    <td><?=$value['nomauteur']?></td>
+                                    <td><?=$value['prénomauteur']?></td>
+                                    <td><?=$value['loginauteur']?></td>
+                                    <td><?=$value['motdepasseauteur']?></td>
+                                    <td><?=$value['emailauteur']?></td>
 
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un auteur</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Contenu du modal à remplir -->
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                            <button type="button" class="btn btn-primary">Confirmer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <td><?=$value['datenaissanceauteur']?></td>
+                                    <td><?=$value['adresseauteur']?></td>
+                                    <td><?=$value['dateinscriptionauteur']?></td>
+                                    <td><?=$value['telauteur']?></td>
+                                    
+                                    <td><a href ="?idauteur=<? $value['idauteur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
 
-                                            <!-- Bouton supprimer -->
-                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                        </td>
-                                    </tr>
+                                   </tr>
+                                  <?php
+                                }
+                              }
+                            ?> 
                                     <!-- Ajoutez d'autres lignes de données au besoin -->
                                 </tbody>
                             </table>
@@ -434,5 +425,8 @@ $_SESSION['roles'] = $rolesUtilisateur;
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

@@ -1,3 +1,11 @@
+<?php
+include_once '../function/EtablissementFunction.php';
+
+if (!empty($_GET['idetablissement'])){
+  $etablissement = getEtablissement($_GET['idetablissement']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -264,7 +272,7 @@
                     <div class="card-body">
                         <h4 class="card-title">INSCRIPTION</h4>
                         <p class="card-description">Créer votre compte</p>
-                        <form class="forms-sample" action="../models/ModelInscritpitionEtablissement.php" method="POST">
+                        <form class="forms-sample" action="../models/Etablissement.php" method="POST">
                             <div class="form-group">
                                 <label for="LoginEtablissement">Login</label>
                                 <input type="text" name="LoginEtablissement" class="form-control" id="LoginEtablissement" placeholder="Login">
@@ -317,90 +325,74 @@
                             <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                             <button class="btn btn-light">Annuler</button>
                             <?php
-                            //si le message d'alert n'est pas vide 
-                            if(!empty($_SESSION['message']['text'])){
-                                //affiche
+                            // Affichage du message d'alerte s'il n'est pas vide 
+                            if (!empty($_SESSION['message']['text'])) {
                             ?>
-                            <div class="alert <?=$_SESSION['message']['type']?>">
-                                <?=$_SESSION['message']['text']?>
-                            </div>
+                                <div class="alert <?=$_SESSION['message']['type']?>">
+                                    <?=$_SESSION['message']['text']?>
+                                </div>
                             <?php
-                            }  
+                            }
                             ?>
                         </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Datagrid de liste des participants -->
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Listes des Etablissements</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Mail</th>
-                                        <th>TypeEtablissement</th>
-                                        <th>Nom</th>
-                                        <th>Adresse</th>
-                                        <th>Nombre Participants</th>
-                                        <th>Public</th>
-                                        <th>Téléphone</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Lignes de données de la liste des établissements -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>XXXXXX</td>
-                                        <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                                Modifier
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Contenu du modal à remplir -->
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                            <button type="button" class="btn btn-primary">Confirmer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- bouton supprimer -->
-                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Ajoutez d'autres lignes de données au besoin -->
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Datagrid de liste des participants -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <!-- Début de la partie blanche -->
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Listes des Établissements</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mail</th>
+                                    <th>Type Etablissement</th>
+                                    <th>Nom</th>
+                                    <th>Description</th>
+                                    <th>Adresse</th>
+                                    <th>Nombre Participants</th>
+                                    <th>Public</th>
+                                    <th>Téléphone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $etablis = getEtablissement();
+                                if (!empty($etablis) && is_array($etablis)) {
+                                    foreach ($etablis as $key => $value) {
+                                ?>
+                                        <tr>
+                                            <td><?= $value['emailetablissement'] ?></td>
+                                            <td><?= $value['typeetablissement'] ?></td>
+                                            <td><?= $value['nometablissement'] ?></td>
+                                            <td><?= $value['dateinscriptionetablissement'] ?></td>
+                                            <td><?= $value['adresseetablissement'] ?></td>
+                                            <td><?= $value['nombreparticipant'] ?></td>
+                                            <td><?= $value['lepublic'] ?></td>
+                                            <td><?= $value['teletablissement'] ?></td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -436,5 +428,8 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

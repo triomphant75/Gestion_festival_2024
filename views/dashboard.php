@@ -222,9 +222,8 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <?php if($role == 'accompagnateur' || $role == 'interprete') { ?>
+         
                     <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
-                <?php } ?>
                    <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
                    <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
                    <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
@@ -265,7 +264,7 @@ if(isset($_SESSION['role'])) {
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
              <div class="d-xl-flex justify-content-between align-items-start">
-              <h2 class="text-dark font-weight-bold mb-2"> Overview dashboard </h2>
+              <h2 class="text-dark font-weight-bold mb-2"> Statistique Festi_Livre </h2>
               
             </div>
             <div class="row">
@@ -277,22 +276,20 @@ if(isset($_SESSION['role'])) {
                       <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Orders</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">932.00</h2>
+                            <h5 class="mb-2 text-dark font-weight-normal">Edition</h5>
+                            <h2 class="mb-4 text-dark font-weight-bold">16</h2>
                             <div class="dashboard-progress dashboard-progress-1 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-lightbulb icon-md absolute-center text-dark"></i></div>
-                            <p class="mt-4 mb-0">Completed</p>
-                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">5443</h3>
+                            
                           </div>
                         </div>
                       </div>
                       <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Unique Visitors</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">756,00</h2>
+                            <h5 class="mb-2 text-dark font-weight-normal">Participants</h5>
+                            <h2 class="mb-4 text-dark font-weight-bold">20</h2>
                             <div class="dashboard-progress dashboard-progress-2 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-account-circle icon-md absolute-center text-dark"></i></div>
-                            <p class="mt-4 mb-0">Increased since yesterday</p>
-                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">50%</h3>
+                          
                           </div>
                         </div>
                       </div>
@@ -302,19 +299,17 @@ if(isset($_SESSION['role'])) {
                             <h5 class="mb-2 text-dark font-weight-normal">Impressions</h5>
                             <h2 class="mb-4 text-dark font-weight-bold">100,38</h2>
                             <div class="dashboard-progress dashboard-progress-3 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-eye icon-md absolute-center text-dark"></i></div>
-                            <p class="mt-4 mb-0">Increased since yesterday</p>
-                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">35%</h3>
+                            <p class="mt-4 mb-0"></p>
+                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">,</h3>
                           </div>
                         </div>
                       </div>
                       <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Followers</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">4250k</h2>
+                            <h5 class="mb-2 text-dark font-weight-normal">Interventions</h5>
+                            <h2 class="mb-4 text-dark font-weight-bold">50</h2>
                             <div class="dashboard-progress dashboard-progress-4 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-cube icon-md absolute-center text-dark"></i></div>
-                            <p class="mt-4 mb-0">Decreased since yesterday</p>
-                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">25%</h3>
                           </div>
                         </div>
                       </div>

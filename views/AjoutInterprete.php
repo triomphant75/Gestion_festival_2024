@@ -271,7 +271,7 @@ if (!empty($_GET['idinterprete'])){
                               <div class="card-body">
                                   <h4 class="card-title">INSCRIPTION</h4>
                                   <p class="card-description">Créer votre compte</p>
-                                  <form class="forms-sample" action="../models/ModelinscriptionInterprete.php" method="POST">
+                                  <form class="forms-sample" action="../models/Interprete.php" method="POST">
                                       <div class="form-group">
                                           <label for="loginInterprete">Login</label>
                                           <input type="text" name="loginInterprete" class="form-control" id="loginInterprete" placeholder="Login">
@@ -367,7 +367,7 @@ if (!empty($_GET['idinterprete'])){
                                         <td><?=$value['datenaissanceinterprete']?></td>
                                         <td><?=$value['adresseinterprete']?></td>
                                         <td><?=$value['telinterprete']?></td>
-                                        <td><?=$value['dateinscription']?></td>
+                                        <td><?=$value['dateinscriptioninterprete']?></td>
                                         <td><a href ="?idinterprete=<?=$value['idinterprete']?>"><ion-icon name="create"></ion-icon></a></td>
                                     </tr>
                                     <?php
@@ -418,6 +418,6 @@ if (!empty($_GET['idinterprete'])){
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

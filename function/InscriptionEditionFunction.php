@@ -1,7 +1,7 @@
 <?php
 include '../cores/connexion.php';
 
-function getInscriptionInscription($idinscription=null){
+function getInscription($idinscription=null){
 
     if(!empty($idinscription)) { 
         $sql="SELECT * FROM inscription WHERE idinscription=?";
@@ -23,4 +23,5 @@ function getInscriptionInscription($idinscription=null){
 
     }
 }
+
 ?>

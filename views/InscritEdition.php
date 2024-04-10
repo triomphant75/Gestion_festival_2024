@@ -1,9 +1,13 @@
 <?php
 session_start();
+include_once '../function/InscriptionEditionFunction.php';
+include_once '../function/AuteurFunction.php'; 
+include_once '../function/AccompFunction.php';
+include_once '../function/EditionFunction.php';
+include_once '../function/EtablissementFunction.php';
+include_once '../function/InterpreteFunction.php';
 
-if (!empty($_GET['idedition'])){
-  $editionI = getEdition($_GET['idedition']);
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -167,7 +171,10 @@ if (!empty($_GET['idedition'])){
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+
+                  
                 </ul>
               </div>
             </li>
@@ -210,8 +217,6 @@ if (!empty($_GET['idedition'])){
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Liste des inscriptions</a></li>
 
                 </ul>
               </div>
@@ -224,13 +229,14 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li><?php endif; ?>
+      
+                 <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                 <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li><?php endif; ?>
+                 <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li><?php endif; ?>
+                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li><?php endif; ?>
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
 
                 </ul>
@@ -263,53 +269,57 @@ if (!empty($_GET['idedition'])){
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-         <!-- ici le debut de la partie blanche -->
-         <div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
-            <p class="card-description"> Créer une édition </p>
-            <form class="forms-sample"  action="<?= !empty($_GET['idedition']) ? "../models/ModifierEdition" : "../models/Edition.php" ?>" method="POST">
-                <div class="form-group">
-                    <label for="start_date">Date de début</label>
-                    <input value="<?= !empty($_GET['idedition']) ? $editionI['datedebuteedition'] : "" ?>" type="date" class="form-control" name="start_date" id="start_date" placeholder="Date de début">
-                    <input value="<?= !empty($_GET['idedition']) ? $editionI['idedition'] : "" ?>" type="hidden" class="form-control" name="idedition" id="idedition" >
-
+             <!-- Début de la partie blanche -->
+             <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Liste des participants</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date Inscription</th>
+                                    <th>Edition</th>
+                                    <th>Auteur</th>
+                                    <th>Accompagnateur</th>
+                                    <th>Interprete</th>
+                                    <th>Etablissement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lignes de données -->
+                                <?php
+                              $inscriptions = getInscription();
+                              if (!empty($inscriptions)&& is_array($inscriptions)){
+                                foreach ($inscriptions as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['dateinscription']?></td>
+                                    <td><?=$value['idedition']?></td>
+                                    <td><?=$value['idauteur']?></td>
+                                    <td><?=$value['idaccompagnateur']?></td>
+                                    <td><?=$value['idinterprete']?></td>
+                                    <td><?=$value['idetablissement']?></td>
+                                
+                                  <?php
+                                }
+                              }
+                            ?>  
+                                <!-- Ajoutez d'autres lignes de données au besoin -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="end_date">Date de fin</label>
-                    <input value="<?= !empty($_GET['idedition']) ? $editionI['datefinedition']: "" ?>" type="date" class="form-control" name="end_date" id="end_date" placeholder="Date de fin">
-                </div>
-                <div class="form-group">
-                    <label for="year">Année</label>
-                    <input value="<?= !empty($_GET['idedition']) ? $editionI['anneeedition']: "" ?>" type="number" class="form-control" name="year" id="year" placeholder="Année">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea value="<?= !empty($_GET['idedition']) ? $editionI['descriptionediton']: "" ?>" class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary mr-2">Créer</button>
-                <button class="btn btn-light">Annuler</button>
-
-                
-            </form>
-            <?php
-                    //si le message d'alert n'est pas vide 
-                    if(!empty($_SESSION['message']['text'])){
-                      //affiche
-                      ?>
-                      <div class="alert <?=$_SESSION['message']['type']?>">
-
-                          <?=$_SESSION['message']['text']?>
-                      </div>
-                      <?php
-                    }  
-                ?>
+            </div>
         </div>
     </div>
 </div>
 
-              <!-- ici la fin de  la partie blanche -->
+
+              <!-- fin de la partie blanche -->
+            
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
@@ -340,8 +350,5 @@ if (!empty($_GET['idedition'])){
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
   </body>
 </html>

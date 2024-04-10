@@ -294,6 +294,7 @@ include_once '../function/EtablissementFunction.php';
                                     <td><?= $value['nombreparticipant'] ?></td>
                                     <td><?= $value['lepublic'] ?></td>
                                     <td><?= $value['teletablissement'] ?></td>
+                                    
                                 </tr>
                         <?php
                             }

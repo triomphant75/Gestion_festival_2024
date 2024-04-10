@@ -1,3 +1,11 @@
+
+<?php
+session_start();
+include_once '../function/AccompFunction.php';
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -188,8 +196,6 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
 
                 </ul>
               </div>
@@ -267,28 +273,45 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Login</th>
+                                
                                 <th>Nom</th>
                                 <th>Prenom</th>
+                                <th>Login</th>
+                                <th> Mot de passe</th>
                                 <th>Email</th>
-                                <th>Date Inscription</th>
                                 <th>Date Naissance</th>
+                                <th>Adresse</th>
                                 <th>Téléphone</th>
+                                <th>Date Inscription</th>
                               
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Lignes de données de la liste d'œuvres -->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                                <td>XXXXXX</td>
-                            </tr>
+                            <?php
+                              $accompagnateurs = getAccompagnateur();
+                              if (!empty($accompagnateurs)&& is_array($accompagnateurs)){
+                                foreach ($accompagnateurs as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idaccompagnateur']?></td>
+                                    <td><?=$value['nomaccompagnateur']?></td>
+                                    <td><?=$value['prenomaccompagnateur']?></td>
+                                    <td><?=$value['loginaccompagnateur']?></td>
+                                    <td><?=$value['motdepasseaccompagnateur']?></td>
+                                    <td><?=$value['emailaccompagnateur']?></td>
+                                    <td><?=$value['datenaissanceacommpagnateur']?></td>
+                                    <td><?=$value['adresseaccompagnateur']?></td>
+                                    <td><?=$value['telacommpagnateur']?></td>
+                                    <td><?=$value['dateinscriptionaccompagnateur']?></td>
+                                    
+                                   
+                                    <td><a href ="?idaccompagnateur=<? $value['idaccompagnateur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
                             <!-- Ajoutez d'autres lignes de données au besoin -->
                         </tbody>
                     </table>

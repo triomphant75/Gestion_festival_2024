@@ -192,8 +192,8 @@ include_once '../function/OeuvreFunction.php';
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
               </div>
@@ -206,9 +206,8 @@ include_once '../function/OeuvreFunction.php';
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutParticipant.php">Ajouter oeuvre</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeParticipant.php"> Liste des oeuvres</a></li>
-
+                <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
                 </ul>
               </div>
             </li>
@@ -289,31 +288,11 @@ include_once '../function/OeuvreFunction.php';
                                         <td><?=$value['prixlitteraire']?></td>
                                         <td><?=$value['anneepublication']?></td>
                                         <td><?=$value['genrelitteraire']?></td>
-                                        <td><?=$value['descriptionoeuvre']?></td>                                 
-                                        <td>
-                                            <a href="AjoutOeuvre.php?idoeuvre=<?= $value['idoeuvre'] ?>">
-                                                <ion-icon name="create"></ion-icon>
-                                            </a>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                                Modifier
-                                            </button>
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modifier une oeuvre</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Votre contenu du formulaire de modification -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                        </td>
+                                        <td><?=$value['descriptionoeuvre']?></td>    
+                                        
+                                        
+                                        <td><a href ="?idoeuvre=<? $value['idoeuvre'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+
                                     </tr>
                                     <?php
                                             }
@@ -355,5 +334,8 @@ include_once '../function/OeuvreFunction.php';
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

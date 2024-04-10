@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once '../function/EtablissementFunction.php';
 ?>
 
 <!DOCTYPE html>

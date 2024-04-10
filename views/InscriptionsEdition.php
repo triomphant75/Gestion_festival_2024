@@ -6,25 +6,24 @@ include_once '../function/AccompFunction.php';
 include_once '../function/AuteurFunction.php';
 include_once '../function/InterpreteFunction.php';
 include_once '../function/EtablissementFunction.php';
+include_once '../function/InscriptionEditionFunction.php';
 
-if (!empty($_GET['nomauteur'])){
-  $nomauteur = getAuteur($_GET['nomauteur']);
+if (!empty($_GET['idauteur'])){
+  $nomauteur = getAuteur($_GET['idauteur']);
 }
 if (!empty($_GET['idedition'])){
   $edition = getEdition($_GET['idedition']);
 }
-if (!empty($_GET['nominterprete'])){
-  $nominterprete = getNomInterprete($_GET['nominterprete']);
+if (!empty($_GET['idinterprete'])){
+  $nominterprete = getInterprete($_GET['idinterprete']);
 }
-if (!empty($_GET['nomaccompagnateur'])){
-  $nomaccompagnateur = getNomAccompagnateur($_GET['nomaccompagnateur']);
+if (!empty($_GET['idaccompaganteur'])){
+  $nomaccompagnateur = getAccompagnateur($_GET['idaccompaganteur']);
 }
-if (!empty($_GET['nometablissement'])){
-  $nometablissement = getNomEtablissement($_GET['nometablissement']);
+if (!empty($_GET['idetablissement'])){
+  $nometablissement = getEtablissement($_GET['idetablissement']);
 }
-if (!empty($_GET['idinscription'])){
-  $EInscription = getEdition($_GET['idinscription']);
-}
+
 
 ?>
 
@@ -288,10 +287,10 @@ if (!empty($_GET['idinscription'])){
         <div class="card-body">
             <h4 class="card-title">BIENVENUE SUR LA PAGE D'EDITION</h4>
             <p class="card-description">Gestion des inscriptions à une édition </p>
-            <form class="forms-sample" method="POST" action="../models/Inscription.php">
+            <form class="forms-sample" method="POST" action="../models/GestionInscritptionEdition.php">
                 <div class="form-group">
-                    <label for="start_date">Date d'Inscription</label>
-                    <input type="date" class="form-control" name="dateInscription" id="start_date" placeholder="Date de début">
+                    <label for="start_date">Date Inscription</label>
+                    <input type="date" class="form-control" name="dateInscription" id="start_date" placeholder="Date">
                 </div>
                 <div class="form-group">
                     <label for="id">Edition</label>
@@ -316,7 +315,7 @@ if (!empty($_GET['idinscription'])){
                         if (!empty($nomAuteurs) && is_array($nomAuteurs)) {
                             foreach ($nomAuteurs as $key => $value) {
                                 ?>
-                                <option value="<?= $value['nomauteur'] ?>"><?= $value['nomauteur'] ?></option>
+                                <option value="<?= $value['idauteur'] ?>"><?= $value['idauteur'] ?></option>
                                 <?php
                             }
                         }
@@ -327,11 +326,11 @@ if (!empty($_GET['idinscription'])){
                     <label for="id">Acompagnateur</label>
                     <select name="acompagnateur" id="id" class="form-control">
                         <?php
-                        $nomaccompagnateurs = getNomAccompagnateur();
+                        $nomaccompagnateurs = getAccompagnateur();
                         if (!empty($nomaccompagnateurs) && is_array($nomaccompagnateurs)) {
                             foreach ($nomaccompagnateurs as $key => $value) {
                                 ?>
-                                <option value="<?= $value['nomaccompagnateur'] ?>"><?= $value['nomaccompagnateur'] ?></option>
+                                <option value="<?= $value['idaccompagnateur'] ?>"><?= $value['idaccompagnateur'] ?></option>
                                 <?php
                             }
                         }
@@ -342,11 +341,11 @@ if (!empty($_GET['idinscription'])){
                     <label for="id">Interprete</label>
                     <select name="interprete" id="id" class="form-control">
                         <?php
-                        $nominterpretes = getNomInterprete();
+                        $nominterpretes = getInterprete();
                         if (!empty($nominterpretes) && is_array($nominterpretes)) {
                             foreach ($nominterpretes as $key => $value) {
                                 ?>
-                                <option value="<?= $value['nominterprete'] ?>"><?= $value['nominterprete'] ?></option>
+                                <option value="<?= $value['idinterprete'] ?>"><?= $value['idinterprete'] ?></option>
                                 <?php
                             }
                         }
@@ -357,11 +356,11 @@ if (!empty($_GET['idinscription'])){
                     <label for="id">Etablissement</label>
                     <select name="etablissement" id="id" class="form-control">
                         <?php
-                        $nometablissements = getNomEtablissement();
+                        $nometablissements = getEtablissement();
                         if (!empty($nometablissements) && is_array($nometablissements)) {
                             foreach ($nometablissements as $key => $value) {
                                 ?>
-                                <option value="<?= $value['nometablissement'] ?>"><?= $value['nometablissement'] ?></option>
+                                <option value="<?= $value['idetablissement'] ?>"><?= $value['idetablissement'] ?></option>
                                 <?php
                             }
                         }
@@ -412,5 +411,8 @@ if (!empty($_GET['idinscription'])){
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

@@ -11,7 +11,7 @@ if (
     && !empty($_POST['auteur'])
 ){
     $sql = "INSERT INTO inscription (dateinscription, idedition ,idaccompagnateur , idetablissement,idinterprete,idauteur  ) 
-    VALUES(?,?,?,?,?,?,?)";
+    VALUES(?,?,?,?,?,?)";
     $req = $connexion->prepare($sql);
 
     $req->execute(array(
@@ -38,6 +38,6 @@ if (
 
 
 //redirection vers la vue 
-header('Location: ../views/AjoutEdition.php');
+header('Location: ../views/InscriptionsEdition.php');
  
 ?>

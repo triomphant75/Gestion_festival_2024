@@ -279,6 +279,7 @@ include_once '../function/InterventionFunction.php';
                         <th>Auteur</th>
                         <th>Accompagnateur</th>
                         <th>Interprète</th>
+                        <th>Edition</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -298,12 +299,9 @@ include_once '../function/InterventionFunction.php';
                                 <td><?= $value['idauteur'] ?></td>
                                 <td><?= $value['idaccompagnateur'] ?></td>
                                 <td><?= $value['idinterprete'] ?></td>
-                                <td>
-                                  <!-- Bouton modifier -->
-                                  <button type="button" class="btn btn-success btn-sm selectWork">
-                                      <a href="?idintervention=<?= $value['idintervention'] ?>">Modifier</a>
-                                  </button>
-                              </td>
+                                <td><?= $value['idedition'] ?></td>
+                                <!-- bouton modifier / Supprimer-->
+                                <td><a href ="?idintervention=<? $value['idintervention'] ?>"><ion-icon name="create"></ion-icon></<a></td>
 
                             </tr>
                     <?php
@@ -349,5 +347,8 @@ include_once '../function/InterventionFunction.php';
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

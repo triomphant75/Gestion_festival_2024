@@ -49,9 +49,6 @@ if (
     $_SESSION ['message'] ['text']= "une information obligatoire non renseignée";
     $_SESSION ['message'] ['type']= "danger";
 }
-
-
-//redirection vers la vue 
+  //redirection vers la vue 
 header('Location: ../views/PageConnexion.php');
- 
 ?>

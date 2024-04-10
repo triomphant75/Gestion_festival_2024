@@ -278,6 +278,7 @@ include_once '../function/InterpreteFunction.php';
                                 <th>Adresse</th>
                                 <th>Telephone</th>
                                 <th>Date Inscription</th>
+                    
                               </tr>
                         </thead>
           <!-- Lignes de données de la liste d'œuvres -->
@@ -296,10 +297,7 @@ include_once '../function/InterpreteFunction.php';
                                     <td><?=$value['datenaissanceinterprete']?></td>
                                     <td><?=$value['adresseinterprete']?></td>
                                     <td><?=$value['telinterprete']?></td>
-                                    <td><?=$value['dateinscription']?></td>
-                                    
-                                   
-                                    <td><a href ="?idinterprete=<? $value['idinterprete'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                    <td><?=$value['dateinscriptioninterprete']?></td>
                                   </tr>
                                   <?php
                                 }

@@ -1,13 +1,18 @@
 <?php
 session_start();
-// Vérifiez si la variable de session $role est définie
-if(isset($_SESSION['role'])) {
-  $role = $_SESSION['role'];
-} else {
-  // Définissez un rôle par défaut si la variable de session n'est pas définie
-  $role = 'Non défini';
-}
 
+include_once '../function/AccompFunction.php';
+// Vérifiez si la variable de session $role est définie
+
+// Définir les rôles par défaut dans un tableau
+$rolesParDefaut = ['Accompagnateur', 'Auteur', 'Interprete', 'Etablissement', 'commission'];
+
+if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
+    $role = $_SESSION['role'];
+} else {
+    // Choisir un rôle par défaut au hasard s'il n'y a pas de rôle défini dans la session
+    $role = $rolesParDefaut[array_rand($rolesParDefaut)];
+}
 ?>
 
 <!DOCTYPE html>
@@ -229,7 +234,7 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <?php if($role != 'Auteur') { ?>
+                <?php if($role != 'Accompagnateur' || $role != 'acteur' ) { ?>
                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
                  <?php } ?>
                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
@@ -279,7 +284,7 @@ if(isset($_SESSION['role'])) {
                                               <div class="card-body">
                                                   <h4 class="card-title">INSCRIPTION</h4>
                                                   <p class="card-description">Créer votre compte</p>
-                                                  <form class="forms-sample" action="../models/ModelInscriptionAccompagnateur.php" method="POST">
+                                                  <form class="forms-sample" action="../models/Accompagnateur.php" method="POST">
                                                       <div class="form-group">
                                                           <label for="loginAccompagnateur">Login</label>
                                                           <input type="text" name="loginAccompagnateur" class="form-control" id="loginAccompagnateur" placeholder="Login">
@@ -316,7 +321,7 @@ if(isset($_SESSION['role'])) {
                                                           <label for="PwdAccompagnateur">Mot de passe </label>
                                                           <input type="password" name="PwdAccompagnateur" class="form-control" id="PwdAccompagnateur">
                                                       </div>
-                                                      <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                                                      <button type="submit" name="enregistrerAccompagnateur"  class="btn btn-primary mr-2">Enregistrer</button>
                                                       <button class="btn btn-light">Annuler</button>
                                                       <?php
                                                       //si le message d'alert n'est pas vide 
@@ -339,66 +344,55 @@ if(isset($_SESSION['role'])) {
 
 
                           <div class="col-md-12 grid-margin stretch-card">
-                              <div class="card">
-                                  <div class="card-body">
-                                      <h6 class="card-title">Listes des Accompagnateurs</h6>
-                                      <div class="table-responsive">
-                                          <table class="table table-bordered">
-                                              <thead>
-                                                  <tr>
-                                                      <th>ID</th>
-                                                      <th>Login</th>
-                                                      <th>Nom</th>
-                                                      <th>Prenom</th>
-                                                      <th>Email</th>
-                                                      <th>Date Inscription</th>
-                                                      <th>Date Naissance</th>
-                                                      <th>Téléphone</th>
-                                                      <th>Action</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <!-- Lignes de données de la liste des accompagnateurs -->
-                                                  <tr>
-                                                      <td>1</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>XXXXXX</td>
-                                                      <td>
-                                                          <!-- Button trigger modal -->
-                                                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                                              Modifier
-                                                          </button>
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Listes des accompagnateur </h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Login</th>
+                                <th> Mot de passe</th>
+                                <th>Email</th>
+                                <th>Date Naissance</th>
+                                <th>Adresse</th>
+                                <th>Téléphone</th>
+                                <th>Date Inscription</th>
+                                <th>Action</th>
 
-                                                          <!-- Modal -->
-                                                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                              <div class="modal-dialog">
-                                                                  <div class="modal-content">
-                                                                      <div class="modal-header">
-                                                                          <h5 class="modal-title" id="exampleModalLabel">Modifier un participant</h5>
-                                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                              <span aria-hidden="true">&times;</span>
-                                                                          </button>
-                                                                      </div>
-                                                                      <div class="modal-body">
-                                                                          ...
-                                                                      </div>
-                                                                      <div class="modal-footer">
-                                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                                          <button type="button" class="btn btn-primary">Confirmer</button>
-                                                                      </div>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-
-                                                          <!-- bouton supprimer -->
-                                                          <button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button>
-                                                      </td>
-                                                  </tr>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lignes de données de la liste d'œuvres -->
+                            <?php
+                              $accompagnateurs = getAccompagnateur();
+                              if (!empty($accompagnateurs)&& is_array($accompagnateurs)){
+                                foreach ($accompagnateurs as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idaccompagnateur']?></td>
+                                    <td><?=$value['nomaccompagnateur']?></td>
+                                    <td><?=$value['prenomaccompagnateur']?></td>
+                                    <td><?=$value['loginaccompagnateur']?></td>
+                                    <td><?=$value['motdepasseaccompagnateur']?></td>
+                                    <td><?=$value['emailaccompagnateur']?></td>
+                                    <td><?=$value['datenaissanceacommpagnateur']?></td>
+                                    <td><?=$value['adresseaccompagnateur']?></td>
+                                    <td><?=$value['telacommpagnateur']?></td>
+                                    <td><?=$value['dateinscriptionaccompagnateur']?></td>
+                                    
+                                    <!-- bouton modifier / Supprimer-->
+                                    <td><a href ="?idaccompagnateur=<? $value['idaccompagnateur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
+                                  </tr>
+                                  <?php
+                                }
+                              }
+                            ?>  
                                                   <!-- Ajoutez d'autres lignes de données au besoin -->
                                               </tbody>
                                           </table>
@@ -441,5 +435,8 @@ if(isset($_SESSION['role'])) {
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   </body>
 </html>

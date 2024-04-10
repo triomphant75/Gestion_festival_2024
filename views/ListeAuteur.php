@@ -277,8 +277,6 @@ include_once '../function/AuteurFunction.php';
                                 <th>Email</th>
                                 <th>Date Naissance</th>
                                 <th>adresse auteur</th>
-                                <th>Desistement</th>
-                                <th>id inscription</th>
                                 <th>Date Inscription</th>
                                 
                                 <th>Téléphone</th>
@@ -302,14 +300,11 @@ include_once '../function/AuteurFunction.php';
 
                                     <td><?=$value['datenaissanceauteur']?></td>
                                     <td><?=$value['adresseauteur']?></td>
-                                    <td><?=$value['desistement']?></td>
-                                    <td><?=$value['idinscription']?></td>
-                                    <td><?=$value['dateinscription']?></td>
-                                    <td><?=$value['telephone']?></td>
+                                    <td><?=$value['dateinscriptionauteur']?></td>
+                                    <td><?=$value['telauteur']?></td>
                                     
                                     
-                                    <td><a href ="?idauteur=<? $value['idauteur'] ?>"><ion-icon name="create"></ion-icon></<a></td>
-                                  </tr>
+                                   </tr>
                                   <?php
                                 }
                               }

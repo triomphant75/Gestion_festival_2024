@@ -50,6 +50,6 @@ if (
 
 
 //redirection vers la vue 
-header('Location: ../views/PageConnexion.php');
+header('Location: ../views/AjoutAccompagnateur.php');
  
 ?>
