@@ -1,19 +1,25 @@
 <?php
 session_start();
 
-include_once '../function/AccompFunction.php';
-// Vérifiez si la variable de session $role est définie
+include '../function/AccompFunction.php';
+include_once '../models/ModelConnexion.php';
 
-// Définir les rôles par défaut dans un tableau
-$rolesParDefaut = ['Accompagnateur', 'Auteur', 'Interprete', 'Etablissement', 'commission'];
-
-if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
-    $role = $_SESSION['role'];
-} else {
-    // Choisir un rôle par défaut au hasard s'il n'y a pas de rôle défini dans la session
-    $role = $rolesParDefaut[array_rand($rolesParDefaut)];
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
 }
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
+// Vérifie si la variable de session $role est définie
+if(isset($_SESSION['role'])) {
+  $role = $_SESSION['role'];
+} 
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +67,7 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
                   <img src="../public/assets/images/faces/face28.png" alt="image">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Nom utilisateur</p>
+                <p class="mb-1 text-black">USER</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -167,22 +173,27 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
 
-                  
-                </ul>
-              </div>
-            </li>
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -191,9 +202,17 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
               </a>
               <div class="collapse" id="auth4">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="LancementVoeux.php">Lancement des voeux</a></li>
+                <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeDesVoeux.php">Liste voeux</a></li>
+                  <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="AnalyseVoeux.php">Analyse des Voeux</a></li>
+                  <?php } ?>
 
                 </ul>
               </div>
@@ -206,7 +225,9 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -220,8 +241,11 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  
 
                 </ul>
               </div>
@@ -234,16 +258,27 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <?php if($role != 'Accompagnateur' || $role != 'acteur' ) { ?>
-                 <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
-                 <?php } ?>
-                 <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                 <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                    <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
 
                 </ul>
               </div>
@@ -257,8 +292,9 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -266,7 +302,7 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
             </li>
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
-                <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                <a href="../views/Accueil.php" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Déconnexion</span></a>
               </div>
             </li>
@@ -335,6 +371,14 @@ if(isset($_SESSION['role']) && in_array($_SESSION['role'], $rolesParDefaut)) {
                                                       }
                                                       ?>
                                                   </form>
+                                                  <?php
+                                                  // Si le message d'alerte n'est pas vide
+                                                  if (!empty($_SESSION['message']['text'])):
+                                              ?>
+                                              <div class="alert <?= $_SESSION['message']['type'] ?>">
+                                                  <?= $_SESSION['message']['text'] ?>
+                                              </div>
+                                              <?php endif; ?>
                                               </div>
                                           </div>
                                       </div>

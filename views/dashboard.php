@@ -1,9 +1,22 @@
 <?php
 session_start();
-// Vérifiez si la variable de session $role est définie
+include_once '../models/ModelConnexion.php';
+include_once '../function/StatistiqueFunction.php';
+
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
+}
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
+// Vérifie si la variable de session $role est définie
 if(isset($_SESSION['role'])) {
   $role = $_SESSION['role'];
 } 
+
 ?>
 
 
@@ -18,6 +31,9 @@ if(isset($_SESSION['role'])) {
     <link rel="stylesheet" href="../public/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../public/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.base.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -29,6 +45,10 @@ if(isset($_SESSION['role'])) {
     <link rel="shortcut icon" href="../public/assets/images/favicon.png" />
   </head>
   <body>
+    <!-- Alert for database errors -->
+    <div id="databaseErrorAlert" class="alert alert-danger d-none" role="alert">
+      Une erreur est survenue .
+    </div>
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -53,7 +73,7 @@ if(isset($_SESSION['role'])) {
                   <img src="../public/assets/images/faces/face28.png" alt="image">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Nom utilisateur</p>
+                <p class="mb-1 text-black">USER</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -159,19 +179,27 @@ if(isset($_SESSION['role'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
-              </div>
-            </li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
+
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -180,9 +208,17 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth4">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="LancementVoeux.php">Lancement des voeux</a></li>
+                <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeDesVoeux.php">Liste voeux</a></li>
+                  <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="AnalyseVoeux.php">Analyse des Voeux</a></li>
+                  <?php } ?>
 
                 </ul>
               </div>
@@ -195,7 +231,9 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -209,8 +247,12 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  
+
                 </ul>
               </div>
             </li>
@@ -222,15 +264,27 @@ if(isset($_SESSION['role'])) {
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-         
-                    <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
                    <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                    <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
                    <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                    <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
                    <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                    <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                <?php } ?>
                    <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
 
                 </ul>
               </div>
@@ -244,8 +298,9 @@ if(isset($_SESSION['role'])) {
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -253,7 +308,7 @@ if(isset($_SESSION['role'])) {
             </li>
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
-                <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                <a href="../views/Accueil.php" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Déconnexion</span></a>
               </div>
             </li>
@@ -263,59 +318,51 @@ if(isset($_SESSION['role'])) {
         <div class="main-panel">
           <div class="content-wrapper">
              <!-- Début de la partie blanche -->
-             <div class="d-xl-flex justify-content-between align-items-start">
-              <h2 class="text-dark font-weight-bold mb-2"> Statistique Festi_Livre </h2>
-              
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                
-                <div class="tab-content tab-transparent-content">
-                  <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">
-                    <div class="row">
-                      <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Edition</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">16</h2>
-                            <div class="dashboard-progress dashboard-progress-1 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-lightbulb icon-md absolute-center text-dark"></i></div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Participants</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">20</h2>
-                            <div class="dashboard-progress dashboard-progress-2 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-account-circle icon-md absolute-center text-dark"></i></div>
-                          
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3  col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Impressions</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">100,38</h2>
-                            <div class="dashboard-progress dashboard-progress-3 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-eye icon-md absolute-center text-dark"></i></div>
-                            <p class="mt-4 mb-0"></p>
-                            <h3 class="mb-0 font-weight-bold mt-2 text-dark">,</h3>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body text-center">
-                            <h5 class="mb-2 text-dark font-weight-normal">Interventions</h5>
-                            <h2 class="mb-4 text-dark font-weight-bold">50</h2>
-                            <div class="dashboard-progress dashboard-progress-4 d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-cube icon-md absolute-center text-dark"></i></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-              </div>
+             <style>
+    /* Style addition for better appearance (optional) */
+    .table-responsive {
+      overflow-x: auto;
+    }
+  </style>
+  <div class="container mt-5">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">ID Statistique</th>
+            <th scope="col">Taux de Participation</th>
+            <th scope="col">Nombre de Participation / Intervention</th>
+            <th scope="col">Année de Sauvegarde</th>
+            <th scope="col">ID Edition</th>
+            <th scope="col">ID Intervention</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example row (replace with your data) -->
+          <?php
+                              $Statistique = getStatistique();
+                              if (!empty($Statistique)&& is_array($Statistique)){
+                                foreach ($Statistique as $key => $value){    
+                                  ?>
+                                  <tr>
+                                    <td><?=$value['idsauvegarde']?></td>
+                                    <td><?=$value['tauxdeparticipation']?></td>
+                                    <td><?=$value['nombredeparicipantpresentparintervention']?></td>
+                                    <td><?=$value['anneesauvegarde']?></td>
+                                    <td><?=$value['idedition']?></td>
+                                    <td><?=$value['idintervention']?></td>
+                                    
+                                    </tr>
+                      <?php
+                                            }
+                                        }
+                                    ?> 
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+            
               <!-- fin de la partie blanche -->
             
           </div>
@@ -345,8 +392,35 @@ if(isset($_SESSION['role'])) {
     <script src="../public/assets/js/off-canvas.js"></script>
     <script src="../public/assets/js/hoverable-collapse.js"></script>
     <script src="../public/assets/js/misc.js"></script>
+
     <!-- endinject -->
     <!-- Custom js for this page -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- End custom js for this page -->
+
+
+    <script>
+    // JavaScript code to show/hide database error alert
+    // You need to integrate this with your backend/database interaction logic
+
+    // Function to show database error alert
+    function showDatabaseErrorAlert() {
+      $('#databaseErrorAlert').removeClass('d-none'); // Remove 'd-none' class to display the alert
+    }
+
+    // Function to hide database error alert
+    function hideDatabaseErrorAlert() {
+      $('#databaseErrorAlert').addClass('d-none'); // Add 'd-none' class to hide the alert
+    }
+
+    // Call this function when there's a database error to show the alert
+    // For example, in an AJAX error callback
+    // showDatabaseErrorAlert();
+
+    // Call this function when the error is resolved or user dismisses the alert
+    // hideDatabaseErrorAlert();
+  </script>
   </body>
 </html>

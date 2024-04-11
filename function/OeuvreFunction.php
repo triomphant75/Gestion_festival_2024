@@ -21,4 +21,24 @@ function getOeuvre($idoeuvre=null){
     }
 }
 
+function getVoeux($idoeuvre=null){
+
+    if(!empty($idoeuvre)) { 
+        $sql="SELECT * FROM voeux WHERE idvoeux=?";
+
+        $req= $GLOBALS['connexion']->prepare($sql);
+
+        $req->execute(array($idoeuvre)); 
+    }
+    else {
+        $sql="SELECT * FROM voeux";
+        $req= $GLOBALS['connexion']->prepare($sql);
+
+        $req->execute();
+
+        //retourne tout le resultat de la requete
+        return $req->fetchAll();
+    }
+}
+
 ?>

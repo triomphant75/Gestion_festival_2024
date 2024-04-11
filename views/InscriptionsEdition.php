@@ -24,6 +24,21 @@ if (!empty($_GET['idetablissement'])){
   $nometablissement = getEtablissement($_GET['idetablissement']);
 }
 
+include_once '../models/ModelConnexion.php';
+
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
+}
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
+// Vérifie si la variable de session $role est définie
+if(isset($_SESSION['role'])) {
+  $role = $_SESSION['role'];
+} 
 
 ?>
 
@@ -39,6 +54,8 @@ if (!empty($_GET['idetablissement'])){
     <link rel="stylesheet" href="../public/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../public/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -74,7 +91,7 @@ if (!empty($_GET['idetablissement'])){
                   <img src="../public/assets/images/faces/face28.png" alt="image">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Nom utilisateur</p>
+                <p class="mb-1 text-black">USER</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -168,7 +185,7 @@ if (!empty($_GET['idetablissement'])){
         </div>
       </nav>
       <!-- partial -->
-      <<div class="container-fluid page-body-wrapper">
+      <div class="container-fluid page-body-wrapper">
         <!-- partial:../../partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
@@ -180,19 +197,27 @@ if (!empty($_GET['idetablissement'])){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
-              </div>
-            </li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
+
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -201,9 +226,17 @@ if (!empty($_GET['idetablissement'])){
               </a>
               <div class="collapse" id="auth4">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="LancementVoeux.php">Lancement des voeux</a></li>
+                <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeDesVoeux.php">Liste voeux</a></li>
+                  <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="AnalyseVoeux.php">Analyse des Voeux</a></li>
+                  <?php } ?>
 
                 </ul>
               </div>
@@ -216,7 +249,9 @@ if (!empty($_GET['idetablissement'])){
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -230,8 +265,12 @@ if (!empty($_GET['idetablissement'])){
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  
+
                 </ul>
               </div>
             </li>
@@ -243,14 +282,28 @@ if (!empty($_GET['idetablissement'])){
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
+
                 </ul>
               </div>
             </li>
@@ -263,8 +316,9 @@ if (!empty($_GET['idetablissement'])){
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -272,7 +326,7 @@ if (!empty($_GET['idetablissement'])){
             </li>
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
-                <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                <a href="../views/Accueil.php" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Déconnexion</span></a>
               </div>
             </li>
@@ -370,10 +424,18 @@ if (!empty($_GET['idetablissement'])){
                 
                 <!-- Bouton "S'inscrire" -->
                 <div class="text-center mt-3 mb-2"> <!-- Ajout des marges pour déplacer le bouton vers le bas -->
-                    <button type="submit" name="inscrire" class="btn btn-primary btn-lg px-4">S'inscrire</button> <!-- Ajout de la classe btn-lg pour augmenter la taille du bouton -->
+                    <button type="submit" name="inscrire" class="btn btn-primary btn-lg px-4">Inscrire les participants</button> <!-- Ajout de la classe btn-lg pour augmenter la taille du bouton -->
                    
                 </div>
             </form>
+                                <!-- Message d'alerte -->
+
+
+            <div id="alertContainer" class="alert <?= $_SESSION['message']['type'] ?>">
+              <?= $_SESSION['message']['text'] ?>
+            </div>
+            
+   
         </div>
     </div>
 </div>
@@ -413,6 +475,25 @@ if (!empty($_GET['idetablissement'])){
     <!-- End custom js for this page -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // JavaScript code to hide alert initially
+    $(document).ready(function() {
+      $('#alertContainer').hide();
+    });
+
+    // Event listener for form submission
+    $('form').submit(function(event) {
+      // Prevent default form submission
+      event.preventDefault();
+
+      // Show the alert after form submission
+      $('#alertContainer').show();
+    });
+  </script>
 
   </body>
 </html>

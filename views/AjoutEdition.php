@@ -1,11 +1,24 @@
 <?php
 session_start();
 include_once '../function/EditionFunction.php';
+include_once '../models/ModelConnexion.php';
+
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
+}
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
 
 if (!empty($_GET['idedition'])){
   $editionI = getEdition($_GET['idedition']);
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -159,19 +172,27 @@ if (!empty($_GET['idedition'])){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
-              </div>
-            </li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
+
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -195,7 +216,9 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -209,10 +232,11 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Liste des inscriptions</a></li>
+                  
 
                 </ul>
               </div>
@@ -225,14 +249,27 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li><?php endif; ?>
-                 <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                 <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li><?php endif; ?>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li><?php endif; ?>
-                  <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <?php if (in_array('emailauteur', $_SESSION['roles']) || in_array('emailaccompagnateur', $_SESSION['roles']) || in_array('emailinterprete', $_SESSION['roles']) || in_array('emailetablissement', $_SESSION['roles'])): ?><li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li><?php endif; ?>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
 
                 </ul>
               </div>
@@ -246,8 +283,9 @@ if (!empty($_GET['idedition'])){
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>

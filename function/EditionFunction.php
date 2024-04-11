@@ -23,4 +23,19 @@ function getEdition($idedition=null){
 
     }
 }
+
+function filterEditionsByAnnee($annee){
+
+    // Requête SQL pour sélectionner les éditions par année
+    $sql = "SELECT * FROM editions WHERE anneeedition = ?";
+    $stmt = $GLOBALS['connexion']->prepare($sql);
+    $stmt->execute([$annee]);
+    $editions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Retourner les éditions filtrées
+    return $editions;
+
+    }
+
+
 ?>

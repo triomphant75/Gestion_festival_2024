@@ -1,3 +1,24 @@
+<?php
+include_once '../models/ModelConnexion.php';
+include_once '../function/OeuvreFunction.php';
+
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
+}
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
+// Vérifie si la variable de session $role est définie
+if(isset($_SESSION['role'])) {
+  $role = $_SESSION['role'];
+} 
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,7 +65,7 @@
                   <img src="../public/assets/images/faces/face28.png" alt="image">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Nom utilisateur</p>
+                <p class="mb-1 text-black">USER</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -150,19 +171,27 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">s'inscrire</a></li>
-                </ul>
-              </div>
-            </li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
+
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -171,9 +200,17 @@
               </a>
               <div class="collapse" id="auth4">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="LancementVoeux.php">Lancement des voeux</a></li>
+                <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeDesVoeux.php">Liste voeux</a></li>
+                  <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="AnalyseVoeux.php">Analyse des Voeux</a></li>
+                  <?php } ?>
 
                 </ul>
               </div>
@@ -186,7 +223,9 @@
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -200,8 +239,11 @@
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  
 
                 </ul>
               </div>
@@ -214,14 +256,28 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
+
                 </ul>
               </div>
             </li>
@@ -234,8 +290,9 @@
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -243,7 +300,7 @@
             </li>
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
-                <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                <a href="../views/Accueil.php" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Déconnexion</span></a>
               </div>
             </li>
@@ -259,96 +316,54 @@
             <h4 class="card-title">BIENVENUE SUR LA PAGE VOEUX</h4>
             <p class="card-description">Lancement de la période de voeux </p>
 
-            <!-- Période avec Date de Départ et Date de Fin -->
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Période:</label>
-                <div class="col-sm-5">
-                    <input type="date" class="form-control" id="startDate" placeholder="Date de Départ">
-                </div>
-                <div class="col-sm-5">
-                    <input type="date" class="form-control" id="endDate" placeholder="Date de Fin">
-                </div>
-            </div>
+           
 
             <!-- Datagrid de liste d'œuvres -->
-            <h6 class="card-title">Listes des oeuvres </h6>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>titre</th>
-                            <th>auteur</th>
-                            <th>edition</th>
-                            <th>public cible</th>
-                            <th>prix littéraire</th>
-                            <th>année de publication</th>
-                            <th>genre littéraire</th>
-                            <th>Action</th> <!-- Nouvelle colonne pour les cases à cocher -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Lignes de données de la liste d'œuvres -->
-                        <tr>
-                            <td>1</td>
-                            <td>L'avare</td>
-                            <td>Molière</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td><button type="button" class="btn btn-primary btn-sm selectWork">Sélectionner</button></td> <!-- Bouton pour sélectionner l'œuvre -->
-                        </tr>
-                        <!-- Ajoutez d'autres lignes de données au besoin -->
-                    </tbody>
-                </table>
+            <div class="main-panel">
+        <div class="col-md-24 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Listes des Oeuvres</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>titre</th>
+                                        <th>edition</th>
+                                        <th>public cible</th>
+                                        <th>prix littéraire</th>
+                                        <th>année de publication</th>
+                                        <th>genre littéraire</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Lignes de données de la liste d'œuvres -->
+                                    <?php
+                                        $oeuvres = getOeuvre();
+                                        if (!empty($oeuvres) && is_array($oeuvres)){
+                                            foreach ($oeuvres as $value){    
+                                    ?>
+                                    <tr>
+                                        <td><?=$value['titre']?></td>
+                                        <td><?=$value['editionoeuvre']?></td>
+                                        <td><?=$value['publiccible']?></td>
+                                        <td><?=$value['prixlitteraire']?></td>
+                                        <td><?=$value['anneepublication']?></td>
+                                        <td><?=$value['genrelitteraire']?></td>
+                                        <td><?=$value['descriptionoeuvre']?></td>    
+                                    </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Datagrid des œuvres sélectionnées -->
-            <h6 class="card-title mt-4">Listes des oeuvres sélectionnées </h6>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>titre</th>
-                            <th>auteur</th>
-                            <th>edition</th>
-                            <th>public cible</th>
-                            <th>prix littéraire</th>
-                            <th>année de publication</th>
-                            <th>genre littéraire</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="selectedWorksTableBody"> <!-- Corps de la datagrid des œuvres sélectionnées -->
-                        <tr>
-                            <td>1</td>
-                            <td>L'avare</td>
-                            <td>Molière</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td>XXXXXX</td>
-                            <td><button type="button" class="btn btn-danger btn-sm selectWork">Supprimer</button></td> <!-- Bouton pour sélectionner l'œuvre -->
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Bouton "Confirmer" -->
-            <div class="text-center mt-3">
-                <button class="btn btn-primary btn-lg px-4">Confirmer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
+          </div>
               <!-- fin de la partie blanche -->
             
           </div>

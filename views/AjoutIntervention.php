@@ -28,6 +28,22 @@ if (!empty($_GET['idedition'])){
   $editions = getEdition($_GET['idedition']);
 }
 
+include_once '../models/ModelConnexion.php';
+
+// Assurez-vous que la variable de session 'role' est définie
+if (!isset($_SESSION['role'])) {
+    // Rediriger l'utilisateur vers une page de connexion si 'role' n'est pas défini
+    header('Location: PageConnexion.php');
+    exit(); // Assurez-vous de terminer le script après la redirection
+}
+
+// Maintenant que nous sommes sûrs que 'role' est défini, nous pouvons l'utiliser
+$role = $_SESSION['role'];
+// Vérifie si la variable de session $role est définie
+if(isset($_SESSION['role'])) {
+  $role = $_SESSION['role'];
+} 
+
 ?>
 
 
@@ -77,7 +93,7 @@ if (!empty($_GET['idedition'])){
                   <img src="../public/assets/images/faces/face28.png" alt="image">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Nom utilisateur</p>
+                <p class="mb-1 text-black">USER</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -183,19 +199,27 @@ if (!empty($_GET['idedition'])){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Edition</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEdition.php">créer une edition</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEditions.php">Liste des editions</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>                </ul>
-              </div>
-            </li>
+    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+        <span class="menu-title">Edition</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+            <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="AjoutEdition.php">créer une édition</a></li>
+            <?php } ?>
+
+        <li class="nav-item"><a class="nav-link" href="ListeEditions.php">Liste des éditions</a></li>
+        <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+            <li class="nav-item"><a class="nav-link" href="InscriptionsEdition.php">gestion inscription</a></li>
+        <?php } ?>
+        <li class="nav-item"><a class="nav-link" href="InscritEdition.php">Liste des inscriptions</a></li>
+    </ul>
+</div>
+
+</li>
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -204,9 +228,17 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth4">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="LancementVoeux.php">Lancement des voeux</a></li>
+                <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "admin" && $_SESSION['role'] != "accompagnateur"  && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeDesVoeux.php">Liste voeux</a></li>
+                  <?php } ?>
+                  <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
                   <li class="nav-item"> <a class="nav-link" href="AnalyseVoeux.php">Analyse des Voeux</a></li>
+                  <?php } ?>
 
                 </ul>
               </div>
@@ -219,7 +251,9 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth2">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutIntervention.php">Ajouter une intervention</a></li>
+                <?php }?>
                   <li class="nav-item"> <a class="nav-link" href="ListeIntervention.php"> Liste des interventions</a></li>
 
                 </ul>
@@ -233,8 +267,11 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth3">
                 <ul class="nav flex-column sub-menu">
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
                   <li class="nav-item"> <a class="nav-link" href="AjoutOeuvre.php">Ajouter oeuvre</a></li>
+                <?php } ?>
                   <li class="nav-item"> <a class="nav-link" href="ListeOeuvre.php"> Liste des oeuvres</a></li>
+                  
 
                 </ul>
               </div>
@@ -247,14 +284,27 @@ if (!empty($_GET['idedition'])){
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php">Ajouter un Accompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAccompagnateur.php" >Ajouter un Accompagnateur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAccompagnateur.php"> Liste des Acompagnateur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutAuteur.php">Ajouter un Auteur</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeAuteur.php"> Liste des Auteur</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutInterprete.php">Ajouter un Interprete</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeInterprete.php"> Liste des Interprete</a></li>
+                   <?php if ($_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "auteur"  && $_SESSION['role'] != "accompagnateur" && $_SESSION['role'] != "etablissement" && $_SESSION['role'] != "interprete") { ?>
+
+                   <li class="nav-item"> <a class="nav-link" href="AjoutEtablissement.php">Ajouter un établissement</a></li>
+                <?php } ?>
+                   <li class="nav-item"> <a class="nav-link" href="ListeEtablissement.php"> Liste des établissements</a></li>
+                 
 
                 </ul>
               </div>
@@ -268,8 +318,9 @@ if (!empty($_GET['idedition'])){
                         <img src="../public/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
-                        <p class="mb-1">Nom utilisateur</p>
-                      </div>
+                        <p class="mb-1">Role: <?php echo $_SESSION['role']; ?></p>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -277,7 +328,7 @@ if (!empty($_GET['idedition'])){
             </li>
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
-                <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                <a href="../views/Accueil.php" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Déconnexion</span></a>
               </div>
             </li>
@@ -294,22 +345,26 @@ if (!empty($_GET['idedition'])){
                         <div class="card-body">
                             <h4 class="card-title">Intervention </h4>
                             <p class="card-description"> Ajouter une intervention</p>
-                            <form class="forms-sample" action="../models/Intervention.php" method="POST">
+                            <form class="forms-sample" action="<?= !empty($_GET['idintervention']) ? "../models/ModifierIntervention.php" : "../models/Intervention.php" ?>" method="POST">
+                                    <?php if (!empty($_GET['idintervention'])): ?>
+                                        <!-- Champ caché pour l'ID de l'intervention à modifier -->
+                                        <input type="hidden" name="idintervention" value="<?= $_GET['idintervention'] ?>">
+                                    <?php endif; ?>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Durée</label>
-                                    <input type="time" name="DureeIntervention" class="form-control" id="exampleInputUsername1" placeholder="Durée">
+                                    <input value="<?= !empty($_GET['idintervention']) ? $value['dureeintervention'] : "" ?>" type="time" name="DureeIntervention" class="form-control" id="exampleInputUsername1" placeholder="Durée">
                                 </div>
                                 <div class="form-group">
                                     <label for="start_date">Date de début</label>
-                                    <input type="date" name="DateFDntervention" class="form-control" id="start_date" placeholder="Date de début">
+                                    <input value="<?= !empty($_GET['idintervention']) ? $interperetes['datedebutintervention'] : "" ?>" type="date" name="DateFDntervention" class="form-control" id="start_date" placeholder="Date de début">
                                 </div>
                                 <div class="form-group">
                                     <label for="end_date">Date de fin</label>
-                                    <input type="date" name="DateFIntervention" class="form-control" id="end_date" placeholder="Date de fin">
+                                    <input value="<?= !empty($_GET['idintervention']) ? $interperetes['datefinintervention'] : "" ?>" type="date" name="DateFIntervention" class="form-control" id="end_date" placeholder="Date de fin">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Etat</label>
-                                    <select class="form-control" name="EtatIntervention"id="exampleFormControlSelect1">
+                                    <select value="<?= !empty($_GET['idintervention']) ? $interperetes['etatintervention'] : "" ?>"  class="form-control" name="EtatIntervention"id="exampleFormControlSelect1">
                                         <option>Programmée</option>
                                         <option>En attente</option>
                                         <option>Annulée</option>
@@ -318,11 +373,11 @@ if (!empty($_GET['idedition'])){
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Lieu</label>
-                                    <input type="text" name="LieuIntervention" class="form-control" id="exampleInputUsername1" placeholder="Lieu">
+                                    <input  type="text" name="LieuIntervention" class="form-control" id="exampleInputUsername1" placeholder="Lieu">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Auteur</label>
-                                    <select class="form-control" name="AuteurIntervention"id="exampleFormControlSelect1">
+                                    <select value="<?= !empty($_GET['idintervention']) ? $interperetes['idauteur'] : "" ?>" class="form-control" name="AuteurIntervention"id="exampleFormControlSelect1">
                                       <?php
                                           $nomAuteurs = getAuteur();
                                           if (!empty($nomAuteurs) && is_array($nomAuteurs)) {
@@ -397,67 +452,73 @@ if (!empty($_GET['idedition'])){
                                         ?>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                                <button type="submit" class="btn btn-primary mr-2"><?= !empty($_GET['idintervention']) ? 'Modifier' : 'Créer' ?></button>
                                 <button class="btn btn-light">Annuler</button>
                             </form>
+                            <?php
+                // Si le message d'alerte n'est pas vide
+                if (!empty($_SESSION['message']['text'])):
+            ?>
+            <div class="alert <?= $_SESSION['message']['type'] ?>">
+                <?= $_SESSION['message']['text'] ?>
+            </div>
+            <?php endif; ?>
                         </div>
                     </div>
             </div>
 
     <!-- Datagrid de liste d'œuvres -->
     <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Listes des Interventions </h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Durée</th>
-                                <th>Date de début</th>
-                                <th>Date de fin</th>
-                                <th>Lieu</th>
-                                <th>Etat de l'intervention</th>
-                                <th>Etablissement</th>
-                                <th>Auteur </th>
-                                <th>Accompagnateur</th>
-                                <th>Interprete</th>
-                                <th>Edition</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lignes de données de la liste d'œuvres -->
-                            <?php
-                    $interventions = getIntervention();
-                    if (!empty($interventions) && is_array($interventions)) {
-                        foreach ($interventions as $key => $value) {
-                    ?>
-                            <tr>
-                                <td><?= $value['dureeintervention'] ?></td>
-                                <td><?= $value['datedebutintervention'] ?></td>
-                                <td><?= $value['datefinintervention'] ?></td>
-                                <td><?= $value['lieuintervention'] ?></td>
-                                <td><?= $value['etatintervention'] ?></td>
-                                <td><?= $value['idetablissement'] ?></td>
-                                <td><?= $value['idauteur'] ?></td>
-                                <td><?= $value['idaccompagnateur'] ?></td>
-                                <td><?= $value['idinterprete'] ?></td>
-                                <td><?= $value['idedition'] ?></td>
-                                <td>
-
-                                    <!-- bouton modifier / Supprimer-->
-                                    <a href ="?idedition=<? $value['idedition'] ?>"><ion-icon name="create"></ion-icon></<a>
-                                </td>
-                            </tr>
-                            <?php
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Liste des Interventions</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Durée</th>
+                            <th>Date de début</th>
+                            <th>Date de fin</th>
+                            <th>Lieu</th>
+                            <th>Etat de l'intervention</th>
+                            <th>Etablissement</th>
+                            <th>Auteur</th>
+                            <th>Accompagnateur</th>
+                            <th>Interprete</th>
+                            <th>Edition</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Lignes de données de la liste des interventions -->
+                        <?php
+                        $interventions = getIntervention();
+                        if (!empty($interventions) && is_array($interventions)) {
+                            foreach ($interventions as $key => $value) {
+                        ?>
+                                <tr>
+                                    <td><?= $value['dureeintervention'] ?></td>
+                                    <td><?= $value['datedebutintervention'] ?></td>
+                                    <td><?= $value['datefinintervention'] ?></td>
+                                    <td><?= $value['lieuintervention'] ?></td>
+                                    <td><?= $value['etatintervention'] ?></td>
+                                    <td><?= $value['idetablissement'] ?></td>
+                                    <td><?= $value['idauteur'] ?></td>
+                                    <td><?= $value['idaccompagnateur'] ?></td>
+                                    <td><?= $value['idinterprete'] ?></td>
+                                    <td><?= $value['idedition'] ?></td>
+                                    <td>
+                                        <!-- Bouton modifier redirigeant vers le formulaire d'ajout d'intervention avec l'ID de l'intervention -->
+                                        <a href="AjoutIntervention.php?idintervention=<?= $value['idintervention'] ?>"><ion-icon name="create"></ion-icon></a>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
                         }
-                    }
-                    ?>
-                            <!-- Ajoutez d'autres lignes de données au besoin -->
-                        </tbody>
-                    </table>
-                </div>
+                        ?>
+                        <!-- Ajoutez d'autres lignes de données au besoin -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../cores/connexion.php';
 
 if (isset($_POST['valider'])) {
@@ -22,18 +23,23 @@ if (isset($_POST['valider'])) {
                 case "auteur":
                     $emailColumn = "emailauteur";
                     $passwordColumn = "motdepasseauteur";
+                   
                     break;
                 case "interprete":
                     $emailColumn = "emailinterprete";
                     $passwordColumn = "motdepasseinterprete";
+
                     break;
                 case "etablissement":
                     $emailColumn = "emailetablissement";
-                    $passwordColumn = "motdeetablissement";
+                    $passwordColumn = "motdepasseetablissement";
+                   
                     break;
                 case "admini":
                     $emailColumn = "emailadmin";
-                    $passwordColumn = "motdepasseadmin";
+                    $passwordColumn = "motdePasseadmin";
+                   
+
                     break;
                 default:
                     break;
@@ -45,20 +51,72 @@ if (isset($_POST['valider'])) {
             $stmt->execute([$email, $password]);
             $user = $stmt->fetch();
 
-            // Si l'utilisateur est trouvé dans cette table, redirigez-le et arrêtez la boucle
-            if ($user) {
-                header('Location: ../views/dashboard.php');
-                exit();
-            }else{
-                header('Location: ../views/PageConnexion.php');
-            }
-        }
 
-        // Si l'utilisateur n'est pas trouvé dans aucune des tables, affichez un message d'erreur
-        $_SESSION['message']['text'] = "Une erreur s'est produite lors de la connexion";
-        $_SESSION['message']['type'] = "danger";
-        header('Location: ../views/PageConnexion.php');
-        exit();
+
+           
+           // Si l'utilisateur est trouvé dans cette table, redirigez-le et arrêtez la boucle
+           if ($user) {
+            // Déterminer le rôle en fonction du nom de la table
+            $role = '';
+            switch ($table) {
+                case "accompagnateur":
+                    $role = "accompagnateur";
+                    break;
+                case "auteur":
+                    $role = "auteur";
+                    break;
+                case "interprete":
+                    $role = "interprete";
+                    break;
+                case "etablissement":
+                    $role = "etablissement";
+                    break;
+                case "admini":
+                    $role = "admin";
+                    break;
+                default:
+                    // Si la table n'est pas associée à un rôle spécifique, définissez un rôle par défaut
+                    $role = "default";
+                    break;
+            }
+
+            // Stocke le rôle dans une variable de session
+            $_SESSION['role'] = $role;
+
+           
+            // Rediriger l'utilisateur vers le tableau de bord approprié en fonction de son rôle
+            switch ($role) {
+                case "accompagnateur":
+                    header('Location: ../views/dashboard.php');
+                    break;
+                case "auteur":
+                    header('Location: ../views/dashboard.php');
+                    break;
+                case "interprete":
+                    header('Location: ../views/dashboard.php');
+                    break;
+                case "etablissement":
+                    header('Location: ../views/dashboard.php');
+                    break;
+                case "admin":
+                    header('Location: ../views/dashboard.php');
+                    break;
+                default:
+                    // Redirection par défaut vers le tableau de bord général
+                    header('Location: ../views/dashboard.php');
+                    break;
+            }
+            exit();
+        }
     }
+
+    
+
+    // Si l'utilisateur n'est pas trouvé dans aucune des tables, affichez un message d'erreur
+    $_SESSION['message']['text'] = "Une erreur s'est produite lors de la connexion";
+    $_SESSION['message']['type'] = "danger";
+    header('Location: ../views/PageConnexion.php');
+    exit();
+}
 }
 ?>
